@@ -1,13 +1,15 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../providers/auth_providers.dart';
+import 'package:up_todo_app/feature/authenticaton/local_auth/local_auth.dart';
+import 'package:up_todo_app/feature/authenticaton/login/presentation/view_model/login_with_facebook_provider.dart';
+
+import '../../../../../core/notification/notification_bar.dart';
 import '../../../../../core/reusable_widgets/buttons.dart';
 import '../../../../../core/reusable_widgets/text_form_field.dart';
-import '../../../../../core/notification/notification_bar.dart';
+import '../providers/auth_providers.dart';
 import '../view_model/login_state.dart';
-import 'package:up_todo_app/feature/authenticaton/local_auth/local_auth.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
@@ -229,8 +231,16 @@ class LoginScreen extends ConsumerWidget {
                     ),
                     Button(
                       isColor: false,
-                      onPressed: () {},
-                      text: "Login With Apple",
+                      onPressed: () async {
+                        final userDate =
+                            await FacebookLoginService.signInWithFacebook();
+                        if (userDate != null) {
+                          print("User Info :$userDate");
+                        } else {
+                          print("Login failed");
+                        }
+                      },
+                      text: "Login With Facebook",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
