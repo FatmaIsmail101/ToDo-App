@@ -9,7 +9,7 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Expanded(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         spacing: 6,
