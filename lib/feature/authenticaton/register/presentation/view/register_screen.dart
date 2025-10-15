@@ -11,7 +11,6 @@ import 'package:up_todo_app/feature/authenticaton/register/presentation/provider
 import '../../../../../core/reusable_widgets/buttons.dart';
 import '../../../../../core/reusable_widgets/text_form_field.dart';
 import '../../../local_auth/local_auth.dart';
-import '../../data/model/register_model.dart';
 
 class RegisterScreen extends ConsumerWidget {
   RegisterScreen({super.key});
@@ -232,8 +231,9 @@ class RegisterScreen extends ConsumerWidget {
                                       actions: [
                                         TextButton(
                                           onPressed: () async {
-                                            if (pinController.text.isEmpty)
+                                            if (pinController.text.isEmpty) {
                                               return;
+                                            }
 
                                             // 🔹 نحفظ الـ PIN في SharedPreferences
                                             await LocalAuthHelper.setPin(

@@ -10,7 +10,7 @@ class CacheHelper {
 
   // Save an integer value to 'counter' key.
   static Future<void> setInt(String key, int value) async {
-    await prefs?.setInt(key, value);
+    await prefs.setInt(key, value);
   }
 
   static int? getInt(String key) {
@@ -32,7 +32,7 @@ class CacheHelper {
   }
 
   static String? getString(String key) {
-    return prefs?.getString(key)??'';
+    return prefs.getString(key) ?? '';
   }
 
   static Future<void> setDouble(String key, double value) async {
@@ -44,7 +44,7 @@ class CacheHelper {
   }
 
   static Future<void> setStringList(String key, List<String> value) async {
-    await prefs?.setStringList(key, value);
+    await prefs.setStringList(key, value);
   }
 
   static List<String>? getStringList(String key) {

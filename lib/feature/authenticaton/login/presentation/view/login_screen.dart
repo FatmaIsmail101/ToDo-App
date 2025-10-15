@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/routes/page_route_name.dart';
 import 'package:up_todo_app/feature/authenticaton/local_auth/local_auth.dart';
 import 'package:up_todo_app/feature/authenticaton/login/presentation/view_model/login_with_facebook_provider.dart';
 
@@ -33,7 +34,11 @@ class LoginScreen extends ConsumerWidget {
           icon: Icons.error,
         );
       }
-
+      if (next.state == LoginStatus.success) {
+        NotificationBar.showNotification(message: "Logined Successfully",
+            type: ContentType.success, context: context, icon: Icons.check);
+        Navigator.pushReplacementNamed(context, PageRouteName.homeScreen);
+      }
       // ✅ Success / needLocalAuth
       if (next.state == LoginStatus.needLocalAuth && next.model != null) {
         showModalBottomSheet(
@@ -55,7 +60,9 @@ class LoginScreen extends ConsumerWidget {
                       context: context,
                       icon: Icons.check,
                     );
-                    Navigator.pop(context);
+                    //todo
+                    Navigator.pushReplacementNamed(
+                        context, PageRouteName.homeScreen);
                   } else {
                     NotificationBar.showNotification(
                       message: "Fingerprint authentication failed",
@@ -89,7 +96,8 @@ class LoginScreen extends ConsumerWidget {
                           onPressed: () {
                             if (pinController.text ==
                                 LocalAuthHelper.getPin()) {
-                              Navigator.pop(context);
+                              Navigator.pushReplacementNamed(
+                                  context, PageRouteName.homeScreen);
                               NotificationBar.showNotification(
                                 message: "Authenticated with PIN",
                                 type: ContentType.success,
@@ -123,7 +131,9 @@ class LoginScreen extends ConsumerWidget {
               ListTile(
                 leading: Icon(Icons.cancel),
                 title: Text('Cancel'),
-                onTap: () => Navigator.pop(context),
+                onTap: () =>
+                    Navigator.pushReplacementNamed(
+                        context, PageRouteName.homeScreen),
               ),
             ],
           ),

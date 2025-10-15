@@ -6,5 +6,11 @@ class Assets {
   static const String imagesIntro1 = 'assets/images/intro1.png';
   static const String imagesIntro2 = 'assets/images/intro2.png';
   static const String imagesIntro3 = 'assets/images/intro3.png';
-
+  static const String imagesSplash = 'assets/images/splash.png';
+  static const String outlineTag =
+      'assets/images/Home Screen/vuesax/outline/tag.png';
+  static const String outlineTag2x =
+      'assets/images/Home Screen/vuesax/outline/tag@2x.png';
+  static const String outlineTag3x =
+      'assets/images/Home Screen/vuesax/outline/tag@3x.png';
 }

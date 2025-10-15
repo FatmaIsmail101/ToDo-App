@@ -3,5 +3,10 @@ class PageRouteName{
   static const String startScreen="/startScreen";
   static const String loginScreen="/loginScreen";
   static const String registerScreen="/registerScreen";
-
+  static const String homeScreen = "/homeScreen";
+  static const String indexScreen = "/indexScreen";
+  static const String calenderScreen = "/calenderScreen";
+  static const String addScreen = "/addScreen";
+  static const String foucsScreen = "/foucsScreen";
+  static const String personScreen = "/personScreen";
 }

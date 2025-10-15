@@ -14,6 +14,7 @@ class FacebookLoginService {
       print("Error during Facebook login : $e");
       return null;
     }
+    return null;
   }
 
   static Future<void> logOut() async {
