@@ -14,7 +14,8 @@ class TaskItem extends StatelessWidget {
       onTap: () {},
       child: Container(
         width: double.infinity,
-        height: 80,
+        padding: EdgeInsets.all(10),
+        height: 110,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           color: Color(0xff363636),
@@ -24,12 +25,13 @@ class TaskItem extends StatelessWidget {
           children: [
             Icon(
               model.isComplete ? Icons.circle_rounded : Icons.circle_outlined,
-              color: model.isComplete ? Color(0xff8875FF) : Colors.transparent,
+              color: model.isComplete ? Color(0xff8875FF) : Colors.white,
             ),
             Expanded(
               child: Column(
                 spacing: 6,
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     model.title,
@@ -39,6 +41,7 @@ class TaskItem extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  Spacer(),
                   Text(
                     formateTaskDate(model.dateTime),
                     style: GoogleFonts.lato(
@@ -51,8 +54,9 @@ class TaskItem extends StatelessWidget {
               ),
             ),
             Container(
-              width: 88,
-              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 7),
+              // width: 88,
+              // height: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
                 color: model.category.color,
@@ -72,15 +76,17 @@ class TaskItem extends StatelessWidget {
               ),
             ),
             Container(
-              width: 88,
-              height: 30,
+              padding: EdgeInsets.symmetric(horizontal: 7),
+
+              // width: 88,
+              // height: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(4),
-                color: Color(0xffE8E8E8),
-              ),
+                color: Colors.transparent,
+                border: Border.all(color: Colors.lightBlue)),
               child: Row(
-                children: [
-                  Icon(model.priority.label),
+                children: [ [
+                  Icon(model.priority.label, color: Colors.white),
                   Text(
                     "${model.priority.level}",
                     style: GoogleFonts.lato(

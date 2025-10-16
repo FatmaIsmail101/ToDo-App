@@ -27,11 +27,21 @@ class TaskDataSourceImpl implements TaskDataSource {
   }
 
   @override
+  @override
   Future<List<TaskModel>> getAllTasks() async {
     final jsonString = CacheHelper.getString("tasks");
-    if (jsonString == null) return [];
-    final List decoded = jsonDecode(jsonString);
-    return decoded.map((e) => TaskModel.fromJson(e)).toList();
+
+    // ✅ لو مفيش داتا أو نص فاضي
+    if (jsonString == null || jsonString.isEmpty) return [];
+
+    try {
+      final List decoded = jsonDecode(jsonString);
+      return decoded.map((e) => TaskModel.fromJson(e)).toList();
+    } catch (e) {
+      // ✅ لو حصل خطأ في الـ JSON نفسه (مثلاً corrupted data)
+      print("Error decoding tasks JSON: $e");
+      return [];
+    }
   }
 
   @override

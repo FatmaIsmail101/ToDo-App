@@ -105,7 +105,9 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                       builder: (BuildContext context) {
                         return Dialog(
                           backgroundColor: Colors.black,
-                          child: CategoryDialog(),
+                          child: CategoryDialog(
+                            selectedCateogery: selectedCategory,
+                          ),
                         );
                       },
                     );
@@ -124,7 +126,9 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                       builder: (BuildContext context) {
                         return Dialog(
                           backgroundColor: Colors.black,
-                          child: PriorityDialog(),
+                          child: PriorityDialog(
+                            selectedPriorty: selectedPriority,
+                          ),
                         );
                       },
                     );

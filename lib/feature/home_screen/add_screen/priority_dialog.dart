@@ -1,17 +1,27 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/priorty_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
-class PriorityDialog extends StatelessWidget {
-  PriorityDialog({super.key});
+class PriorityDialog extends StatefulWidget {
+  PriorityDialog({super.key, this.selectedPriorty});
 
+  TaskPriority? selectedPriorty;
+
+  @override
+  State<PriorityDialog> createState() => _PriorityDialogState();
+}
+
+class _PriorityDialogState extends State<PriorityDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 360,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        color: Colors.black,
+        color: Color(0xff363636),
       ),
       child: Padding(
         padding: const EdgeInsets.all(6.0),
@@ -32,19 +42,38 @@ class PriorityDialog extends StatelessWidget {
             Expanded(
               child: GridView.builder(
                 padding: EdgeInsets.zero,
-                itemBuilder: (context, index) =>
-                    PriortyItem(model: priorityList[index]),
+                itemBuilder: (context, index) {
+                  final priorty = priorityList[index];
+                  return PriortyItem(model: priorityList[index],
+                    isSelected: widget.selectedPriorty == priorty,
+                    selectPriority: () {
+                      setState(() {
+                        widget.selectedPriorty = priorty;
+                      });
+                    },);
+                },
                 itemCount: priorityList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
+                    crossAxisCount: 4, crossAxisSpacing: 2, mainAxisSpacing: 16,
+                    childAspectRatio: .8
                 ),
               ),
             ),
             Row(
               children: [
                 Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
+                  child: TextButton(
+                    onPressed: () {
+                      NotificationBar.showNotification(
+                          message: "Please Select Priorty",
+                          type: ContentType.failure
+                          ,
+                          context: context,
+                          icon: Icons.error_outline);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                    ),
                     child: Text(
                       "Cancel",
                       style: GoogleFonts.lato(
@@ -52,16 +81,21 @@ class PriorityDialog extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                    ),
                   ),
                 ),
                 Expanded(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (widget.selectedPriorty != null) {
+                        Navigator.pop(context, widget.selectedPriorty);
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
+
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)
+                        )
                     ),
                     child: Text(
                       "Save",

@@ -3,8 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/category_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
-class CategoryDialog extends StatelessWidget {
+class CategoryDialog extends StatefulWidget {
+  CategoryDialog({this.selectedCateogery});
+
+  Category? selectedCateogery;
+
   @override
+  State<CategoryDialog> createState() => _CategoryDialogState();
+}
+
+class _CategoryDialogState extends State<CategoryDialog> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -30,8 +38,18 @@ class CategoryDialog extends StatelessWidget {
             Expanded(
               child: GridView.builder(
                 padding: EdgeInsets.zero,
-                itemBuilder: (context, index) =>
-                    CategoryItem(model: categoryesList[index]),
+                itemBuilder: (context, index) {
+                  final category = categoryesList[index];
+                  return CategoryItem(
+                    model: categoryesList[index],
+                    selected: () {
+                      setState(() {
+                        widget.selectedCateogery = category;
+                      });
+                    },
+                    isSelected: widget.selectedCateogery == category,
+                  );
+                },
                 itemCount: categoryesList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
@@ -42,7 +60,11 @@ class CategoryDialog extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (widget.selectedCateogery != null) {
+                  Navigator.pop(context, widget.selectedCateogery);
+                }
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
