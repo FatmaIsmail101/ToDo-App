@@ -85,7 +85,7 @@ class TaskItem extends StatelessWidget {
                 color: Colors.transparent,
                 border: Border.all(color: Colors.lightBlue)),
               child: Row(
-                children: [ [
+                children: [
                   Icon(model.priority.label, color: Colors.white),
                   Text(
                     "${model.priority.level}",
