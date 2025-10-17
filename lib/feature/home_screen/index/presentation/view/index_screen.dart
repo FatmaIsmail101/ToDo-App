@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/routes/page_route_name.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/task_provider/task_providers.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/widget/task_item.dart';
 
@@ -65,7 +66,17 @@ class IndexScreen extends ConsumerWidget {
                 : Expanded(
                     child: ListView.separated(
                       itemBuilder: (context, index) =>
-                          TaskItem(model: taskState[index]),
+                          InkWell(
+
+                              onTap: () {
+                                print(
+                                    "Navigation to edit screen with: ${taskState[index]
+                                        .title}");
+                                Navigator.pushNamed(
+                                    context, PageRouteName.editScreen,
+                                    arguments: taskState[index]);
+                              },
+                              child: TaskItem(model: taskState[index])),
                       separatorBuilder: (context, index) =>
                           SizedBox(height: 16),
                       itemCount: taskState.length,

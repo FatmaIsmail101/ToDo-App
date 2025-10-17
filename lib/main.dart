@@ -5,6 +5,7 @@ import 'package:up_todo_app/feature/authenticaton/register/presentation/view/reg
 import 'package:up_todo_app/feature/home_screen/calender/calender_screen.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/foucs_screen.dart';
 import 'package:up_todo_app/feature/home_screen/home_screen.dart';
+import 'package:up_todo_app/feature/home_screen/index/presentation/view/edit_secreen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/person_screen.dart';
 import 'package:up_todo_app/feature/intro/presentation/intro_screen.dart';
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
         PageRouteName.calenderScreen: (context) => CalenderScreen(),
         PageRouteName.addScreen: (context) => AddScreen(),
         PageRouteName.foucsScreen: (context) => FoucsScreen(),
-        PageRouteName.personScreen: (context) => PersonScreen()
+        PageRouteName.personScreen: (context) => PersonScreen(),
+        PageRouteName.editScreen: (context) => EditSecreen()
 
 
       },

@@ -23,131 +23,135 @@ class _AddScreenState extends ConsumerState<AddScreen> {
   DateTime? selectedDateTime;
   Category? selectedCategory;
   TaskPriority? selectedPriority;
-
+  bool isComplete = false;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-        left: 16,
-        right: 16,
-        top: 24,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24,
-          children: [
-            Text(
-              "Add Task",
-              style: GoogleFonts.lato(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-
-            TextField(
-              controller: titleController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                labelText: "Title",
-                labelStyle: GoogleFonts.lato(
+    return Material(
+      color: Colors.black,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+          left: 16,
+          right: 16,
+          top: 24,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 24,
+            children: [
+              Text(
+                "Add Task",
+                style: GoogleFonts.lato(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white24),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white54),
-                  borderRadius: BorderRadius.circular(12),
+              ),
+
+              TextField(
+                controller: titleController,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: "Title",
+                  labelStyle: GoogleFonts.lato(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white24),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white54),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
-            ),
-            TextField(
-              controller: descriptionController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                labelText: "Description",
-                labelStyle: GoogleFonts.lato(
-                  color: Colors.white,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white24),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white54),
-                  borderRadius: BorderRadius.circular(12),
+              TextField(
+                controller: descriptionController,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  labelText: "Description",
+                  labelStyle: GoogleFonts.lato(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white24),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white54),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ),
-            ),
 
-            // 🟣 اختيار الكاتيجوري
+              // 🟣 اختيار الكاتيجوري
 
-            // ⏰ زرار التاريخ والساعة
-            Row(
-              children: [
-                IconButton(
-                  onPressed: () => pickDate(context),
-                  icon: const Icon(Icons.access_time, color: Colors.white),
-                ),
+              // ⏰ زرار التاريخ والساعة
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => pickDate(context),
+                    icon: const Icon(Icons.access_time, color: Colors.white),
+                  ),
 
-                Bounceable(
-                  onTap: () async {
-                    final selectedCategoryItem = await showDialog<Category>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.black,
-                          child: CategoryDialog(
-                            selectedCateogery: selectedCategory,
-                          ),
-                        );
-                      },
-                    );
-                    if (selectedCategoryItem != null) {
-                      setState(() {
-                        selectedCategory = selectedCategoryItem;
-                      });
-                    }
-                  },
-                  child: Image.asset(Assets.tag),
-                ),
-                Bounceable(
-                  onTap: () async {
-                    final selectedPriorityItem = await showDialog<TaskPriority>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Dialog(
-                          backgroundColor: Colors.black,
-                          child: PriorityDialog(
-                            selectedPriorty: selectedPriority,
-                          ),
-                        );
-                      },
-                    );
-                    if (selectedPriorityItem != null) {
-                      setState(() {
-                        selectedPriority = selectedPriorityItem;
-                      });
-                    }
-                  },
-                  child: Icon(Icons.flag, color: Colors.white),
-                ),
-                Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.send, color: Colors.blue),
-                  onPressed: addTask,
-                ),
-              ],
-            ),
-          ],
+                  Bounceable(
+                    onTap: () async {
+                      final selectedCategoryItem = await showDialog<Category>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            backgroundColor: Colors.black,
+                            child: CategoryDialog(
+                              selectedCateogery: selectedCategory,
+                            ),
+                          );
+                        },
+                      );
+                      if (selectedCategoryItem != null) {
+                        setState(() {
+                          selectedCategory = selectedCategoryItem;
+                        });
+                      }
+                    },
+                    child: Image.asset(Assets.tag),
+                  ),
+                  Bounceable(
+                    onTap: () async {
+                      final selectedPriorityItem =
+                          await showDialog<TaskPriority>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Dialog(
+                                backgroundColor: Colors.black,
+                                child: PriorityDialog(
+                                  selectedPriorty: selectedPriority,
+                                ),
+                              );
+                            },
+                          );
+                      if (selectedPriorityItem != null) {
+                        setState(() {
+                          selectedPriority = selectedPriorityItem;
+                        });
+                      }
+                    },
+                    child: Icon(Icons.flag, color: Colors.white),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.send, color: Colors.blue),
+                    onPressed: addTask,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -192,7 +196,8 @@ class _AddScreenState extends ConsumerState<AddScreen> {
 
     final task = TaskModel(
       title: titleController.text.trim(),
-      isComplete: false,
+      description: descriptionController.text.trim(),
+      isComplete: isComplete,
       category: selectedCategory!,
       priority: selectedPriority!,
       dateTime: selectedDateTime!,

@@ -4,6 +4,8 @@ import 'package:uuid/uuid.dart';
 class TaskModel {
   final String id;
   final String title;
+  final String description;
+
   final bool isComplete;
   final Category category;
   final TaskPriority priority;
@@ -16,11 +18,14 @@ class TaskModel {
     required this.category,
     required this.priority,
     required this.dateTime,
+    required this.description
   }) : id = id ?? const Uuid().v4();
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "title": title,
+    "description": description,
+
     "isComplete": isComplete,
     "category": category.toJson(),
     "priority": priority.level,
@@ -30,6 +35,7 @@ class TaskModel {
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(
       title: json["title"],
+      description: json["description"],
       category: Category.fromJson(json["category"]),
       dateTime: DateTime.parse(json["dateTime"]),
       isComplete: json["isComplete"],
