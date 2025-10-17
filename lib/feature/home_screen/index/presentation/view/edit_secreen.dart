@@ -275,7 +275,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                         selectedCategory == null
                             ? Icon(model.category.icon, color: Colors.white)
                             : Icon(
-                                editedTask.category.icon,
+                                editedModel.category.icon,
                                 color: Colors.white,
                               ),
                         SizedBox(width: 6),
@@ -289,7 +289,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                                 ),
                               )
                             : Text(
-                                editedTask.category.name,
+                                editedModel.category.name,
                                 style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12,
@@ -356,7 +356,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                                 ),
                               )
                             : Text(
-                                "${editedTask.priority.level}",
+                                "${editedModel.priority.level}",
                                 style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12,
@@ -432,19 +432,19 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       .editTask(editedModel);
                   Navigator.pop(context);
                 },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 12),
+                  backgroundColor: Color(0xff8875FF),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
                 child: Text(
                   "Edit Task",
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                     color: Colors.white,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 12),
-                  backgroundColor: Color(0xff8875FF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
                   ),
                 ),
               ),
@@ -479,18 +479,18 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
     });
   }
 
-  late final editedTask = TaskModel(
-    title: titleController.text.trim() ?? "",
-    isComplete: isComplete,
-    category:
-        selectedCategory ??
-        Category(
-          name: "Health",
-          color: Colors.red,
-          icon: Icons.health_and_safety,
-        ),
-    priority: selectedPriority ?? TaskPriority(level: 1, label: Icons.flag),
-    dateTime: selectedDateTime ?? DateTime(2025),
-    description: descriptionController.text.trim() ?? "",
-  );
+  // late final editedTask = TaskModel(
+  //   title: titleController.text.trim() ?? "",
+  //   isComplete: isComplete,
+  //   category:
+  //       selectedCategory ??
+  //       Category(
+  //         name: "Health",
+  //         color: Colors.red,
+  //         icon: Icons.health_and_safety,
+  //       ),
+  //   priority: selectedPriority ?? TaskPriority(level: 1, label: Icons.flag),
+  //   dateTime: selectedDateTime ?? DateTime(2025),
+  //   description: descriptionController.text.trim() ?? "",
+  // );
 }
