@@ -32,3 +32,9 @@ final taskViewModelProvider =
       final taskUseCase = ref.read(taskUseCaseProvider);
       return TaskViewModel(taskUseCase);
     });
+
+final categoryViewModelProvider =
+    StateNotifierProvider<CategoryViewModel, List<Category>>((ref) {
+      final taskUseCase = ref.read(taskUseCaseProvider);
+      return CategoryViewModel(taskUseCase);
+    });

@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/category_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
-class CategoryDialog extends StatefulWidget {
-  CategoryDialog({this.selectedCateogery});
+import '../index/presentation/task_provider/task_providers.dart';
+import 'categories/add_category.dart';
 
-  Category? selectedCateogery;
+class CategoryDialog extends ConsumerStatefulWidget {
+  CategoryDialog({super.key, this.selectedCategory});
+
+  Category? selectedCategory;
 
   @override
-  State<CategoryDialog> createState() => _CategoryDialogState();
+  ConsumerState<CategoryDialog> createState() => _CategoryDialogState();
 }
 
-class _CategoryDialogState extends State<CategoryDialog> {
+class _CategoryDialogState extends ConsumerState<CategoryDialog> {
+  @override
   Widget build(BuildContext context) {
+    // 🧠 هنا هنقرأ الكاتيجوريز من الـ provider
+    final categories = ref.watch(categoryViewModelProvider);
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
@@ -34,35 +42,57 @@ class _CategoryDialogState extends State<CategoryDialog> {
               ),
               textAlign: TextAlign.center,
             ),
-            Divider(color: Colors.white),
+            const Divider(color: Colors.white),
+
+            // 🧩 عرض الكاتيجوريز من الـ provider بدلاً من الليست الثابتة
             Expanded(
               child: GridView.builder(
                 padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  final category = categoryesList[index];
-                  return CategoryItem(
-                    model: categoryesList[index],
-                    selected: () {
-                      setState(() {
-                        widget.selectedCateogery = category;
-                      });
-                    },
-                    isSelected: widget.selectedCateogery == category,
-                  );
-                },
-                itemCount: categoryesList.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                itemCount: categories.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   mainAxisSpacing: 16,
                   crossAxisSpacing: 2,
                   childAspectRatio: .8,
                 ),
+                itemBuilder: (context, index) {
+                  final category = categories[index];
+
+                  return CategoryItem(
+                    model: category,
+                    isSelected: widget.selectedCategory == category,
+                    selected: () async {
+                      // ✅ لو آخر عنصر = "Create New"
+                      if (index == categories.length - 1) {
+                        final newCategory = await Navigator.push<Category>(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AddCategoryScreen(),
+                          ),
+                        );
+
+                        if (newCategory != null && context.mounted) {
+                          setState(() {
+                            categories.insert(
+                                categories.length - 1, newCategory);
+                            widget.selectedCategory = newCategory;
+                          });
+                        }
+                      } else {
+                        setState(() {
+                          widget.selectedCategory = category;
+                        });
+                      }
+                    },
+                  );
+                },
               ),
             ),
+
             ElevatedButton(
               onPressed: () {
-                if (widget.selectedCateogery != null) {
-                  Navigator.pop(context, widget.selectedCateogery);
+                if (widget.selectedCategory != null) {
+                  Navigator.pop(context, widget.selectedCategory);
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -81,46 +111,4 @@ class _CategoryDialogState extends State<CategoryDialog> {
       ),
     );
   }
-
-  List<Category> categoryesList = [
-    Category(
-      name: "Grocery",
-      color: Colors.lightGreenAccent,
-      icon: Icons.local_grocery_store,
-    ),
-    Category(name: "Work", color: Colors.red, icon: Icons.work),
-    Category(
-      name: "Sport",
-      color: Colors.greenAccent,
-      icon: Icons.sports_baseball,
-    ),
-    Category(
-      name: "Design",
-      color: Colors.greenAccent,
-      icon: Icons.design_services,
-    ),
-    Category(
-      name: "University",
-      color: Colors.blue.shade200,
-      icon: Icons.cast_for_education,
-    ),
-    Category(
-      name: "Social",
-      color: Colors.pink.shade200,
-      icon: Icons.social_distance,
-    ),
-    Category(
-      name: "Music",
-      color: Colors.pink.shade200,
-      icon: Icons.music_note,
-    ),
-    Category(
-      name: "Health",
-      color: Colors.greenAccent.shade700,
-      icon: Icons.health_and_safety,
-    ),
-    Category(name: "Movie", color: Colors.blue.shade100, icon: Icons.movie),
-    Category(name: "Home", color: Color(0xffFFCC80), icon: Icons.home),
-    Category(name: "Create New", color: Color(0xff80FFD1), icon: Icons.add),
-  ];
 }

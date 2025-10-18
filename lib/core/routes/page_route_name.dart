@@ -10,4 +10,5 @@ class PageRouteName{
   static const String foucsScreen = "/foucsScreen";
   static const String personScreen = "/personScreen";
   static const String editScreen = "/editScreen";
+  static const String addCategoryScreen = "/addCategoryScreen";
 }

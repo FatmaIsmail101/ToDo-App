@@ -21,4 +21,12 @@ class TaskUseCase {
   Future<List<TaskModel>> getAllTasksUseCas() async {
     return await repo.getAllTasks();
   }
+
+  Future<void> addCategory(Category model) async {
+    await repo.addCategory(model);
+  }
+
+  Future<List<Category>> getAllCategories() async {
+    return await repo.getAllCategories();
+  }
 }

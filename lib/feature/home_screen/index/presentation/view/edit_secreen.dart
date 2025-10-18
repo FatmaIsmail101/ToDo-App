@@ -13,7 +13,7 @@ import '../../../../../core/assets/assets.dart';
 import '../../../add_screen/widget/edit_title_item.dart';
 
 class EditSecreen extends ConsumerStatefulWidget {
-  EditSecreen({super.key});
+  const EditSecreen({super.key});
 
   @override
   @override
@@ -28,6 +28,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
   TaskPriority? selectedPriority;
   bool isComplete = false;
 
+  @override
   Widget build(BuildContext context) {
     final taskState = ref.watch(taskViewModelProvider);
     final model = ModalRoute.of(context)!.settings.arguments as TaskModel;
@@ -48,13 +49,19 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
     return Scaffold(
       backgroundColor: Color(0xff1D1D1D),
       appBar: AppBar(
-        title: Text(
-          "Edit Task ${model.title}",
-          style: GoogleFonts.lato(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                "Edit Task ${model.title}",
+                style: GoogleFonts.lato(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
         centerTitle: true,
         backgroundColor: Color(0xff1D1D1D),
@@ -78,8 +85,53 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   model.isComplete
-                      ? Icon(Icons.circle, color: Color(0xff8875FF))
-                      : Icon(Icons.circle_outlined, color: Colors.white),
+                      ? Bounceable(
+                          onTap: () {
+                            final editedCompleteModel = TaskModel(
+                              id: model.id,
+                              title: titleController.text.trim().isEmpty
+                                  ? model.title
+                                  : titleController.text.trim(),
+                              isComplete: !model.isComplete,
+                              category: selectedCategory ?? model.category,
+                              priority: selectedPriority ?? model.priority,
+                              dateTime: selectedDateTime ?? model.dateTime,
+                              description:
+                                  descriptionController.text.trim().isEmpty
+                                  ? model.description
+                                  : descriptionController.text.trim(),
+                            );
+                            ref
+                                .read(taskViewModelProvider.notifier)
+                                .editTask(editedCompleteModel);
+                          },
+                          child: Icon(Icons.circle, color: Color(0xff8875FF)),
+                        )
+                      : Bounceable(
+                          onTap: () {
+                            final editedCompleteModel = TaskModel(
+                              id: model.id,
+                              title: titleController.text.trim().isEmpty
+                                  ? model.title
+                                  : titleController.text.trim(),
+                              isComplete: !model.isComplete,
+                              category: selectedCategory ?? model.category,
+                              priority: selectedPriority ?? model.priority,
+                              dateTime: selectedDateTime ?? model.dateTime,
+                              description:
+                                  descriptionController.text.trim().isEmpty
+                                  ? model.description
+                                  : descriptionController.text.trim(),
+                            );
+                            ref
+                                .read(taskViewModelProvider.notifier)
+                                .editTask(editedCompleteModel);
+                          },
+                          child: Icon(
+                            Icons.circle_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
                   SizedBox(width: 20),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -252,7 +304,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                           return Dialog(
                             backgroundColor: Colors.black,
                             child: CategoryDialog(
-                              selectedCateogery: selectedCategory,
+                              selectedCategory: selectedCategory,
                             ),
                           );
                         },
@@ -281,7 +333,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                         SizedBox(width: 6),
                         selectedCategory == null
                             ? Text(
-                                "${model.category.name}",
+                                model.category.name,
                                 style: GoogleFonts.lato(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12,

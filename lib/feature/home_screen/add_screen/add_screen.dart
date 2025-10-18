@@ -108,7 +108,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                           return Dialog(
                             backgroundColor: Colors.black,
                             child: CategoryDialog(
-                              selectedCateogery: selectedCategory,
+                              selectedCategory: selectedCategory,
                             ),
                           );
                         },

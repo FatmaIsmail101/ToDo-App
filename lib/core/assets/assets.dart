@@ -5,5 +5,5 @@ class Assets{
   static const String profilePIC = "assets/images/Group 159.png";
   static const String indexPIC = "assets/images/Checklist-rafiki 1.png";
   static const String tag = "assets/images/tag.png";
-  static const String leadingIcon = "assets/images/Repeat.png";
+  static const String leadingIcon = "assets/images/repeat.png";
 }

@@ -45,6 +45,7 @@ dependencies:
   convex_bottom_bar: ^3.2.0
   uuid: ^4.5.1
 
+  intl: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

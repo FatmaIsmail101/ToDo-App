@@ -27,4 +27,14 @@ class TaskRepoImpl implements TaskRepo {
   Future<void> removeTask(String id) async {
     await dataSource.removeTask(id);
   }
+
+  @override
+  Future<void> addCategory(Category model) async {
+    await dataSource.addCategory(model);
+  }
+
+  @override
+  Future<List<Category>> getAllCategories() async {
+    return await dataSource.getAllCategory();
+  }
 }

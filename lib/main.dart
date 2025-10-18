@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:up_todo_app/feature/authenticaton/login/presentation/view/login_screen.dart';
 import 'package:up_todo_app/feature/authenticaton/register/presentation/view/register_screen.dart';
+import 'package:up_todo_app/feature/home_screen/add_screen/categories/add_category.dart';
 import 'package:up_todo_app/feature/home_screen/calender/calender_screen.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/foucs_screen.dart';
 import 'package:up_todo_app/feature/home_screen/home_screen.dart';
@@ -36,12 +37,13 @@ class MyApp extends StatelessWidget {
         PageRouteName.loginScreen: (context) => LoginScreen(),
         PageRouteName.registerScreen: (context) => RegisterScreen(),
         PageRouteName.homeScreen: (context) => HomeScreen(),
-        PageRouteName.indexScreen: (context) => IndexScreen(),
+        PageRouteName.indexScreen: (context) => const IndexScreen(),
         PageRouteName.calenderScreen: (context) => CalenderScreen(),
         PageRouteName.addScreen: (context) => AddScreen(),
         PageRouteName.foucsScreen: (context) => FoucsScreen(),
         PageRouteName.personScreen: (context) => PersonScreen(),
-        PageRouteName.editScreen: (context) => EditSecreen()
+        PageRouteName.editScreen: (context) => EditSecreen(),
+        PageRouteName.addCategoryScreen: (context) => AddCategoryScreen()
 
 
       },

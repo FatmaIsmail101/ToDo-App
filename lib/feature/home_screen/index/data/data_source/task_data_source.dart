@@ -8,4 +8,8 @@ abstract class TaskDataSource {
   Future<void> removeTask(String id);
 
   Future<void> editTask(TaskModel task);
+
+  Future<void> addCategory(Category model);
+
+  Future<List<Category>> getAllCategory();
 }

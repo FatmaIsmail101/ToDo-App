@@ -55,4 +55,26 @@ class TaskDataSourceImpl implements TaskDataSource {
     final jsonString = jsonEncode(jsonList);
     CacheHelper.setString("tasks", jsonString);
   }
+
+  @override
+  Future<void> addCategory(Category model) async {
+    final categoryList = await getAllCategory();
+    categoryList.add(model);
+    final jsonList = categoryList.map((e) => e.toJson()).toList();
+    final jsonString = jsonEncode(jsonList);
+    await CacheHelper.setString("categoryList", jsonString);
+  }
+
+  @override
+  Future<List<Category>> getAllCategory() async {
+    final categoryList = await CacheHelper.getString("categoryList");
+    if (categoryList!.isEmpty || categoryList == null) return [];
+    try {
+      final List decoded = jsonDecode(categoryList);
+      return decoded.map((e) => Category.fromJson(e),).toList();
+    } catch (e) {
+      print("Error decoding category JSON: $e");
+      return [];
+    }
+  }
 }

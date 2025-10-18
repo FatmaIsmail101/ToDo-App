@@ -8,4 +8,8 @@ abstract class TaskRepo {
   Future<void> removeTask(String id);
 
   Future<List<TaskModel>> getAllTasks();
+
+  Future<void> addCategory(Category model);
+
+  Future<List<Category>> getAllCategories();
 }
