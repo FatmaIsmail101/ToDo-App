@@ -67,8 +67,8 @@ class TaskDataSourceImpl implements TaskDataSource {
 
   @override
   Future<List<Category>> getAllCategory() async {
-    final categoryList = await CacheHelper.getString("categoryList");
-    if (categoryList!.isEmpty || categoryList == null) return [];
+    final categoryList = CacheHelper.getString("categoryList");
+    if (categoryList!.isEmpty) return [];
     try {
       final List decoded = jsonDecode(categoryList);
       return decoded.map((e) => Category.fromJson(e),).toList();

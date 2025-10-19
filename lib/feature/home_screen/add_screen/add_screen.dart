@@ -24,6 +24,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
   Category? selectedCategory;
   TaskPriority? selectedPriority;
   bool isComplete = false;
+
   @override
   Widget build(BuildContext context) {
     return Material(
