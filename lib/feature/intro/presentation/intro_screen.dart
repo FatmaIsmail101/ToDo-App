@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/casheing/cache_helper.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
 import 'package:up_todo_app/feature/intro/data/model/intero_model.dart';
 
@@ -15,6 +16,13 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    CacheHelper.setBool("Intro", true);
+  }
+
   List<IntroModel> intos = [
     IntroModel(
       imagePath: Assets.intro1,

@@ -320,7 +320,8 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      backgroundColor: Colors.black12,
+                      backgroundColor:
+                          selectedCategory?.color ?? editedModel.category.color,
                     ),
                     child: Row(
                       children: [

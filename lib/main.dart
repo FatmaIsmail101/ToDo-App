@@ -19,18 +19,21 @@ import 'feature/home_screen/add_screen/add_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  bool flag = CacheHelper.getBool("Intro") ?? false;
+
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'To Do App',
-      initialRoute: PageRouteName.intro, // الصفحة الافتراضية
+      initialRoute: flag == true ? PageRouteName.homeScreen : PageRouteName
+          .intro, // الصفحة الافتراضية
       routes: {
         PageRouteName.intro: (context) => IntroScreen(),
         PageRouteName.startScreen: (context) => StartScreen(),
