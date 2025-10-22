@@ -18,7 +18,7 @@ class TaskModel {
     required this.category,
     required this.priority,
     required this.dateTime,
-    required this.description
+    required this.description,
   }) : id = id ?? const Uuid().v4();
 
   Map<String, dynamic> toJson() => {
@@ -41,6 +41,26 @@ class TaskModel {
       isComplete: json["isComplete"],
       priority: TaskPriority(level: json["priority"], label: Icons.flag),
       id: json["id"],
+    );
+  }
+
+  TaskModel copyWith({
+    String? id,
+    String? title,
+    String? description,
+    bool? isComplete,
+    Category? category,
+    TaskPriority? priority,
+    DateTime? dateTime,
+  }) {
+    return TaskModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      isComplete: isComplete ?? this.isComplete,
+      priority: priority ?? this.priority,
+      category: category ?? this.category,
+      dateTime: dateTime ?? this.dateTime,
     );
   }
 }

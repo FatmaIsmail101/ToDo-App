@@ -8,6 +8,7 @@ import 'package:up_todo_app/feature/home_screen/add_screen/category_dialog.dart'
 import 'package:up_todo_app/feature/home_screen/add_screen/priority_dialog.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/task_provider/task_providers.dart';
+import 'package:up_todo_app/feature/home_screen/index/presentation/view_model/edit_view_model.dart';
 
 import '../../../../../core/assets/assets.dart';
 import '../../../add_screen/widget/edit_title_item.dart';
@@ -16,36 +17,17 @@ class EditSecreen extends ConsumerStatefulWidget {
   const EditSecreen({super.key});
 
   @override
-  @override
   ConsumerState<EditSecreen> createState() => _EditSecreenState();
 }
 
 class _EditSecreenState extends ConsumerState<EditSecreen> {
-  DateTime? selectedDateTime;
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  Category? selectedCategory;
-  TaskPriority? selectedPriority;
-  bool isComplete = false;
-
   @override
   Widget build(BuildContext context) {
     final taskState = ref.watch(taskViewModelProvider);
     final model = ModalRoute.of(context)!.settings.arguments as TaskModel;
-    final editedModel = TaskModel(
-      id: model.id,
-      title: titleController.text.trim().isEmpty
-          ? model.title
-          : titleController.text.trim(),
-      isComplete: isComplete ? model.isComplete : isComplete,
-      category: selectedCategory ?? model.category,
-      priority: selectedPriority ?? model.priority,
-      dateTime: selectedDateTime ?? model.dateTime,
-      description: descriptionController.text.trim().isEmpty
-          ? model.description
-          : descriptionController.text.trim(),
-    );
     print("Received model${model.title}");
+    final state = ref.watch(editViewModelProvider(model));
+    final notifier = ref.read(editViewModelProvider(model).notifier);
     return Scaffold(
       backgroundColor: Color(0xff1D1D1D),
       appBar: AppBar(
@@ -84,60 +66,21 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  model.isComplete
-                      ? Bounceable(
-                          onTap: () {
-                            final editedCompleteModel = TaskModel(
-                              id: model.id,
-                              title: titleController.text.trim().isEmpty
-                                  ? model.title
-                                  : titleController.text.trim(),
-                              isComplete: !model.isComplete,
-                              category: selectedCategory ?? model.category,
-                              priority: selectedPriority ?? model.priority,
-                              dateTime: selectedDateTime ?? model.dateTime,
-                              description:
-                                  descriptionController.text.trim().isEmpty
-                                  ? model.description
-                                  : descriptionController.text.trim(),
-                            );
-                            ref
-                                .read(taskViewModelProvider.notifier)
-                                .editTask(editedCompleteModel);
-                          },
-                          child: Icon(Icons.circle, color: Color(0xff8875FF)),
-                        )
-                      : Bounceable(
-                          onTap: () {
-                            final editedCompleteModel = TaskModel(
-                              id: model.id,
-                              title: titleController.text.trim().isEmpty
-                                  ? model.title
-                                  : titleController.text.trim(),
-                              isComplete: !model.isComplete,
-                              category: selectedCategory ?? model.category,
-                              priority: selectedPriority ?? model.priority,
-                              dateTime: selectedDateTime ?? model.dateTime,
-                              description:
-                                  descriptionController.text.trim().isEmpty
-                                  ? model.description
-                                  : descriptionController.text.trim(),
-                            );
-                            ref
-                                .read(taskViewModelProvider.notifier)
-                                .editTask(editedCompleteModel);
-                          },
-                          child: Icon(
-                            Icons.circle_outlined,
-                            color: Colors.white,
-                          ),
-                        ),
+                  Bounceable(
+                    onTap: () => notifier.toggleComplete(),
+                    child: Icon(
+                      state.isComplete ? Icons.circle : Icons.circle_outlined,
+                      color: state.isComplete
+                          ? Color(0xff8875FF)
+                          : Colors.white,
+                    ),
+                  ),
                   SizedBox(width: 20),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        model.title,
+                        state.title,
                         style: GoogleFonts.lato(
                           color: Color(0xe0ffffff),
                           fontWeight: FontWeight.w500,
@@ -145,7 +88,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                         ),
                       ),
                       Text(
-                        model.description,
+                        state.description,
                         style: GoogleFonts.lato(
                           color: Colors.grey,
                           fontWeight: FontWeight.w500,
@@ -160,6 +103,12 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       showDialog(
                         context: context,
                         builder: (context) {
+                          final titleController = TextEditingController(
+                            text: state.title,
+                          );
+                          final descriptionController = TextEditingController(
+                            text: state.description,
+                          );
                           return Dialog(
                             backgroundColor: Colors.black,
                             child: EditTitleItem(
@@ -177,47 +126,12 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                                         titleController: titleController,
                                         editButton: () {
                                           // هنا نحدث التاسك
-                                          final editedTask = TaskModel(
-                                            id: model.id,
-                                            title:
-                                                titleController.text
-                                                    .trim()
-                                                    .isEmpty
-                                                ? model.title
-                                                : titleController.text.trim(),
-                                            isComplete: isComplete
-                                                ? model.isComplete
-                                                : isComplete,
-                                            category:
-                                                selectedCategory ??
-                                                model.category,
-                                            priority:
-                                                selectedPriority ??
-                                                model.priority,
-                                            dateTime:
-                                                selectedDateTime ??
-                                                model.dateTime,
-                                            description:
-                                                descriptionController.text
-                                                    .trim()
-                                                    .isEmpty
-                                                ? model.description
-                                                : descriptionController.text
-                                                      .trim(),
+                                          notifier.updateTitleAndDesc(
+                                            titleController.text,
+                                            descriptionController.text,
                                           );
-
-                                          ref
-                                              .read(
-                                                taskViewModelProvider.notifier,
-                                              )
-                                              .editTask(editedTask);
-
-                                          Navigator.pop(
-                                            context,
-                                          ); // يقفل الـ dialog
-                                          Navigator.pop(
-                                            context,
-                                          ); // يرجع للـ IndexScreen
+                                          Navigator.pop(context);
+                                          // يقفل الـ dialog// يرجع للـ IndexScreen
                                         },
                                       ),
                                     );
@@ -248,7 +162,10 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Spacer(),
                   ElevatedButton(
                     onPressed: () async {
-                      pickDateTime(context);
+                      final newDate = await pickDateTime(context);
+                      if (newDate != null) {
+                        notifier.newDate(newDate);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(horizontal: 6),
@@ -257,27 +174,14 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       ),
                       backgroundColor: Colors.black12,
                     ),
-                    child: selectedDateTime == null
-                        ? Text(
-                            DateFormat(
-                              'dd/MM/yyyy hh:mm a',
-                            ).format(model.dateTime),
-                            style: GoogleFonts.lato(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Text(
-                            DateFormat(
-                              'dd/MM/yyyy hh:mm a',
-                            ).format(selectedDateTime!),
-                            style: GoogleFonts.lato(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12,
-                              color: Colors.white,
-                            ),
-                          ),
+                    child: Text(
+                      DateFormat('dd/MM/yyyy hh:mm a').format(state.dateTime),
+                      style: GoogleFonts.lato(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -298,21 +202,17 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                     onPressed: () async {
                       final selectedCategoryItem = await showDialog<Category>(
                         context: context,
-
-                        // false = user must tap button, true = tap outside dialog
                         builder: (BuildContext dialogContext) {
                           return Dialog(
                             backgroundColor: Colors.black,
                             child: CategoryDialog(
-                              selectedCategory: selectedCategory,
+                              selectedCategory: state.category,
                             ),
                           );
                         },
                       );
                       if (selectedCategoryItem != null) {
-                        setState(() {
-                          selectedCategory = selectedCategoryItem;
-                        });
+                        notifier.newCategory(selectedCategoryItem);
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -320,35 +220,20 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6),
                       ),
-                      backgroundColor:
-                          selectedCategory?.color ?? editedModel.category.color,
+                      backgroundColor: state.category.color,
                     ),
                     child: Row(
                       children: [
-                        selectedCategory == null
-                            ? Icon(model.category.icon, color: Colors.white)
-                            : Icon(
-                                editedModel.category.icon,
-                                color: Colors.white,
-                              ),
+                        Icon(state.category.icon, color: Colors.white),
                         SizedBox(width: 6),
-                        selectedCategory == null
-                            ? Text(
-                                model.category.name,
-                                style: GoogleFonts.lato(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text(
-                                editedModel.category.name,
-                                style: GoogleFonts.lato(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                ),
-                              ),
+                        Text(
+                          state.category.name,
+                          style: GoogleFonts.lato(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -369,23 +254,20 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Spacer(),
                   ElevatedButton(
                     onPressed: () async {
-                      final selectedPriorityItem = await showDialog<TaskPriority>(
-                        context: context,
-
-                        // false = user must tap button, true = tap outside dialog
-                        builder: (BuildContext dialogContext) {
-                          return Dialog(
-                            backgroundColor: Colors.black,
-                            child: PriorityDialog(
-                              selectedPriorty: selectedPriority,
-                            ),
+                      final selectedPriorityItem =
+                          await showDialog<TaskPriority>(
+                            context: context,
+                            builder: (BuildContext dialogContext) {
+                              return Dialog(
+                                backgroundColor: Colors.black,
+                                child: PriorityDialog(
+                                  selectedPriorty: state.priority,
+                                ),
+                              );
+                            },
                           );
-                        },
-                      );
                       if (selectedPriorityItem != null) {
-                        setState(() {
-                          selectedPriority = selectedPriorityItem;
-                        });
+                        notifier.newPriority(selectedPriorityItem);
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -397,25 +279,16 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                     ),
                     child: Row(
                       children: [
-                        Icon(model.priority.label, color: Colors.white),
+                        Icon(state.priority.label, color: Colors.white),
                         SizedBox(width: 6),
-                        selectedPriority == null
-                            ? Text(
-                                "${model.priority.level}",
-                                style: GoogleFonts.lato(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Text(
-                                "${editedModel.priority.level}",
-                                style: GoogleFonts.lato(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                ),
-                              ),
+                        Text(
+                          "${state.priority.level}",
+                          style: GoogleFonts.lato(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -480,9 +353,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  ref
-                      .read(taskViewModelProvider.notifier)
-                      .editTask(editedModel);
+                  ref.read(taskViewModelProvider.notifier).editTask(state);
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
@@ -508,42 +379,34 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
     );
   }
 
-  Future<void> pickDateTime(BuildContext context) async {
+  Future<DateTime?> pickDateTime(BuildContext context) async {
     final date = await showDatePicker(
       context: context,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 360)),
     );
-    if (date == null) return;
+    if (date == null) return null;
     final time = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
       barrierColor: Colors.black12,
     );
-    if (time == null) return;
-    setState(() {
-      selectedDateTime = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-    });
+    if (time == null) return null;
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
-
-  // late final editedTask = TaskModel(
-  //   title: titleController.text.trim() ?? "",
-  //   isComplete: isComplete,
-  //   category:
-  //       selectedCategory ??
-  //       Category(
-  //         name: "Health",
-  //         color: Colors.red,
-  //         icon: Icons.health_and_safety,
-  //       ),
-  //   priority: selectedPriority ?? TaskPriority(level: 1, label: Icons.flag),
-  //   dateTime: selectedDateTime ?? DateTime(2025),
-  //   description: descriptionController.text.trim() ?? "",
-  // );
 }
+
+// late final editedTask = TaskModel(
+//   title: titleController.text.trim() ?? "",
+//   isComplete: isComplete,
+//   category:
+//       selectedCategory ??
+//       Category(
+//         name: "Health",
+//         color: Colors.red,
+//         icon: Icons.health_and_safety,
+//       ),
+//   priority: selectedPriority ?? TaskPriority(level: 1, label: Icons.flag),
+//   dateTime: selectedDateTime ?? DateTime(2025),
+//   description: descriptionController.text.trim() ?? "",
+// );
