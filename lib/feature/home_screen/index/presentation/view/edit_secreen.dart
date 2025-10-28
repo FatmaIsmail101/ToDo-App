@@ -115,28 +115,11 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                               descriptionController: descriptionController,
                               titleController: titleController,
                               editButton: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Dialog(
-                                      backgroundColor: Colors.transparent,
-                                      child: EditTitleItem(
-                                        descriptionController:
-                                            descriptionController,
-                                        titleController: titleController,
-                                        editButton: () {
-                                          // هنا نحدث التاسك
-                                          notifier.updateTitleAndDesc(
-                                            titleController.text,
-                                            descriptionController.text,
-                                          );
-                                          Navigator.pop(context);
-                                          // يقفل الـ dialog// يرجع للـ IndexScreen
-                                        },
-                                      ),
-                                    );
-                                  },
+                                notifier.updateTitleAndDesc(
+                                  titleController.text,
+                                  descriptionController.text,
                                 );
+                                Navigator.pop(context);
                               },
                             ),
                           );
