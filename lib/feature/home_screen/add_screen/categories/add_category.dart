@@ -5,28 +5,26 @@ import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/notification/notification_bar.dart';
+import 'package:up_todo_app/core/reusable_widgets/custom_text_field.dart';
+import 'package:up_todo_app/feature/home_screen/add_screen/categories/view_model/add_category_view_model.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/categories/widget/category_color.dart';
-import 'package:up_todo_app/feature/home_screen/index/presentation/task_provider/task_providers.dart';
 
 import '../../index/data/model/task_model.dart';
 
 class AddCategoryScreen extends ConsumerStatefulWidget {
   AddCategoryScreen({super.key, this.selectedCategory});
-
   Category? selectedCategory;
-
   @override
   ConsumerState<AddCategoryScreen> createState() => _AddCategoryState();
 }
 
 class _AddCategoryState extends ConsumerState<AddCategoryScreen> {
-  TextEditingController nameController = TextEditingController();
-  IconPickerIcon? selectedIcon;
-  Color? selectedColor;
-  String? title;
+  final nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(addCategoryProvider);
+    final notifier = ref.read(addCategoryProvider.notifier);
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
@@ -56,35 +54,10 @@ class _AddCategoryState extends ConsumerState<AddCategoryScreen> {
                       color: Color(0xe0ffffff),
                     ),
                   ),
-                  TextField(
-                    onChanged: (value) {
-                      title = value;
-                    },
-                    controller: nameController,
-                    decoration: InputDecoration(
-                      hintText: "Category name",
-                      hintStyle: GoogleFonts.lato(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4),
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      filled: true,
-                      fillColor: Colors.black,
-                      focusColor: Colors.white,
-                    ),
-                    style: GoogleFonts.lato(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey,
-                    ),
+                  CustomTextField(
+                    onChange: notifier.addTitle,
+                    hint: "Category name",
+                    textController: nameController,
                   ),
                   Text(
                     "Category icon :",
@@ -104,7 +77,7 @@ class _AddCategoryState extends ConsumerState<AddCategoryScreen> {
                         side: BorderSide(color: Colors.white),
                       ),
                     ),
-                    child: selectedIcon == null
+                    child: state.selectedIcon == null
                         ? Text(
                             "Choose icon from library",
                             style: GoogleFonts.lato(
@@ -114,7 +87,7 @@ class _AddCategoryState extends ConsumerState<AddCategoryScreen> {
                             ),
                           )
                         : Icon(
-                            selectedIcon!.data,
+                            state.selectedIcon!.data,
                             color: Colors.white,
                             size: 50,
                           ),
@@ -136,13 +109,12 @@ class _AddCategoryState extends ConsumerState<AddCategoryScreen> {
                         final currentColor = colors[index];
                         return InkWell(
                           onTap: () {
-                            setState(() {
-                              selectedColor = currentColor;
-                            });
+                            notifier.addColor(currentColor);
                           },
                           child: CategoryColor(
                             color: colors[index],
-                            isSelectedColor: selectedColor == currentColor,
+                            isSelectedColor:
+                                state.selectedColor == currentColor,
                           ),
                         );
                       },
@@ -176,7 +148,19 @@ class _AddCategoryState extends ConsumerState<AddCategoryScreen> {
 
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: addCategory,
+                          onPressed: () async {
+                            try {
+                              await notifier.addCategory(context);
+                              Navigator.pop(context);
+                            } catch (e) {
+                              NotificationBar.showNotification(
+                                message: "Please Fill All Fields",
+                                type: ContentType.failure,
+                                context: context,
+                                icon: Icons.error,
+                              );
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
                               vertical: 12,
@@ -254,36 +238,7 @@ class _AddCategoryState extends ConsumerState<AddCategoryScreen> {
       ),
     );
     if (icon != null) {
-      setState(() {
-        selectedIcon = icon;
-      });
-    }
-  }
-
-  Future<void> addCategory() async {
-    if (nameController.text.trim().isNotEmpty &&
-        selectedColor != null &&
-        selectedIcon != null) {
-      final category = Category(
-        name: nameController.text.trim(),
-        color: selectedColor ?? Colors.yellow,
-        icon: selectedIcon?.data ?? Icons.access_time,
-      );
-      await ref.read(categoryViewModelProvider.notifier).addCategory(category);
-      NotificationBar.showNotification(
-        message: "You created an awesome category",
-        type: ContentType.success,
-        context: context,
-        icon: Icons.check,
-      );
-      Navigator.pop(context);
-    } else {
-      NotificationBar.showNotification(
-        message: "Fill All Items",
-        type: ContentType.failure,
-        context: context,
-        icon: Icons.error,
-      );
+      ref.read(addCategoryProvider.notifier).addIcon(icon);
     }
   }
 }

@@ -13,16 +13,8 @@ class EditTaskNotifier extends StateNotifier<TaskModel> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-  void newTitle(String newTitle) {
-    state = state.copyWith(title: newTitle);
-  }
-
   void updateTitleAndDesc(String title, String description) {
     state = state.copyWith(title: title, description: description);
-  }
-
-  void mewDescription(String newDescription) {
-    state = state.copyWith(description: newDescription);
   }
 
   void newCategory(Category category) {

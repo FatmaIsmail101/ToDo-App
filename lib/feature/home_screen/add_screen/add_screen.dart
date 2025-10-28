@@ -1,11 +1,14 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/notification/notification_bar.dart';
+import 'package:up_todo_app/core/reusable_widgets/custom_text_field.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/category_dialog.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/priority_dialog.dart';
+import 'package:up_todo_app/feature/home_screen/add_screen/view_model/add_task_view_model.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
-import 'package:up_todo_app/feature/home_screen/index/presentation/task_provider/task_providers.dart';
 
 import '../../../core/assets/assets.dart';
 
@@ -17,16 +20,13 @@ class AddScreen extends ConsumerStatefulWidget {
 }
 
 class _AddScreenState extends ConsumerState<AddScreen> {
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-
-  DateTime? selectedDateTime;
-  Category? selectedCategory;
-  TaskPriority? selectedPriority;
-  bool isComplete = false;
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(addTaskProvider);
+    final notifier = ref.read(addTaskProvider.notifier);
     return Material(
       color: Colors.black,
       child: Padding(
@@ -49,55 +49,22 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-
-              TextField(
-                controller: titleController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: "Title",
-                  labelStyle: GoogleFonts.lato(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white24),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white54),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+              //title
+              CustomTextField(
+                onChange: notifier.updateTitle,
+                hint: "Title",
+                textController: titleController,
               ),
-              TextField(
-                controller: descriptionController,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  labelText: "Description",
-                  labelStyle: GoogleFonts.lato(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white24),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.white54),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+              //Description
+              CustomTextField(
+                textController: descriptionController,
+                onChange: notifier.updateDescription,
+                hint: "Description",
               ),
-
-              // 🟣 اختيار الكاتيجوري
-
-              // ⏰ زرار التاريخ والساعة
               Row(
                 children: [
                   IconButton(
-                    onPressed: () => pickDate(context),
+                    onPressed: () => pickDate(context, notifier),
                     icon: const Icon(Icons.access_time, color: Colors.white),
                   ),
 
@@ -109,15 +76,13 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                           return Dialog(
                             backgroundColor: Colors.black,
                             child: CategoryDialog(
-                              selectedCategory: selectedCategory,
+                              selectedCategory: state.category,
                             ),
                           );
                         },
                       );
                       if (selectedCategoryItem != null) {
-                        setState(() {
-                          selectedCategory = selectedCategoryItem;
-                        });
+                        notifier.updateCategory(selectedCategoryItem);
                       }
                     },
                     child: Image.asset(Assets.tag),
@@ -131,15 +96,13 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                               return Dialog(
                                 backgroundColor: Colors.black,
                                 child: PriorityDialog(
-                                  selectedPriorty: selectedPriority,
+                                  selectedPriorty: state.priority,
                                 ),
                               );
                             },
                           );
                       if (selectedPriorityItem != null) {
-                        setState(() {
-                          selectedPriority = selectedPriorityItem;
-                        });
+                        notifier.updatePriority(selectedPriorityItem);
                       }
                     },
                     child: Icon(Icons.flag, color: Colors.white),
@@ -147,7 +110,27 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                   Spacer(),
                   IconButton(
                     icon: const Icon(Icons.send, color: Colors.blue),
-                    onPressed: addTask,
+                    onPressed: () async {
+                      final task = await ref
+                          .read(addTaskProvider.notifier)
+                          .saveTask();
+                      if (task != null) {
+                        NotificationBar.showNotification(
+                          message: "Task Added Successfully",
+                          type: ContentType.success,
+                          context: context,
+                          icon: Icons.check,
+                        );
+                        Navigator.pop(context);
+                      } else {
+                        NotificationBar.showNotification(
+                          message: "Fill All fields",
+                          type: ContentType.failure,
+                          context: context,
+                          icon: Icons.error,
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
@@ -158,7 +141,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
     );
   }
 
-  Future<void> pickDate(BuildContext context) async {
+  Future<void> pickDate(BuildContext context, AddTaskNotifier notifier) async {
     final date = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -173,39 +156,9 @@ class _AddScreenState extends ConsumerState<AddScreen> {
     );
     if (time == null) return;
 
-    setState(() {
-      selectedDateTime = DateTime(
-        date.year,
-        date.month,
-        date.day,
-        time.hour,
-        time.minute,
-      );
-    });
-  }
-
-  Future<void> addTask() async {
-    if (titleController.text.trim().isEmpty ||
-        selectedCategory == null ||
-        selectedPriority == null ||
-        selectedDateTime == null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Please fill all fields")));
-      return;
-    }
-
-    final task = TaskModel(
-      title: titleController.text.trim(),
-      description: descriptionController.text.trim(),
-      isComplete: isComplete,
-      category: selectedCategory!,
-      priority: selectedPriority!,
-      dateTime: selectedDateTime!,
+    notifier.updateDateTime(
+      DateTime(date.year, date.month, date.day, time.hour, time.minute),
     );
-
-    await ref.read(taskViewModelProvider.notifier).addTask(task);
-    Navigator.pop(context);
   }
 }
 
