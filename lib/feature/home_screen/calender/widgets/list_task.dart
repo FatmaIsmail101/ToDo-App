@@ -8,7 +8,7 @@ import '../../index/presentation/task_provider/task_providers.dart';
 import '../../index/presentation/view/widget/task_item.dart';
 
 class ListTask extends ConsumerWidget {
-  const ListTask({Key? key}) : super(key: key);
+  const ListTask({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

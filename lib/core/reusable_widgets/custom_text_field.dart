@@ -5,12 +5,12 @@ class CustomTextField extends StatelessWidget {
   final Function(String) onChange;
   final String hint;
 
-  CustomTextField({
-    Key? key,
+  const CustomTextField({
+    super.key,
     required this.onChange,
     required this.hint,
     required this.textController,
-  }) : super(key: key);
+  });
   final TextEditingController textController;
 
   @override

@@ -9,11 +9,11 @@ class CalenderHeader extends ConsumerWidget {
   final VoidCallback goToNext;
 
   const CalenderHeader({
-    Key? key,
+    super.key,
     required this.goToPrev,
     required this.goToNext,
     required this.currentDate,
-  }) : super(key: key);
+  });
   final DateTime currentDate;
 
   @override

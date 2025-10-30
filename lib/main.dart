@@ -4,7 +4,7 @@ import 'package:up_todo_app/feature/authenticaton/login/presentation/view/login_
 import 'package:up_todo_app/feature/authenticaton/register/presentation/view/register_screen.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/categories/add_category.dart';
 import 'package:up_todo_app/feature/home_screen/calender/calender_screen.dart';
-import 'package:up_todo_app/feature/home_screen/foucs/foucs_screen.dart';
+import 'package:up_todo_app/feature/home_screen/foucs/presentation/view/foucs_screen.dart';
 import 'package:up_todo_app/feature/home_screen/home_screen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/edit_secreen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';

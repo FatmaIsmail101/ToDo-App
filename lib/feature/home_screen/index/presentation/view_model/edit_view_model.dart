@@ -8,7 +8,7 @@ final editViewModelProvider =
     );
 
 class EditTaskNotifier extends StateNotifier<TaskModel> {
-  EditTaskNotifier(TaskModel model) : super(model);
+  EditTaskNotifier(super.model);
 
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();

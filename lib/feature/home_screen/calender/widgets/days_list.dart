@@ -9,11 +9,11 @@ class DaysList extends StatelessWidget {
   final ValueChanged<DateTime>? onDaySelected;
 
   const DaysList({
-    Key? key,
+    super.key,
     required this.days,
     required this.onDaySelected,
     this.selectedDay,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

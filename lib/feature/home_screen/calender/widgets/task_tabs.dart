@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 final selectedTabProvider = StateProvider<int>((ref) => 0);
 
 class TaskTabs extends ConsumerWidget {
-  const TaskTabs({Key? key}) : super(key: key);
+  const TaskTabs({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

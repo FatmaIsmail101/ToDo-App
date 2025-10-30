@@ -2,7 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/add_screen.dart';
 import 'package:up_todo_app/feature/home_screen/calender/calender_screen.dart';
-import 'package:up_todo_app/feature/home_screen/foucs/foucs_screen.dart';
+import 'package:up_todo_app/feature/home_screen/foucs/presentation/view/foucs_screen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/person_screen.dart';
 
