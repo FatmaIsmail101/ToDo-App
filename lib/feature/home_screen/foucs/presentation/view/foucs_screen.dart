@@ -156,17 +156,18 @@ class FoucsScreen extends ConsumerWidget {
                         value: min,
                         items: List.generate(
                           60,
-                          (index) => DropdownMenuItem(
-                            value: index,
-                            child: Text(
-                              "$index",
-                              style: GoogleFonts.lato(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 18,
-                                color: Color(0xf5202020),
+                              (index) =>
+                              DropdownMenuItem(
+                                value: index,
+                                child: Text(
+                                  "$index",
+                                  style: GoogleFonts.lato(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18,
+                                    color: Color(0xf5202020),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
                         ),
                         onChanged: (value) => setState(() => min = value ?? 0),
                       ),
@@ -188,17 +189,18 @@ class FoucsScreen extends ConsumerWidget {
                         value: sec,
                         items: List.generate(
                           60,
-                          (index) => DropdownMenuItem(
-                            value: index,
-                            child: Text(
-                              "$index",
-                              style: GoogleFonts.lato(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 18,
-                                color: Color(0xf5202020),
+                              (index) =>
+                              DropdownMenuItem(
+                                value: index,
+                                child: Text(
+                                  "$index",
+                                  style: GoogleFonts.lato(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18,
+                                    color: Color(0xf5202020),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
                         ),
                         onChanged: (value) => setState(() => sec = value ?? 0),
                       ),
@@ -215,9 +217,10 @@ class FoucsScreen extends ConsumerWidget {
                   ),
                 ),
                 TextButton(
-                  onPressed: () => Navigator.of(
-                    context,
-                  ).pop(<String, int>{"min": min, "sec": sec}),
+                  onPressed: () =>
+                      Navigator.of(
+                        context,
+                      ).pop(<String, int>{"min": min, "sec": sec}),
                   child: const Text(
                     "Done",
                     style: TextStyle(color: Colors.white),
