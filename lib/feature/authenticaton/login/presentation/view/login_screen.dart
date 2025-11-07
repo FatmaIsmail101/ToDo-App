@@ -35,8 +35,12 @@ class LoginScreen extends ConsumerWidget {
         );
       }
       if (next.state == LoginStatus.success) {
-        NotificationBar.showNotification(message: "Logined Successfully",
-            type: ContentType.success, context: context, icon: Icons.check);
+        NotificationBar.showNotification(
+          message: "Logined Successfully",
+          type: ContentType.success,
+          context: context,
+          icon: Icons.check,
+        );
         Navigator.pushReplacementNamed(context, PageRouteName.homeScreen);
       }
       // ✅ Success / needLocalAuth
@@ -62,7 +66,9 @@ class LoginScreen extends ConsumerWidget {
                     );
                     //todo
                     Navigator.pushReplacementNamed(
-                        context, PageRouteName.homeScreen);
+                      context,
+                      PageRouteName.homeScreen,
+                    );
                   } else {
                     NotificationBar.showNotification(
                       message: "Fingerprint authentication failed",
@@ -97,7 +103,9 @@ class LoginScreen extends ConsumerWidget {
                             if (pinController.text ==
                                 LocalAuthHelper.getPin()) {
                               Navigator.pushReplacementNamed(
-                                  context, PageRouteName.homeScreen);
+                                context,
+                                PageRouteName.homeScreen,
+                              );
                               NotificationBar.showNotification(
                                 message: "Authenticated with PIN",
                                 type: ContentType.success,
@@ -131,9 +139,10 @@ class LoginScreen extends ConsumerWidget {
               ListTile(
                 leading: Icon(Icons.cancel),
                 title: Text('Cancel'),
-                onTap: () =>
-                    Navigator.pushReplacementNamed(
-                        context, PageRouteName.homeScreen),
+                onTap: () => Navigator.pushReplacementNamed(
+                  context,
+                  PageRouteName.homeScreen,
+                ),
               ),
             ],
           ),

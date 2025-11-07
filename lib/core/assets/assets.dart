@@ -6,4 +6,8 @@ class Assets{
   static const String indexPIC = "assets/images/Checklist-rafiki 1.png";
   static const String tag = "assets/images/tag.png";
   static const String leadingIcon = "assets/images/repeat.png";
+  static const String userImg = "assets/images/user_img.png";
+  static const String about = "assets/images/about.png";
+  static const String help = "assets/images/flash.png";
+  static const String like = "assets/images/like.png";
 }

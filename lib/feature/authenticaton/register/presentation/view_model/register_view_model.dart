@@ -20,7 +20,7 @@ class RegisterViewModel extends StateNotifier<AsyncValue<void>> {
         password: password,
         confirmPassword: confirmPassword,
       );
-      await useCase(model);
+      await useCase.call(model);
       state = const AsyncData(null);
     } catch (e, st) {
       state = AsyncError(e, st);

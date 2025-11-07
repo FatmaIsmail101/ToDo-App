@@ -8,7 +8,7 @@ import 'package:up_todo_app/feature/home_screen/foucs/presentation/view/foucs_sc
 import 'package:up_todo_app/feature/home_screen/home_screen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/edit_secreen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
-import 'package:up_todo_app/feature/home_screen/person/person_screen.dart';
+import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
 import 'package:up_todo_app/feature/intro/presentation/intro_screen.dart';
 import 'package:up_todo_app/feature/intro/presentation/start_screen.dart';
 
@@ -30,10 +30,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.dark,
+
       debugShowCheckedModeBanner: false,
       title: 'To Do App',
-      initialRoute: flag == true ? PageRouteName.homeScreen : PageRouteName
-          .intro, // الصفحة الافتراضية
+      initialRoute: PageRouteName
+          .intro,
+      // الصفحة الافتراضية
+      //flag == true ? PageRouteName.homeScreen :
       routes: {
         PageRouteName.intro: (context) => IntroScreen(),
         PageRouteName.startScreen: (context) => StartScreen(),

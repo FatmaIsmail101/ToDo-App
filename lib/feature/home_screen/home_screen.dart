@@ -4,7 +4,7 @@ import 'package:up_todo_app/feature/home_screen/add_screen/add_screen.dart';
 import 'package:up_todo_app/feature/home_screen/calender/calender_screen.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/presentation/view/foucs_screen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
-import 'package:up_todo_app/feature/home_screen/person/person_screen.dart';
+import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       bottomNavigationBar: ConvexAppBar(
         elevation: 20,
@@ -52,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: 16,
                   right: 16,
                   top: 24,
+
                 ),
                 child: AddScreen(),
               ),

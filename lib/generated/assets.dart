@@ -2,10 +2,17 @@
 class Assets {
   Assets._();
 
+  static const String imagesAbout = 'assets/images/about.png';
+  static const String imagesChecklistRafiki1 =
+      'assets/images/Checklist-rafiki 1.png';
+  static const String imagesFlash = 'assets/images/flash.png';
+  static const String imagesGroup159 = 'assets/images/Group 159.png';
   static const String imagesIntro1 = 'assets/images/intro1.png';
   static const String imagesIntro2 = 'assets/images/intro2.png';
   static const String imagesIntro3 = 'assets/images/intro3.png';
+  static const String imagesLike = 'assets/images/like.png';
   static const String imagesRepeat = 'assets/images/repeat.png';
   static const String imagesSplash = 'assets/images/splash.png';
   static const String imagesTag = 'assets/images/tag.png';
+  static const String imagesUserImg = 'assets/images/user_img.png';
 }

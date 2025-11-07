@@ -11,12 +11,21 @@ class TimerDSImpl implements TimerDataSource {
   }
 
   @override
+  @override
   TimerModel? getTimer() {
     final jsonString = CacheHelper.getString("timer");
-    if (jsonString == null) {
+
+    if (jsonString == null || jsonString.isEmpty) {
       return null;
     }
-    return TimerModel.fromJson(jsonDecode(jsonString));
+
+    try {
+      final decoded = jsonDecode(jsonString);
+      return TimerModel.fromJson(decoded);
+    } catch (e) {
+      print("❌ JSON Parse Error in getTimer(): $e");
+      return null; // أو ممكن تمسحي القيمة الفاسدة CacheHelper.remove("timer");
+    }
   }
 
   @override
