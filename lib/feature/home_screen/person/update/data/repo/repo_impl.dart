@@ -1,7 +1,7 @@
 import 'package:up_todo_app/feature/authenticaton/login/data/model/login_model.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/data/data_source.dart';
+import 'package:up_todo_app/feature/home_screen/person/update/data/data_source/data_source.dart';
 
-import '../domain/repo/repo.dart';
+import '../../domain/repo/repo.dart';
 
 class UpdateRepoImpl implements UpdateRepo {
   DataSourceName dataSourceName;

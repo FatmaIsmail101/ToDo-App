@@ -1,13 +1,17 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/core/reusable_widgets/buttons.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/view_model/provider.dart';
+import 'package:up_todo_app/core/routes/page_route_name.dart';
+import 'package:up_todo_app/feature/home_screen/person/log_out/provider/providers.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/widget/card_number_of_tasks.dart';
 
 import '../../../../../core/assets/assets.dart';
 import '../../../../authenticaton/login/presentation/providers/auth_providers.dart';
 import '../../../index/presentation/task_provider/task_providers.dart';
+import '../../update/view_model/providers.dart';
 
 class PersonScreen extends ConsumerWidget {
   PersonScreen({super.key});
@@ -19,7 +23,6 @@ class PersonScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final update = ref.watch(updateProvider);
     final notifier = ref.read(updateProvider.notifier);
-
     final loginState = ref.watch(loginViewModelProvider);
     final taskState = ref.watch(taskViewModelProvider);
     final complete = taskState
@@ -28,6 +31,7 @@ class PersonScreen extends ConsumerWidget {
     final notComplete = taskState
         .where((element) => element.isComplete == false)
         .toList();
+    final logOut = ref.watch(logOutProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
@@ -113,8 +117,8 @@ class PersonScreen extends ConsumerWidget {
                 ),
               ),
               GestureDetector(
-                onTap: () {
-                  showDialog(
+                onTap: () async {
+                  showDialog<String>(
                     context: context,
                     // false = user must tap button, true = tap outside dialog
                     builder: (BuildContext dialogContext) {
@@ -123,9 +127,21 @@ class PersonScreen extends ConsumerWidget {
                         text: "Change account name",
                         controller: nameController,
                         hint: "Enter Name",
-                        onTap: () {
+                        onTap: () async {
                           notifier.updateName(nameController.text);
+                          final updatedUserName = await ref
+                              .read(loginViewModelProvider.notifier)
+                              .login(
+                            nameController.text,
+                            loginState.model?.password ?? "",
+                          );
                           Navigator.pop(context);
+                          NotificationBar.showNotification(
+                            message: "Mabrook",
+                            type: ContentType.success,
+                            context: context,
+                            icon: Icons.access_time,
+                          );
                         },
                       );
                     },
@@ -152,27 +168,63 @@ class PersonScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              Row(
-                spacing: 10,
-                children: <Widget>[
-                  Icon(Icons.lock_outline_sharp, color: Colors.white, size: 35),
-                  Expanded(
-                    child: Text(
-                      "Change account password",
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16,
-                        color: Colors.white,
+              GestureDetector(
+                onTap: () async {
+                  showDialog(
+                    context: context,
+                    // false = user must tap button, true = tap outside dialog
+                    builder: (BuildContext dialogContext) {
+                      return alertDialog(
+                        hint: "Change Password",
+                        controller: passwordController,
+                        text: "Change account Password",
+                        context: context,
+                        onTap: () async {
+                          notifier.updatePassword(passwordController.text);
+                          final updatedUserPassword = ref
+                              .read(loginViewModelProvider.notifier)
+                              .login(
+                            loginState.model?.name ?? "",
+                            passwordController.text,
+                          );
+                          Navigator.pop(context);
+                          NotificationBar.showNotification(
+                            message: "Mabrook",
+                            type: ContentType.success,
+                            context: context,
+                            icon: Icons.access_time,
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+                child: Row(
+                  spacing: 10,
+                  children: <Widget>[
+                    Icon(
+                      Icons.lock_outline_sharp,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                    Expanded(
+                      child: Text(
+                        "Change account password",
+                        style: GoogleFonts.lato(
+                          fontWeight: FontWeight.normal,
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                  //  Spacer(),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-                ],
+                    //  Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                  ],
+                ),
               ),
               Row(
                 spacing: 10,
@@ -263,20 +315,32 @@ class PersonScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              Row(
-                spacing: 10,
-                children: <Widget>[
-                  Icon(Icons.logout, color: Colors.red, size: 30),
-                  // Image.asset(Assets.like,color: Colors.white,),
-                  Text(
-                    "Log out",
-                    style: GoogleFonts.lato(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16,
-                      color: Colors.red,
+              GestureDetector(
+                onTap: () async {
+                  await ref.read(logOutProvider.notifier).removeAccount();
+                  Navigator.pushNamedAndRemoveUntil(
+                    context, PageRouteName.registerScreen, (route) => false,);
+                  NotificationBar.showNotification(
+                      message: "Removed Successfully ",
+                      type: ContentType.success,
+                      context: context,
+                      icon: Icons.remember_me);
+                },
+                child: Row(
+                  spacing: 10,
+                  children: <Widget>[
+                    Icon(Icons.logout, color: Colors.red, size: 30),
+                    // Image.asset(Assets.like,color: Colors.white,),
+                    Text(
+                      "Log out",
+                      style: GoogleFonts.lato(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16,
+                        color: Colors.red,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

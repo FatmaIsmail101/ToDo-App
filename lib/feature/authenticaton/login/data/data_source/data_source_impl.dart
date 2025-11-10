@@ -9,7 +9,6 @@ class LocalDataSourceImpl implements LocalDataSource {
   @override
   Future<LoginModel?> getUser() async {
     final data = CacheHelper.getString("user");
-    final password = CacheHelper.getString("password");
     if (data != null && data.isNotEmpty) {
       final decoded = jsonDecode(data);
       return LoginModel.fromJson(decoded);

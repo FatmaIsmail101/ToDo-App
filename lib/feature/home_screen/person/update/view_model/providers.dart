@@ -1,15 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/data/data_source.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/data/repo_impl.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/domain/repo/repo.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/domain/repo/use_case.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/view_model/provider.dart';
+import 'package:up_todo_app/feature/authenticaton/login/data/model/login_model.dart';
+import 'package:up_todo_app/feature/home_screen/person/update/view_model/provider.dart';
 
 // 🧩 Data Layer
 // 🧠 Domain Layer
 
-import '../data/data_source_impl.dart';
+import '../../../../authenticaton/login/presentation/providers/auth_providers.dart';
+import '../data/data_source/data_source.dart';
+import '../data/data_source/data_source_impl.dart';
+import '../data/repo/repo_impl.dart';
+import '../domain/repo/repo.dart';
+import '../domain/repo/use_case.dart';
 
 // ✅ 1. DataSource Provider
 final authLocalDataSourceProvider = Provider<DataSourceName>((ref) {
@@ -29,8 +31,10 @@ final updateUseCaseProvider = Provider<UpdateUseCase>((ref) {
 });
 
 // ✅ 4. ViewModel Provider
-final loginViewModelProvider =
-    StateNotifierProvider<UpdateProvider, AsyncValue>((ref) {
+final updateProvider =
+StateNotifierProvider<UpdateProvider, LoginModel?>((ref) {
+  final loginState = ref.read(loginViewModelProvider);
+  final loginModel = loginState.model;
       final updateUseCase = ref.read(updateUseCaseProvider);
-      return UpdateProvider(updateUseCase);
+  return UpdateProvider(updateUseCase, loginModel);
     });

@@ -1,5 +1,5 @@
 import 'package:up_todo_app/feature/authenticaton/login/data/model/login_model.dart';
-import 'package:up_todo_app/feature/home_screen/person/name/domain/repo/repo.dart';
+import 'package:up_todo_app/feature/home_screen/person/update/domain/repo/repo.dart';
 
 class UpdateUseCase {
   UpdateRepo repo;
