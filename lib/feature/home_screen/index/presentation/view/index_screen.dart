@@ -173,6 +173,7 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
               if (Completed.isNotEmpty) ...[
                 Text(
                   "Completed",
+
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
