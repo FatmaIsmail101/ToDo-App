@@ -1,4 +1,5 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +12,7 @@ import 'package:up_todo_app/feature/home_screen/person/presentation/view/widget/
 import '../../../../../core/assets/assets.dart';
 import '../../../../authenticaton/login/presentation/providers/auth_providers.dart';
 import '../../../index/presentation/task_provider/task_providers.dart';
+import '../../setteings/theme/provider.dart';
 import '../../update/view_model/providers.dart';
 
 class PersonScreen extends ConsumerWidget {
@@ -21,6 +23,9 @@ class PersonScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedColor = ref.watch(themeSchemeProvider);
+    final themePreview = FlexThemeData.light(scheme: selectedColor);
+
     final update = ref.watch(updateProvider);
     final notifier = ref.read(updateProvider.notifier);
     final loginState = ref.watch(loginViewModelProvider);
@@ -34,9 +39,9 @@ class PersonScreen extends ConsumerWidget {
     final logOut = ref.watch(logOutProvider);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.transparent,
+      backgroundColor: themePreview.colorScheme.primary,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: themePreview.colorScheme.primary,
         centerTitle: true,
         title: Text(
           "Profile",
@@ -46,6 +51,7 @@ class PersonScreen extends ConsumerWidget {
             color: Color(0xe0ffffff),
           ),
         ),
+        leading: SizedBox(),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -88,25 +94,30 @@ class PersonScreen extends ConsumerWidget {
                   color: Colors.grey,
                 ),
               ),
-              Row(
-                spacing: 10,
-                children: <Widget>[
-                  Icon(Icons.settings, color: Colors.white, size: 35),
-                  Text(
-                    "App Settings",
-                    style: GoogleFonts.lato(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16,
-                      color: Colors.white,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, PageRouteName.appSettings);
+                },
+                child: Row(
+                  spacing: 10,
+                  children: <Widget>[
+                    Icon(Icons.settings, color: Colors.white, size: 35),
+                    Text(
+                      "App Settings",
+                      style: GoogleFonts.lato(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-                ],
+                    Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                  ],
+                ),
               ),
               Text(
                 "Account",

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CardNumberOfTasks extends StatelessWidget {
-  CardNumberOfTasks({Key? key, required this.number, required this.word})
-    : super(key: key);
+  CardNumberOfTasks({super.key, required this.number, required this.word});
   int number;
   String word;
 

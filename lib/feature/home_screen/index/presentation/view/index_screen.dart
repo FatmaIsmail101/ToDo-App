@@ -148,7 +148,8 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
                     color: Colors.white,
                   ),
                 ),
-                Expanded(
+                SizedBox(
+                  height: 300,
                   child: ListView.separated(
                     padding: EdgeInsets.only(top: 20),
                     itemBuilder: (context, index) => InkWell(
@@ -171,14 +172,15 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
               ],
               if (Completed.isNotEmpty) ...[
                 Text(
-                  "Not Completed",
+                  "Completed",
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
                     color: Colors.white,
                   ),
                 ),
-                Expanded(
+                SizedBox(
+                  height: 300,
                   child: ListView.separated(
                     padding: EdgeInsets.only(top: 20),
                     itemBuilder: (context, index) => InkWell(

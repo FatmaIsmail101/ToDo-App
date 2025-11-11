@@ -9,12 +9,15 @@ import 'package:up_todo_app/feature/home_screen/home_screen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/edit_secreen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
+import 'package:up_todo_app/feature/home_screen/person/setteings/presentation/setting.dart';
+import 'package:up_todo_app/feature/home_screen/person/setteings/theme/theme_data.dart';
 import 'package:up_todo_app/feature/intro/presentation/intro_screen.dart';
 import 'package:up_todo_app/feature/intro/presentation/start_screen.dart';
 
 import 'core/casheing/cache_helper.dart';
 import 'core/routes/page_route_name.dart';
 import 'feature/home_screen/add_screen/add_screen.dart';
+import 'feature/home_screen/person/setteings/theme/presentation/color_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,16 +25,20 @@ void main() async {
   runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   bool flag = CacheHelper.getBool("Intro") ?? false;
 
   MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.dark,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final lightTheme = ref.watch(appThemeProvider);
+    final darkTheme = ref.watch(appDarkThemeProvider);
 
+    return MaterialApp(
+      themeMode: ThemeMode.system,
+      darkTheme: darkTheme,
+      theme: lightTheme,
       debugShowCheckedModeBanner: false,
       title: 'To Do App',
       initialRoute: PageRouteName
@@ -50,7 +57,9 @@ class MyApp extends StatelessWidget {
         PageRouteName.foucsScreen: (context) => FoucsScreen(),
         PageRouteName.personScreen: (context) => PersonScreen(),
         PageRouteName.editScreen: (context) => EditSecreen(),
-        PageRouteName.addCategoryScreen: (context) => AddCategoryScreen()
+        PageRouteName.addCategoryScreen: (context) => AddCategoryScreen(),
+        PageRouteName.appSettings: (context) => SettingsScreen(),
+        PageRouteName.colorScreen: (context) => ColorScreen()
 
 
       },

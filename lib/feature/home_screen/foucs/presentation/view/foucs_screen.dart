@@ -1,7 +1,10 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/presentation/provider/timer_provider.dart';
+
+import '../../../person/setteings/theme/provider.dart';
 
 class FoucsScreen extends ConsumerWidget {
   const FoucsScreen({super.key});
@@ -13,9 +16,12 @@ class FoucsScreen extends ConsumerWidget {
     final remainingTime = state?.remainingTime ?? 0;
     final minutes = (remainingTime ~/ 60).toString().padLeft(2, "0");
     final secounds = (remainingTime % 60).toString().padLeft(2, "0");
+    final selectedColor = ref.watch(themeSchemeProvider);
+    final themePreview = FlexThemeData.light(scheme: selectedColor);
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: themePreview.colorScheme.primary,
         body: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(

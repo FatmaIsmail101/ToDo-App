@@ -1,26 +1,32 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/add_screen.dart';
 import 'package:up_todo_app/feature/home_screen/calender/calender_screen.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/presentation/view/foucs_screen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
+import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final selectedColor = ref.watch(themeSchemeProvider);
+    final themePreview = FlexThemeData.light(scheme: selectedColor);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.black,
+      backgroundColor: themePreview.colorScheme.primary,
       bottomNavigationBar: ConvexAppBar(
         elevation: 20,
         activeColor: Colors.blue,
@@ -31,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
           TabItem(icon: Icons.access_time),
           TabItem(icon: Icons.person),
         ],
-        backgroundColor: Colors.black,
+        backgroundColor: themePreview.colorScheme.primary,
         //style: TabStyle.react,
         color: Colors.white,
         height: 100,
@@ -43,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              backgroundColor: Colors.black,
+              backgroundColor: themePreview.colorScheme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
               ),

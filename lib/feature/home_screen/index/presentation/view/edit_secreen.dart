@@ -1,3 +1,4 @@
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +13,7 @@ import 'package:up_todo_app/feature/home_screen/index/presentation/view_model/ed
 
 import '../../../../../core/assets/assets.dart';
 import '../../../add_screen/widget/edit_title_item.dart';
+import '../../../person/setteings/theme/provider.dart';
 
 class EditSecreen extends ConsumerStatefulWidget {
   const EditSecreen({super.key});
@@ -23,14 +25,19 @@ class EditSecreen extends ConsumerStatefulWidget {
 class _EditSecreenState extends ConsumerState<EditSecreen> {
   @override
   Widget build(BuildContext context) {
+    final selectedColor = ref.watch(themeSchemeProvider);
+    final themePreview = FlexThemeData.light(scheme: selectedColor);
+
     final taskState = ref.watch(taskViewModelProvider);
     final model = ModalRoute.of(context)!.settings.arguments as TaskModel;
     print("Received model${model.title}");
     final state = ref.watch(editViewModelProvider(model));
     final notifier = ref.read(editViewModelProvider(model).notifier);
     return Scaffold(
-      backgroundColor: Color(0xff1D1D1D),
+      backgroundColor: themePreview.colorScheme.primary,
       appBar: AppBar(
+        backgroundColor: themePreview.colorScheme.primary,
+
         title: Row(
           children: [
             Expanded(
@@ -46,7 +53,6 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
           ],
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff1D1D1D),
         leading: Bounceable(
           onTap: () {
             Navigator.pop(context);

@@ -1,4 +1,5 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,7 @@ import 'package:up_todo_app/feature/home_screen/add_screen/view_model/add_task_v
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
 import '../../../core/assets/assets.dart';
+import '../person/setteings/theme/provider.dart';
 
 class AddScreen extends ConsumerStatefulWidget {
   const AddScreen({super.key});
@@ -25,10 +27,13 @@ class _AddScreenState extends ConsumerState<AddScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedColor = ref.watch(themeSchemeProvider);
+    final themePreview = FlexThemeData.light(scheme: selectedColor);
+
     final state = ref.watch(addTaskProvider);
     final notifier = ref.read(addTaskProvider.notifier);
     return Material(
-      color: Colors.black,
+      color: themePreview.colorScheme.primary,
       child: Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,

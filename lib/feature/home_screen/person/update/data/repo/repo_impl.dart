@@ -12,10 +12,12 @@ class UpdateRepoImpl implements UpdateRepo {
   @override
   Future<LoginModel?> updateName(String newName) async {
     await dataSourceName.updateName(newName);
+    return null;
   }
 
   @override
   Future<LoginModel?> updatePassword(String newPassword) async {
     await dataSourceName.updatePassword(newPassword);
+    return null;
   }
 }
