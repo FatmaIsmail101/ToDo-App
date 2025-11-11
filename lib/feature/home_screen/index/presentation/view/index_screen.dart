@@ -186,9 +186,9 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
                     padding: EdgeInsets.only(top: 20),
                     itemBuilder: (context, index) => InkWell(
                       onTap: () {
-                        print(
-                          "Navigation to edit screen with: ${taskState[index].title}",
-                        );
+                        // print(
+                        //   "Navigation to edit screen with: ${taskState[index].title}",
+                        // );
                         Navigator.pushNamed(
                           context,
                           PageRouteName.editScreen,
