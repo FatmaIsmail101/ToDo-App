@@ -7,6 +7,8 @@ import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.
 class ColorScreen extends ConsumerWidget {
   int index = 0;
 
+  ColorScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedColor = ref.watch(themeSchemeProvider);

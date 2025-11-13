@@ -12,5 +12,5 @@ class PageRouteName{
   static const String editScreen = "/editScreen";
   static const String addCategoryScreen = "/addCategoryScreen";
   static const String appSettings = "/appSettings";
-  static const String colorScreen = "\colorScreen";
+  static const String colorScreen = "colorScreen";
 }

@@ -7,6 +7,8 @@ import 'package:up_todo_app/core/routes/page_route_name.dart';
 import '../theme/provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
+  const SettingsScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedColor = ref.watch(themeSchemeProvider);
