@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
-class TaskItem extends StatelessWidget {
+
+import '../../../../person/setteings/fonts/provider/font_provider.dart';
+
+class TaskItem extends ConsumerWidget {
   TaskModel model;
 
   TaskItem({super.key, required this.model});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(10),
@@ -32,7 +38,7 @@ class TaskItem extends StatelessWidget {
               children: [
                 Text(
                   model.title,
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.getFont(selectedFont,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
@@ -41,7 +47,7 @@ class TaskItem extends StatelessWidget {
                 Spacer(),
                 Text(
                   DateFormat('hh:mm a, dd/MM/yyyy').format(model.dateTime),
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.getFont(selectedFont,
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     color: Colors.grey,
@@ -63,7 +69,7 @@ class TaskItem extends StatelessWidget {
                 Icon(model.category.icon),
                 Text(
                   model.category.name,
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.getFont(selectedFont,
                     fontWeight: FontWeight.w500,
                     fontSize: 12,
                     color: Colors.white,
@@ -86,7 +92,7 @@ class TaskItem extends StatelessWidget {
                 Icon(model.priority.label, color: Colors.white),
                 Text(
                   "${model.priority.level}",
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.getFont(selectedFont,
                     fontWeight: FontWeight.w500,
                     fontSize: 12,
                     color: Colors.white,

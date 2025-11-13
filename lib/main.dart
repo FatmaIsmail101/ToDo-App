@@ -9,6 +9,7 @@ import 'package:up_todo_app/feature/home_screen/home_screen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/edit_secreen.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
+import 'package:up_todo_app/feature/home_screen/person/setteings/fonts/presentation/font_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/presentation/setting.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/theme_data.dart';
 import 'package:up_todo_app/feature/intro/presentation/intro_screen.dart';
@@ -36,7 +37,7 @@ class MyApp extends ConsumerWidget {
     final darkTheme = ref.watch(appDarkThemeProvider);
 
     return MaterialApp(
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       darkTheme: darkTheme,
       theme: lightTheme,
       debugShowCheckedModeBanner: false,
@@ -59,7 +60,8 @@ class MyApp extends ConsumerWidget {
         PageRouteName.editScreen: (context) => EditSecreen(),
         PageRouteName.addCategoryScreen: (context) => AddCategoryScreen(),
         PageRouteName.appSettings: (context) => SettingsScreen(),
-        PageRouteName.colorScreen: (context) => ColorScreen()
+        PageRouteName.colorScreen: (context) => ColorScreen(),
+        PageRouteName.fontScreen: (context) => FontScreen()
 
 
       },

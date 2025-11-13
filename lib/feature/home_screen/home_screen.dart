@@ -23,10 +23,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     final selectedColor = ref.watch(themeSchemeProvider);
     final themePreview = FlexThemeData.light(scheme: selectedColor);
+    final darkThemePreview = FlexThemeData.dark(scheme: selectedColor);
+    final isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
+    final currentColor = isDark ? darkThemePreview : themePreview;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: themePreview.colorScheme.primary,
+      backgroundColor: currentColor.colorScheme.primary,
       bottomNavigationBar: ConvexAppBar(
         elevation: 20,
         activeColor: Colors.blue,
@@ -37,7 +42,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           TabItem(icon: Icons.access_time),
           TabItem(icon: Icons.person),
         ],
-        backgroundColor: themePreview.colorScheme.primary,
+        backgroundColor: currentColor.colorScheme.primary,
         //style: TabStyle.react,
         color: Colors.white,
         height: 100,
@@ -49,7 +54,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             showModalBottomSheet(
               context: context,
               isScrollControlled: true,
-              backgroundColor: themePreview.colorScheme.primary,
+              backgroundColor: currentColor.colorScheme.primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(25)),
               ),

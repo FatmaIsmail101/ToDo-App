@@ -12,6 +12,7 @@ import 'package:up_todo_app/feature/home_screen/person/presentation/view/widget/
 import '../../../../../core/assets/assets.dart';
 import '../../../../authenticaton/login/presentation/providers/auth_providers.dart';
 import '../../../index/presentation/task_provider/task_providers.dart';
+import '../../setteings/fonts/provider/font_provider.dart';
 import '../../setteings/theme/provider.dart';
 import '../../update/view_model/providers.dart';
 
@@ -25,7 +26,11 @@ class PersonScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedColor = ref.watch(themeSchemeProvider);
     final themePreview = FlexThemeData.light(scheme: selectedColor);
-
+    final darkThemePreview = FlexThemeData.dark(scheme: selectedColor);
+    final isDark = Theme
+        .of(context)
+        .brightness == Brightness.dark;
+    final currentColor = isDark ? darkThemePreview : themePreview;
     final update = ref.watch(updateProvider);
     final notifier = ref.read(updateProvider.notifier);
     final loginState = ref.watch(loginViewModelProvider);
@@ -37,15 +42,17 @@ class PersonScreen extends ConsumerWidget {
         .where((element) => element.isComplete == false)
         .toList();
     final logOut = ref.watch(logOutProvider);
+    final selectedFont = ref.watch(fontProvider);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: themePreview.colorScheme.primary,
+      backgroundColor: currentColor.colorScheme.primary,
       appBar: AppBar(
-        backgroundColor: themePreview.colorScheme.primary,
+        backgroundColor: currentColor.colorScheme.primary,
         centerTitle: true,
         title: Text(
           "Profile",
-          style: GoogleFonts.lato(
+          style: GoogleFonts.getFont(selectedFont,
             fontSize: 20,
             fontWeight: FontWeight.normal,
             color: Color(0xe0ffffff),
@@ -71,7 +78,7 @@ class PersonScreen extends ConsumerWidget {
               Center(
                 child: Text(
                   loginState.model?.name.toUpperCase() ?? "Null",
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.getFont(selectedFont,
                     fontWeight: FontWeight.normal,
                     fontSize: 16,
                     color: Colors.white,
@@ -88,7 +95,7 @@ class PersonScreen extends ConsumerWidget {
               ),
               Text(
                 "Settings",
-                style: GoogleFonts.lato(
+                style: GoogleFonts.getFont(selectedFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
                   color: Colors.grey,
@@ -104,7 +111,7 @@ class PersonScreen extends ConsumerWidget {
                     Icon(Icons.settings, color: Colors.white, size: 35),
                     Text(
                       "App Settings",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(selectedFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 16,
                         color: Colors.white,
@@ -121,7 +128,7 @@ class PersonScreen extends ConsumerWidget {
               ),
               Text(
                 "Account",
-                style: GoogleFonts.lato(
+                style: GoogleFonts.getFont(selectedFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
                   color: Colors.grey,
@@ -164,7 +171,7 @@ class PersonScreen extends ConsumerWidget {
                     Icon(Icons.person, color: Colors.white, size: 35),
                     Text(
                       "Change account name",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(selectedFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 16,
                         color: Colors.white,
@@ -221,7 +228,7 @@ class PersonScreen extends ConsumerWidget {
                     Expanded(
                       child: Text(
                         "Change account password",
-                        style: GoogleFonts.lato(
+                        style: GoogleFonts.getFont(selectedFont,
                           fontWeight: FontWeight.normal,
                           fontSize: 16,
                           color: Colors.white,
@@ -243,7 +250,7 @@ class PersonScreen extends ConsumerWidget {
                   Icon(Icons.image_rounded, color: Colors.white, size: 35),
                   Text(
                     "Change account Image",
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.getFont(selectedFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -259,7 +266,7 @@ class PersonScreen extends ConsumerWidget {
               ),
               Text(
                 "Uptodo",
-                style: GoogleFonts.lato(
+                style: GoogleFonts.getFont(selectedFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
                   color: Colors.grey,
@@ -271,7 +278,7 @@ class PersonScreen extends ConsumerWidget {
                   Image.asset(Assets.about, color: Colors.white),
                   Text(
                     "About US",
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.getFont(selectedFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -292,7 +299,7 @@ class PersonScreen extends ConsumerWidget {
                   Image.asset(Assets.help, color: Colors.white),
                   Text(
                     "FAQ",
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.getFont(selectedFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -312,7 +319,7 @@ class PersonScreen extends ConsumerWidget {
                   Image.asset(Assets.like, color: Colors.white),
                   Text(
                     "Support US",
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.getFont(selectedFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -344,7 +351,7 @@ class PersonScreen extends ConsumerWidget {
                     // Image.asset(Assets.like,color: Colors.white,),
                     Text(
                       "Log out",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(selectedFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 16,
                         color: Colors.red,

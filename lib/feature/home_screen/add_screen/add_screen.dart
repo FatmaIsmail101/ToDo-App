@@ -12,6 +12,7 @@ import 'package:up_todo_app/feature/home_screen/add_screen/view_model/add_task_v
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
 import '../../../core/assets/assets.dart';
+import '../person/setteings/fonts/provider/font_provider.dart';
 import '../person/setteings/theme/provider.dart';
 
 class AddScreen extends ConsumerStatefulWidget {
@@ -27,13 +28,17 @@ class _AddScreenState extends ConsumerState<AddScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedFont = ref.watch(fontProvider);
+
     final selectedColor = ref.watch(themeSchemeProvider);
     final themePreview = FlexThemeData.light(scheme: selectedColor);
-
+    final darkThemePreview = FlexThemeData.dark(scheme: selectedColor);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final currentColor = isDark ? darkThemePreview : themePreview;
     final state = ref.watch(addTaskProvider);
     final notifier = ref.read(addTaskProvider.notifier);
     return Material(
-      color: themePreview.colorScheme.primary,
+      color: currentColor.colorScheme.primary,
       child: Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -48,7 +53,8 @@ class _AddScreenState extends ConsumerState<AddScreen> {
             children: [
               Text(
                 "Add Task",
-                style: GoogleFonts.lato(
+                style: GoogleFonts.getFont(
+                  selectedFont,
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,

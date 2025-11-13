@@ -5,6 +5,7 @@ import 'package:up_todo_app/feature/home_screen/add_screen/widget/category_item.
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
 import '../index/presentation/task_provider/task_providers.dart';
+import '../person/setteings/fonts/provider/font_provider.dart';
 import 'categories/add_category.dart';
 
 class CategoryDialog extends ConsumerStatefulWidget {
@@ -21,6 +22,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
   Widget build(BuildContext context) {
     // 🧠 هنا هنقرأ الكاتيجوريز من الـ provider
     final categories = ref.watch(categoryViewModelProvider);
+    final selectedFont = ref.watch(fontProvider);
 
     return Container(
       decoration: BoxDecoration(
@@ -35,7 +37,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
           children: [
             Text(
               "Choose Category",
-              style: GoogleFonts.lato(
+              style: GoogleFonts.getFont(selectedFont,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -103,7 +105,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
               ),
               child: Text(
                 "Add Category",
-                style: GoogleFonts.lato(color: Colors.white),
+                style: GoogleFonts.getFont(selectedFont, color: Colors.white),
               ),
             ),
           ],

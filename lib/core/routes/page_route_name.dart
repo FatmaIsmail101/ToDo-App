@@ -1,8 +1,8 @@
-class PageRouteName{
-  static const String intro="/intro";
-  static const String startScreen="/startScreen";
-  static const String loginScreen="/loginScreen";
-  static const String registerScreen="/registerScreen";
+class PageRouteName {
+  static const String intro = "/intro";
+  static const String startScreen = "/startScreen";
+  static const String loginScreen = "/loginScreen";
+  static const String registerScreen = "/registerScreen";
   static const String homeScreen = "/homeScreen";
   static const String indexScreen = "/indexScreen";
   static const String calenderScreen = "/calenderScreen";
@@ -12,5 +12,6 @@ class PageRouteName{
   static const String editScreen = "/editScreen";
   static const String addCategoryScreen = "/addCategoryScreen";
   static const String appSettings = "/appSettings";
-  static const String colorScreen = "colorScreen";
+  static const String colorScreen = "/colorScreen";
+  static const String fontScreen = "/fontScreen";
 }

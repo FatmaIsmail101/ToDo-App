@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EditTitleItem extends StatelessWidget {
+import '../../person/setteings/fonts/provider/font_provider.dart';
+
+class EditTitleItem extends ConsumerWidget {
   EditTitleItem({
     super.key,
     required this.descriptionController,
@@ -14,7 +17,9 @@ class EditTitleItem extends StatelessWidget {
   VoidCallback editButton;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     return Container(
       height: 300,
       width: 327,
@@ -29,7 +34,8 @@ class EditTitleItem extends StatelessWidget {
           children: [
             Text(
               "Edit Task Title",
-              style: GoogleFonts.lato(
+              style: GoogleFonts.getFont(
+                selectedFont,
                 color: Colors.white,
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
@@ -41,7 +47,8 @@ class EditTitleItem extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 labelText: "Title",
-                labelStyle: GoogleFonts.lato(
+                labelStyle: GoogleFonts.getFont(
+                  selectedFont,
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -61,7 +68,8 @@ class EditTitleItem extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 labelText: "Description",
-                labelStyle: GoogleFonts.lato(
+                labelStyle: GoogleFonts.getFont(
+                  selectedFont,
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -87,7 +95,8 @@ class EditTitleItem extends StatelessWidget {
                     },
                     child: Text(
                       "Cancel",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(
+                        selectedFont,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff8875FF),
@@ -107,7 +116,8 @@ class EditTitleItem extends StatelessWidget {
                     ),
                     child: Text(
                       "Edit Task",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(
+                        selectedFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         color: Colors.white,

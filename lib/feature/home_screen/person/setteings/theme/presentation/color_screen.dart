@@ -5,19 +5,20 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.dart';
 
 class ColorScreen extends ConsumerWidget {
-  int index = 0;
-
   ColorScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedColor = ref.watch(themeSchemeProvider);
     final notifier = ref.read(themeSchemeProvider.notifier);
-    //final scheme=FlexScheme.values[index];
+
     final themePreview = FlexThemeData.light(scheme: selectedColor);
+    final darkThemePreview = FlexThemeData.dark(scheme: selectedColor);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final currentColor = isDark ? darkThemePreview : themePreview;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: themePreview.colorScheme.primary,
+        backgroundColor: currentColor.colorScheme.primary,
         title: Text(
           "Color Screen",
           style: GoogleFonts.lato(
@@ -40,7 +41,9 @@ class ColorScreen extends ConsumerWidget {
         itemBuilder: (context, index) {
           final scheme = FlexScheme.values[index];
           final themePreview = FlexThemeData.light(scheme: scheme);
-
+          final darkThemeePreview = FlexThemeData.dark(scheme: scheme);
+          final isLight = Theme.of(context).brightness == Brightness.light;
+          final colors = isLight ? themePreview : darkThemeePreview;
           return GestureDetector(
             onTap: () {
               //حطينا scheme  عشان خاطر اللى اخترناها من index
@@ -51,7 +54,7 @@ class ColorScreen extends ConsumerWidget {
               height: 40,
               margin: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: themePreview.colorScheme.primary,
+                color: colors.colorScheme.primary,
                 borderRadius: BorderRadius.circular(6),
                 border: Border.all(
                   color: scheme == selectedColor

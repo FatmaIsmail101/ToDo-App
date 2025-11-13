@@ -1,22 +1,27 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/priorty_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
-class PriorityDialog extends StatefulWidget {
+import '../person/setteings/fonts/provider/font_provider.dart';
+
+class PriorityDialog extends ConsumerStatefulWidget {
   PriorityDialog({super.key, this.selectedPriorty});
 
   TaskPriority? selectedPriorty;
 
   @override
-  State<PriorityDialog> createState() => _PriorityDialogState();
+  ConsumerState<PriorityDialog> createState() => _PriorityDialogState();
 }
 
-class _PriorityDialogState extends State<PriorityDialog> {
+class _PriorityDialogState extends ConsumerState<PriorityDialog> {
   @override
   Widget build(BuildContext context) {
+    final selectedFont = ref.watch(fontProvider);
+
     return Container(
       height: 360,
       decoration: BoxDecoration(
@@ -31,7 +36,7 @@ class _PriorityDialogState extends State<PriorityDialog> {
           children: [
             Text(
               "Task Priority",
-              style: GoogleFonts.lato(
+              style: GoogleFonts.getFont(selectedFont,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -76,7 +81,7 @@ class _PriorityDialogState extends State<PriorityDialog> {
                     ),
                     child: Text(
                       "Cancel",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(selectedFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
@@ -99,7 +104,7 @@ class _PriorityDialogState extends State<PriorityDialog> {
                     ),
                     child: Text(
                       "Save",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(selectedFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomTextField extends StatelessWidget {
+import '../../feature/home_screen/person/setteings/fonts/provider/font_provider.dart';
+
+class CustomTextField extends ConsumerWidget {
   final Function(String) onChange;
   final String hint;
 
@@ -14,13 +17,16 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController textController;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     return TextField(
       controller: textController,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: GoogleFonts.lato(
+        hintStyle: GoogleFonts.getFont(
+          selectedFont,
           color: Colors.white,
           fontSize: 22,
           fontWeight: FontWeight.w600,

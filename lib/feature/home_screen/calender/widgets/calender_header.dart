@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:up_todo_app/feature/home_screen/calender/view_model/calender_view_model.dart';
 
+import '../../person/setteings/fonts/provider/font_provider.dart';
+
 class CalenderHeader extends ConsumerWidget {
   final VoidCallback goToPrev;
   final VoidCallback goToNext;
@@ -18,6 +20,8 @@ class CalenderHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     final state = ref.watch(calenderProvider);
     final notifier = ref.read(calenderProvider.notifier);
     final nameMonth = DateFormat(
@@ -41,7 +45,8 @@ class CalenderHeader extends ConsumerWidget {
               children: [
                 Text(
                   nameMonth.toUpperCase(),
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.getFont(
+                    selectedFont,
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: Colors.white,
@@ -50,7 +55,8 @@ class CalenderHeader extends ConsumerWidget {
                 Expanded(
                   child: Text(
                     year,
-                    style: GoogleFonts.lato(
+                    style: GoogleFonts.getFont(
+                      selectedFont,
                       fontWeight: FontWeight.w500,
                       fontSize: 10,
                       color: Colors.grey,

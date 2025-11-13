@@ -8,6 +8,8 @@ import 'package:up_todo_app/feature/home_screen/calender/widgets/days_list.dart'
 import 'package:up_todo_app/feature/home_screen/calender/widgets/list_task.dart';
 import 'package:up_todo_app/feature/home_screen/calender/widgets/task_tabs.dart';
 
+import '../person/setteings/fonts/provider/font_provider.dart';
+
 final selecteDayProvider = StateProvider<DateTime?>((ref) => null);
 
 class CalenderScreen extends ConsumerStatefulWidget {
@@ -26,6 +28,7 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
   @override
   Widget build(BuildContext context) {
     final calender = ref.watch(calenderProvider);
+    final selectedFont = ref.watch(fontProvider);
 
     return SafeArea(
       child: Column(
@@ -35,7 +38,8 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
             padding: const EdgeInsets.only(top: 24.0, right: 24, left: 24),
             child: Text(
               "Calendar",
-              style: GoogleFonts.lato(
+              style: GoogleFonts.getFont(
+                selectedFont,
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
                 color: Colors.white,

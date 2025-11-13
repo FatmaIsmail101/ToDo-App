@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CardDateItem extends StatelessWidget {
+import '../../person/setteings/fonts/provider/font_provider.dart';
+
+class CardDateItem extends ConsumerWidget {
   CardDateItem({
     required this.isWeekend,
     super.key,
@@ -16,7 +19,9 @@ class CardDateItem extends StatelessWidget {
   bool isSelected;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     return Container(
       width: 44,
       height: 48,
@@ -30,7 +35,8 @@ class CardDateItem extends StatelessWidget {
           children: [
             Text(
               nameOfTheDay.toUpperCase(),
-              style: GoogleFonts.lato(
+              style: GoogleFonts.getFont(
+                selectedFont,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: isWeekend ? Colors.red : Color(0xe0ffffff),
@@ -38,7 +44,8 @@ class CardDateItem extends StatelessWidget {
             ),
             Text(
               "$numOfTheDay",
-              style: GoogleFonts.lato(
+              style: GoogleFonts.getFont(
+                selectedFont,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xe0ffffff),

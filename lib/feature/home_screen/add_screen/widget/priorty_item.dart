@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
-class PriortyItem extends StatelessWidget {
+import '../../person/setteings/fonts/provider/font_provider.dart';
+
+class PriortyItem extends ConsumerWidget {
   PriortyItem(
       {super.key, required this.model, required this.isSelected, required this.selectPriority});
 
@@ -11,7 +14,9 @@ class PriortyItem extends StatelessWidget {
   bool isSelected = true;
   final VoidCallback selectPriority;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     return Bounceable(
       onTap: selectPriority,
       child: Container(
@@ -32,7 +37,7 @@ class PriortyItem extends StatelessWidget {
             Icon(model.label, color: Colors.white),
             Text(
               "${model.level}",
-              style: GoogleFonts.lato(
+              style: GoogleFonts.getFont(selectedFont,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: Colors.white,

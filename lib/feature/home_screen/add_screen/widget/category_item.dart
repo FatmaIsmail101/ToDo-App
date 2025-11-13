@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
-class CategoryItem extends StatelessWidget {
+import '../../person/setteings/fonts/provider/font_provider.dart';
+
+class CategoryItem extends ConsumerWidget {
   CategoryItem(
       {super.key, required this.model, required this.selected, this.isSelected = true});
 
@@ -11,7 +14,9 @@ class CategoryItem extends StatelessWidget {
   bool isSelected;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       spacing: 6,
@@ -33,7 +38,7 @@ class CategoryItem extends StatelessWidget {
         ),
         Text(
           model.name,
-          style: GoogleFonts.lato(
+          style: GoogleFonts.getFont(selectedFont,
             fontWeight: FontWeight.w500,
             fontSize: 14,
             color: Colors.white,

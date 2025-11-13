@@ -6,12 +6,15 @@ import 'package:up_todo_app/feature/home_screen/calender/widgets/task_tabs.dart'
 import '../../../../core/routes/page_route_name.dart';
 import '../../index/presentation/task_provider/task_providers.dart';
 import '../../index/presentation/view/widget/task_item.dart';
+import '../../person/setteings/fonts/provider/font_provider.dart';
 
 class ListTask extends ConsumerWidget {
   const ListTask({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final selectedFont = ref.watch(fontProvider);
+
     final taskState = ref.watch(taskViewModelProvider);
     final complete = taskState.where((element) {
       return element.isComplete == true;
@@ -25,7 +28,8 @@ class ListTask extends ConsumerWidget {
       return Center(
         child: Text(
           "No tasks available",
-          style: GoogleFonts.lato(
+          style: GoogleFonts.getFont(
+            selectedFont,
             fontSize: 16,
             color: Colors.white,
             fontWeight: FontWeight.normal,

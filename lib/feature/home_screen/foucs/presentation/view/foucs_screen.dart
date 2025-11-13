@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/presentation/provider/timer_provider.dart';
 
+import '../../../person/setteings/fonts/provider/font_provider.dart';
 import '../../../person/setteings/theme/provider.dart';
 
 class FoucsScreen extends ConsumerWidget {
@@ -18,17 +19,22 @@ class FoucsScreen extends ConsumerWidget {
     final secounds = (remainingTime % 60).toString().padLeft(2, "0");
     final selectedColor = ref.watch(themeSchemeProvider);
     final themePreview = FlexThemeData.light(scheme: selectedColor);
+    final darkThemePreview = FlexThemeData.dark(scheme: selectedColor);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final currentColor = isDark ? darkThemePreview : themePreview;
+    final selectedFont = ref.watch(fontProvider);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: themePreview.colorScheme.primary,
+        backgroundColor: currentColor.colorScheme.primary,
         body: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
               Text(
                 "Focus Mode",
-                style: GoogleFonts.lato(
+                style: GoogleFonts.getFont(
+                  selectedFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 20,
                   color: Color(0xe0ffffff),
@@ -63,7 +69,8 @@ class FoucsScreen extends ConsumerWidget {
                     ),
                     Text(
                       "$minutes:$secounds",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(
+                        selectedFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 30,
                         color: Color(0xe0ffffff),
@@ -90,7 +97,8 @@ class FoucsScreen extends ConsumerWidget {
                   (state == null || !state.isRunning)
                       ? "Start Focusing"
                       : "Stop Timer",
-                  style: GoogleFonts.lato(
+                  style: GoogleFonts.getFont(
+                    selectedFont,
                     fontWeight: FontWeight.normal,
                     fontSize: 20,
                     color: Color(0xe0ffffff),
@@ -109,7 +117,8 @@ class FoucsScreen extends ConsumerWidget {
                     focusColor: Color(0xff8875FF),
                     child: Text(
                       "Resume Timer",
-                      style: GoogleFonts.lato(
+                      style: GoogleFonts.getFont(
+                        selectedFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 20,
                         color: Color(0xe0ffffff),
