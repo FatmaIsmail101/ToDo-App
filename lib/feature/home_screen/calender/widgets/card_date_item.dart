@@ -21,6 +21,9 @@ class CardDateItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Container(
       width: 44,
@@ -36,7 +39,7 @@ class CardDateItem extends ConsumerWidget {
             Text(
               nameOfTheDay.toUpperCase(),
               style: GoogleFonts.getFont(
-                selectedFont,
+                safeFont,
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: isWeekend ? Colors.red : Color(0xe0ffffff),
@@ -45,7 +48,7 @@ class CardDateItem extends ConsumerWidget {
             Text(
               "$numOfTheDay",
               style: GoogleFonts.getFont(
-                selectedFont,
+                safeFont,
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
                 color: Color(0xe0ffffff),

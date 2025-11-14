@@ -21,6 +21,9 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
   @override
   Widget build(BuildContext context) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Container(
       height: 360,
@@ -36,7 +39,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
           children: [
             Text(
               "Task Priority",
-              style: GoogleFonts.getFont(selectedFont,
+              style: GoogleFonts.getFont(safeFont,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -81,7 +84,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
                     ),
                     child: Text(
                       "Cancel",
-                      style: GoogleFonts.getFont(selectedFont,
+                      style: GoogleFonts.getFont(safeFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),
@@ -104,7 +107,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
                     ),
                     child: Text(
                       "Save",
-                      style: GoogleFonts.getFont(selectedFont,
+                      style: GoogleFonts.getFont(safeFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                       ),

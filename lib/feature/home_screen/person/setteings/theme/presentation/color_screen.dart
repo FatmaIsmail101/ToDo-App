@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.dart';
 
 class ColorScreen extends ConsumerWidget {
-  ColorScreen({super.key});
+  const ColorScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

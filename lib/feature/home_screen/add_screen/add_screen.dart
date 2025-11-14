@@ -29,6 +29,9 @@ class _AddScreenState extends ConsumerState<AddScreen> {
   @override
   Widget build(BuildContext context) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     final selectedColor = ref.watch(themeSchemeProvider);
     final themePreview = FlexThemeData.light(scheme: selectedColor);
@@ -54,7 +57,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
               Text(
                 "Add Task",
                 style: GoogleFonts.getFont(
-                  selectedFont,
+                  safeFont,
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,

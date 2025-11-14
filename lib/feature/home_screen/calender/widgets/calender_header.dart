@@ -21,6 +21,9 @@ class CalenderHeader extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     final state = ref.watch(calenderProvider);
     final notifier = ref.read(calenderProvider.notifier);
@@ -46,7 +49,7 @@ class CalenderHeader extends ConsumerWidget {
                 Text(
                   nameMonth.toUpperCase(),
                   style: GoogleFonts.getFont(
-                    selectedFont,
+                    safeFont,
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                     color: Colors.white,
@@ -56,7 +59,7 @@ class CalenderHeader extends ConsumerWidget {
                   child: Text(
                     year,
                     style: GoogleFonts.getFont(
-                      selectedFont,
+                      safeFont,
                       fontWeight: FontWeight.w500,
                       fontSize: 10,
                       color: Colors.grey,

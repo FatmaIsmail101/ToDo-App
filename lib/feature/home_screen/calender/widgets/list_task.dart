@@ -14,6 +14,9 @@ class ListTask extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     final taskState = ref.watch(taskViewModelProvider);
     final complete = taskState.where((element) {
@@ -29,7 +32,7 @@ class ListTask extends ConsumerWidget {
         child: Text(
           "No tasks available",
           style: GoogleFonts.getFont(
-            selectedFont,
+            safeFont,
             fontSize: 16,
             color: Colors.white,
             fontWeight: FontWeight.normal,

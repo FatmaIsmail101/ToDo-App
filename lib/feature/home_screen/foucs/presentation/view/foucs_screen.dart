@@ -23,6 +23,9 @@ class FoucsScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentColor = isDark ? darkThemePreview : themePreview;
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return SafeArea(
       child: Scaffold(
@@ -34,7 +37,7 @@ class FoucsScreen extends ConsumerWidget {
               Text(
                 "Focus Mode",
                 style: GoogleFonts.getFont(
-                  selectedFont,
+                  safeFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 20,
                   color: Color(0xe0ffffff),
@@ -70,7 +73,7 @@ class FoucsScreen extends ConsumerWidget {
                     Text(
                       "$minutes:$secounds",
                       style: GoogleFonts.getFont(
-                        selectedFont,
+                        safeFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 30,
                         color: Color(0xe0ffffff),
@@ -98,7 +101,7 @@ class FoucsScreen extends ConsumerWidget {
                       ? "Start Focusing"
                       : "Stop Timer",
                   style: GoogleFonts.getFont(
-                    selectedFont,
+                    safeFont,
                     fontWeight: FontWeight.normal,
                     fontSize: 20,
                     color: Color(0xe0ffffff),
@@ -118,7 +121,7 @@ class FoucsScreen extends ConsumerWidget {
                     child: Text(
                       "Resume Timer",
                       style: GoogleFonts.getFont(
-                        selectedFont,
+                        safeFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 20,
                         color: Color(0xe0ffffff),

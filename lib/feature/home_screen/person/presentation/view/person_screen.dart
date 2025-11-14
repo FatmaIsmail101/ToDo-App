@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/core/reusable_widgets/buttons.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
+import 'package:up_todo_app/feature/home_screen/person/image/provider.dart';
 import 'package:up_todo_app/feature/home_screen/person/log_out/provider/providers.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/widget/card_number_of_tasks.dart';
 
@@ -27,9 +30,7 @@ class PersonScreen extends ConsumerWidget {
     final selectedColor = ref.watch(themeSchemeProvider);
     final themePreview = FlexThemeData.light(scheme: selectedColor);
     final darkThemePreview = FlexThemeData.dark(scheme: selectedColor);
-    final isDark = Theme
-        .of(context)
-        .brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentColor = isDark ? darkThemePreview : themePreview;
     final update = ref.watch(updateProvider);
     final notifier = ref.read(updateProvider.notifier);
@@ -43,6 +44,12 @@ class PersonScreen extends ConsumerWidget {
         .toList();
     final logOut = ref.watch(logOutProvider);
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
+
+    final imagePath = ref.watch(pickImage);
+    final imageNotifier = ref.watch(pickImage.notifier);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -52,7 +59,8 @@ class PersonScreen extends ConsumerWidget {
         centerTitle: true,
         title: Text(
           "Profile",
-          style: GoogleFonts.getFont(selectedFont,
+          style: GoogleFonts.getFont(
+            safeFont,
             fontSize: 20,
             fontWeight: FontWeight.normal,
             color: Color(0xe0ffffff),
@@ -70,15 +78,23 @@ class PersonScreen extends ConsumerWidget {
               //Image
               Center(
                 child: CircleAvatar(
-                  backgroundImage: AssetImage(Assets.userImg),
-                  foregroundImage: AssetImage(Assets.userImg),
+                  backgroundImage: imagePath != null && imagePath.isNotEmpty
+                      ? FileImage(File(imagePath))
+                      : null,
+                  foregroundImage: imagePath != null && imagePath.isNotEmpty
+                      ? FileImage(File(imagePath))
+                      : null,
                   radius: 86,
+                  child: imagePath == null || imagePath.isEmpty
+                      ? Icon(Icons.person, size: 70, color: Colors.white)
+                      : null,
                 ),
               ),
               Center(
                 child: Text(
                   loginState.model?.name.toUpperCase() ?? "Null",
-                  style: GoogleFonts.getFont(selectedFont,
+                  style: GoogleFonts.getFont(
+                    safeFont,
                     fontWeight: FontWeight.normal,
                     fontSize: 16,
                     color: Colors.white,
@@ -95,7 +111,8 @@ class PersonScreen extends ConsumerWidget {
               ),
               Text(
                 "Settings",
-                style: GoogleFonts.getFont(selectedFont,
+                style: GoogleFonts.getFont(
+                  safeFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
                   color: Colors.grey,
@@ -111,7 +128,8 @@ class PersonScreen extends ConsumerWidget {
                     Icon(Icons.settings, color: Colors.white, size: 35),
                     Text(
                       "App Settings",
-                      style: GoogleFonts.getFont(selectedFont,
+                      style: GoogleFonts.getFont(
+                        safeFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 16,
                         color: Colors.white,
@@ -128,7 +146,8 @@ class PersonScreen extends ConsumerWidget {
               ),
               Text(
                 "Account",
-                style: GoogleFonts.getFont(selectedFont,
+                style: GoogleFonts.getFont(
+                  safeFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
                   color: Colors.grey,
@@ -150,9 +169,9 @@ class PersonScreen extends ConsumerWidget {
                           final updatedUserName = await ref
                               .read(loginViewModelProvider.notifier)
                               .login(
-                            nameController.text,
-                            loginState.model?.password ?? "",
-                          );
+                                nameController.text,
+                                loginState.model?.password ?? "",
+                              );
                           Navigator.pop(context);
                           NotificationBar.showNotification(
                             message: "Mabrook",
@@ -171,7 +190,8 @@ class PersonScreen extends ConsumerWidget {
                     Icon(Icons.person, color: Colors.white, size: 35),
                     Text(
                       "Change account name",
-                      style: GoogleFonts.getFont(selectedFont,
+                      style: GoogleFonts.getFont(
+                        safeFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 16,
                         color: Colors.white,
@@ -202,9 +222,9 @@ class PersonScreen extends ConsumerWidget {
                           final updatedUserPassword = ref
                               .read(loginViewModelProvider.notifier)
                               .login(
-                            loginState.model?.name ?? "",
-                            passwordController.text,
-                          );
+                                loginState.model?.name ?? "",
+                                passwordController.text,
+                              );
                           Navigator.pop(context);
                           NotificationBar.showNotification(
                             message: "Mabrook",
@@ -228,7 +248,8 @@ class PersonScreen extends ConsumerWidget {
                     Expanded(
                       child: Text(
                         "Change account password",
-                        style: GoogleFonts.getFont(selectedFont,
+                        style: GoogleFonts.getFont(
+                          safeFont,
                           fontWeight: FontWeight.normal,
                           fontSize: 16,
                           color: Colors.white,
@@ -244,29 +265,36 @@ class PersonScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-              Row(
-                spacing: 10,
-                children: <Widget>[
-                  Icon(Icons.image_rounded, color: Colors.white, size: 35),
-                  Text(
-                    "Change account Image",
-                    style: GoogleFonts.getFont(selectedFont,
-                      fontWeight: FontWeight.normal,
-                      fontSize: 16,
-                      color: Colors.white,
+              GestureDetector(
+                onTap: () async {
+                  await showBottomSheet(context, ref);
+                },
+                child: Row(
+                  spacing: 10,
+                  children: <Widget>[
+                    Icon(Icons.image_rounded, color: Colors.white, size: 35),
+                    Text(
+                      "Change account Image",
+                      style: GoogleFonts.getFont(
+                        safeFont,
+                        fontWeight: FontWeight.normal,
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                  Spacer(),
-                  Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-                ],
+                    Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.white,
+                      size: 35,
+                    ),
+                  ],
+                ),
               ),
               Text(
                 "Uptodo",
-                style: GoogleFonts.getFont(selectedFont,
+                style: GoogleFonts.getFont(
+                  safeFont,
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
                   color: Colors.grey,
@@ -278,7 +306,8 @@ class PersonScreen extends ConsumerWidget {
                   Image.asset(Assets.about, color: Colors.white),
                   Text(
                     "About US",
-                    style: GoogleFonts.getFont(selectedFont,
+                    style: GoogleFonts.getFont(
+                      safeFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -299,7 +328,8 @@ class PersonScreen extends ConsumerWidget {
                   Image.asset(Assets.help, color: Colors.white),
                   Text(
                     "FAQ",
-                    style: GoogleFonts.getFont(selectedFont,
+                    style: GoogleFonts.getFont(
+                      safeFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -319,7 +349,8 @@ class PersonScreen extends ConsumerWidget {
                   Image.asset(Assets.like, color: Colors.white),
                   Text(
                     "Support US",
-                    style: GoogleFonts.getFont(selectedFont,
+                    style: GoogleFonts.getFont(
+                      safeFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -337,12 +368,16 @@ class PersonScreen extends ConsumerWidget {
                 onTap: () async {
                   await ref.read(logOutProvider.notifier).removeAccount();
                   Navigator.pushNamedAndRemoveUntil(
-                    context, PageRouteName.registerScreen, (route) => false,);
+                    context,
+                    PageRouteName.registerScreen,
+                    (route) => false,
+                  );
                   NotificationBar.showNotification(
-                      message: "Removed Successfully ",
-                      type: ContentType.success,
-                      context: context,
-                      icon: Icons.remember_me);
+                    message: "Removed Successfully ",
+                    type: ContentType.success,
+                    context: context,
+                    icon: Icons.remember_me,
+                  );
                 },
                 child: Row(
                   spacing: 10,
@@ -351,7 +386,8 @@ class PersonScreen extends ConsumerWidget {
                     // Image.asset(Assets.like,color: Colors.white,),
                     Text(
                       "Log out",
-                      style: GoogleFonts.getFont(selectedFont,
+                      style: GoogleFonts.getFont(
+                        safeFont,
                         fontWeight: FontWeight.normal,
                         fontSize: 16,
                         color: Colors.red,
@@ -430,6 +466,74 @@ class PersonScreen extends ConsumerWidget {
           color: Colors.grey,
         ),
       ),
+    );
+  }
+
+  Future<void> showBottomSheet(BuildContext context, WidgetRef ref) async {
+    final imageNotifier = ref.watch(pickImage.notifier);
+    final selectedColor = ref.watch(themeSchemeProvider);
+    final themePreview = FlexThemeData.light(scheme: selectedColor);
+    final darkThemePreview = FlexThemeData.dark(scheme: selectedColor);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final currentColor = isDark ? darkThemePreview : themePreview;
+    return await showModalBottomSheet(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      sheetAnimationStyle: AnimationStyle(curve: Curves.easeInOut),
+      backgroundColor: currentColor.colorScheme.primary,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            spacing: 12,
+            children: [
+              Align(
+                alignment: AlignmentGeometry.center,
+                child: Text(
+                  "Change account Image",
+                  style: GoogleFonts.lato(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+              Divider(
+                color: Colors.white,
+                height: 20,
+                indent: 32,
+                endIndent: 32,
+              ),
+              GestureDetector(
+                onTap: () {
+                  imageNotifier.setImage(fromCamera: true);
+                },
+                child: Text(
+                  "Take picture",
+                  style: GoogleFonts.lato(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  imageNotifier.setImage();
+                },
+                child: Text(
+                  "Import from gallery",
+                  style: GoogleFonts.lato(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 16,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

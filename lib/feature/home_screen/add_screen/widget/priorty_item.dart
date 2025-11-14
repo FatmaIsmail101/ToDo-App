@@ -16,6 +16,9 @@ class PriortyItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Bounceable(
       onTap: selectPriority,
@@ -37,7 +40,7 @@ class PriortyItem extends ConsumerWidget {
             Icon(model.label, color: Colors.white),
             Text(
               "${model.level}",
-              style: GoogleFonts.getFont(selectedFont,
+              style: GoogleFonts.getFont(safeFont,
                 fontSize: 12,
                 fontWeight: FontWeight.w500,
                 color: Colors.white,

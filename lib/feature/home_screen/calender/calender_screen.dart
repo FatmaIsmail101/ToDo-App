@@ -29,6 +29,9 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
   Widget build(BuildContext context) {
     final calender = ref.watch(calenderProvider);
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return SafeArea(
       child: Column(
@@ -39,7 +42,7 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
             child: Text(
               "Calendar",
               style: GoogleFonts.getFont(
-                selectedFont,
+                safeFont,
                 fontWeight: FontWeight.w500,
                 fontSize: 20,
                 color: Colors.white,

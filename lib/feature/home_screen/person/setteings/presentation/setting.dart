@@ -18,6 +18,9 @@ class SettingsScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentColor = isDark ? darkThemePreview : themePreview;
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Scaffold(
       backgroundColor: currentColor.colorScheme.primary,
@@ -26,7 +29,7 @@ class SettingsScreen extends ConsumerWidget {
         title: Text(
           "Settings",
           style: GoogleFonts.getFont(
-            selectedFont,
+            safeFont,
             fontWeight: FontWeight.normal,
             fontSize: 20,
             color: Colors.white,
@@ -50,7 +53,7 @@ class SettingsScreen extends ConsumerWidget {
             Text(
               "Settings",
               style: GoogleFonts.getFont(
-                selectedFont,
+                safeFont,
                 fontWeight: FontWeight.normal,
                 fontSize: 14,
                 color: Colors.grey,
@@ -67,7 +70,7 @@ class SettingsScreen extends ConsumerWidget {
                   Text(
                     "Change app color",
                     style: GoogleFonts.getFont(
-                      selectedFont,
+                      safeFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -93,7 +96,7 @@ class SettingsScreen extends ConsumerWidget {
                   Text(
                     "Change app typography",
                     style: GoogleFonts.getFont(
-                      selectedFont,
+                      safeFont,
                       fontWeight: FontWeight.normal,
                       fontSize: 16,
                       color: Colors.white,
@@ -115,7 +118,7 @@ class SettingsScreen extends ConsumerWidget {
                 Text(
                   "Change app language",
                   style: GoogleFonts.getFont(
-                    selectedFont,
+                    safeFont,
                     fontWeight: FontWeight.normal,
                     fontSize: 16,
                     color: Colors.white,
@@ -132,7 +135,7 @@ class SettingsScreen extends ConsumerWidget {
             Text(
               "Import",
               style: GoogleFonts.getFont(
-                selectedFont,
+                safeFont,
                 fontWeight: FontWeight.normal,
                 fontSize: 14,
                 color: Colors.grey,
@@ -145,7 +148,7 @@ class SettingsScreen extends ConsumerWidget {
                 Text(
                   "Import from Google calendar",
                   style: GoogleFonts.getFont(
-                    selectedFont,
+                    safeFont,
                     fontWeight: FontWeight.normal,
                     fontSize: 16,
                     color: Colors.white,

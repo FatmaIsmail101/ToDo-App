@@ -23,6 +23,9 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
     // 🧠 هنا هنقرأ الكاتيجوريز من الـ provider
     final categories = ref.watch(categoryViewModelProvider);
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Container(
       decoration: BoxDecoration(
@@ -37,7 +40,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
           children: [
             Text(
               "Choose Category",
-              style: GoogleFonts.getFont(selectedFont,
+              style: GoogleFonts.getFont(safeFont,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -105,7 +108,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
               ),
               child: Text(
                 "Add Category",
-                style: GoogleFonts.getFont(selectedFont, color: Colors.white),
+                style: GoogleFonts.getFont(safeFont, color: Colors.white),
               ),
             ),
           ],

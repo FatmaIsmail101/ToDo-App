@@ -8,18 +8,20 @@ import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.
 final appThemeProvider = Provider<ThemeData>((ref) {
   final scheme = ref.watch(themeSchemeProvider);
   final font = ref.watch(fontProvider);
+  final safeFont = font.isEmpty ? "Lato" : font;
   return FlexThemeData.light(scheme: scheme, useMaterial3: true,
       fontFamily: GoogleFonts
-          .getFont(font)
+          .getFont(safeFont)
           .fontFamily);
 });
 
 final appDarkThemeProvider = Provider<ThemeData>((ref) {
   final scheme = ref.watch(themeSchemeProvider);
   final font = ref.watch(fontProvider);
+  final safeFont = font.isEmpty ? "Lato" : font;
 
   return FlexThemeData.dark(scheme: scheme, useMaterial3: true, fontFamily:
   GoogleFonts
-      .getFont(font)
+      .getFont(safeFont)
       .fontFamily);
 });

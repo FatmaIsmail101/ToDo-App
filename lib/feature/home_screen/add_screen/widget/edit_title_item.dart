@@ -19,6 +19,9 @@ class EditTitleItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Container(
       height: 300,
@@ -35,7 +38,7 @@ class EditTitleItem extends ConsumerWidget {
             Text(
               "Edit Task Title",
               style: GoogleFonts.getFont(
-                selectedFont,
+                safeFont,
                 color: Colors.white,
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
@@ -48,7 +51,7 @@ class EditTitleItem extends ConsumerWidget {
               decoration: InputDecoration(
                 labelText: "Title",
                 labelStyle: GoogleFonts.getFont(
-                  selectedFont,
+                  safeFont,
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -69,7 +72,7 @@ class EditTitleItem extends ConsumerWidget {
               decoration: InputDecoration(
                 labelText: "Description",
                 labelStyle: GoogleFonts.getFont(
-                  selectedFont,
+                  safeFont,
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
@@ -96,7 +99,7 @@ class EditTitleItem extends ConsumerWidget {
                     child: Text(
                       "Cancel",
                       style: GoogleFonts.getFont(
-                        selectedFont,
+                        safeFont,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         color: Color(0xff8875FF),
@@ -117,7 +120,7 @@ class EditTitleItem extends ConsumerWidget {
                     child: Text(
                       "Edit Task",
                       style: GoogleFonts.getFont(
-                        selectedFont,
+                        safeFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
                         color: Colors.white,

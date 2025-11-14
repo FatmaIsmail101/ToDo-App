@@ -37,6 +37,9 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
     final state = ref.watch(editViewModelProvider(model));
     final notifier = ref.read(editViewModelProvider(model).notifier);
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Scaffold(
       backgroundColor: currentColor.colorScheme.primary,
@@ -49,7 +52,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
               child: Text(
                 "Edit Task ${model.title}",
                 style: GoogleFonts.getFont(
-                  selectedFont,
+                  safeFont,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -94,7 +97,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       Text(
                         state.title,
                         style: GoogleFonts.getFont(
-                          selectedFont,
+                          safeFont,
                           color: Color(0xe0ffffff),
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
@@ -103,7 +106,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       Text(
                         state.description,
                         style: GoogleFonts.getFont(
-                          selectedFont,
+                          safeFont,
                           color: Colors.grey,
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
@@ -151,7 +154,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Text(
                     "Task Time :",
                     style: GoogleFonts.getFont(
-                      selectedFont,
+                      safeFont,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -175,7 +178,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                     child: Text(
                       DateFormat('dd/MM/yyyy hh:mm a').format(state.dateTime),
                       style: GoogleFonts.getFont(
-                        selectedFont,
+                        safeFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                         color: Colors.white,
@@ -191,7 +194,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Text(
                     "Task Category :",
                     style: GoogleFonts.getFont(
-                      selectedFont,
+                      safeFont,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -229,7 +232,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                         Text(
                           state.category.name,
                           style: GoogleFonts.getFont(
-                            selectedFont,
+                            safeFont,
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
                             color: Colors.white,
@@ -247,7 +250,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Text(
                     "Task Priority :",
                     style: GoogleFonts.getFont(
-                      selectedFont,
+                      safeFont,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -286,7 +289,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                         Text(
                           "${state.priority.level}",
                           style: GoogleFonts.getFont(
-                            selectedFont,
+                            safeFont,
                             fontWeight: FontWeight.w500,
                             fontSize: 12,
                             color: Colors.white,
@@ -304,7 +307,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Text(
                     "Sub-Task  :",
                     style: GoogleFonts.getFont(
-                      selectedFont,
+                      safeFont,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -325,7 +328,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                     child: Text(
                       "Add Sub-Task",
                       style: GoogleFonts.getFont(
-                        selectedFont,
+                        safeFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 12,
                         color: Colors.white,
@@ -348,7 +351,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                     Text(
                       "Delete Task",
                       style: GoogleFonts.getFont(
-                        selectedFont,
+                        safeFont,
                         color: Colors.red,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -372,7 +375,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                 child: Text(
                   "Edit Task",
                   style: GoogleFonts.getFont(
-                    selectedFont,
+                    safeFont,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
                     color: Colors.white,

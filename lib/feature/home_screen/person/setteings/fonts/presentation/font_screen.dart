@@ -12,6 +12,9 @@ class FontScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
     final notifer = ref.read(fontProvider.notifier);
     final fontList = [
       'Lato',
@@ -39,7 +42,7 @@ class FontScreen extends ConsumerWidget {
         title: Text(
           "Fonts",
           style: GoogleFonts.getFont(
-            selectedFont,
+            safeFont,
             fontSize: 22,
             color: Colors.white,
           ),
@@ -60,7 +63,7 @@ class FontScreen extends ConsumerWidget {
             onTap: () {
               notifer.setFont(fontName);
             },
-            trailing: selectedFont == fontName
+            trailing: safeFont == fontName
                 ? Icon(Icons.check, color: Colors.green)
                 : null,
           );

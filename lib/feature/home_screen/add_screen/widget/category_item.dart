@@ -16,6 +16,9 @@ class CategoryItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
+    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+        ? "Lato"
+        : selectedFont;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -38,7 +41,7 @@ class CategoryItem extends ConsumerWidget {
         ),
         Text(
           model.name,
-          style: GoogleFonts.getFont(selectedFont,
+          style: GoogleFonts.getFont(safeFont,
             fontWeight: FontWeight.w500,
             fontSize: 14,
             color: Colors.white,
