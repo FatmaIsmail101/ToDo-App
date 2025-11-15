@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
 
 import '../fonts/provider/font_provider.dart';
@@ -18,8 +19,7 @@ class SettingsScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentColor = isDark ? darkThemePreview : themePreview;
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
 
     return Scaffold(
@@ -27,7 +27,7 @@ class SettingsScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: currentColor.colorScheme.primary,
         title: Text(
-          "Settings",
+          context.local?.settings ?? "",
           style: GoogleFonts.getFont(
             safeFont,
             fontWeight: FontWeight.normal,
@@ -51,7 +51,7 @@ class SettingsScreen extends ConsumerWidget {
           spacing: 16,
           children: [
             Text(
-              "Settings",
+              context.local?.settings ?? "",
               style: GoogleFonts.getFont(
                 safeFont,
                 fontWeight: FontWeight.normal,
@@ -68,7 +68,7 @@ class SettingsScreen extends ConsumerWidget {
                 children: <Widget>[
                   Icon(Icons.format_paint_sharp, color: Colors.white, size: 35),
                   Text(
-                    "Change app color",
+                    context.local?.change_app_color ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
@@ -94,7 +94,7 @@ class SettingsScreen extends ConsumerWidget {
                 children: <Widget>[
                   Icon(Icons.text_fields, color: Colors.white, size: 35),
                   Text(
-                    "Change app typography",
+                    context.local?.change_app_typography ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
@@ -111,29 +111,34 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ),
             ),
-            Row(
-              spacing: 10,
-              children: <Widget>[
-                Icon(Icons.language, color: Colors.white, size: 35),
-                Text(
-                  "Change app language",
-                  style: GoogleFonts.getFont(
-                    safeFont,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 16,
-                    color: Colors.white,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, PageRouteName.localizationScreen);
+              },
+              child: Row(
+                spacing: 10,
+                children: <Widget>[
+                  Icon(Icons.language, color: Colors.white, size: 35),
+                  Text(
+                    context.local?.change_app_language ?? "",
+                    style: GoogleFonts.getFont(
+                      safeFont,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Spacer(),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.white,
-                  size: 35,
-                ),
-              ],
+                  Spacer(),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                ],
+              ),
             ),
             Text(
-              "Import",
+              context.local?.import ?? "",
               style: GoogleFonts.getFont(
                 safeFont,
                 fontWeight: FontWeight.normal,
@@ -146,7 +151,7 @@ class SettingsScreen extends ConsumerWidget {
               children: <Widget>[
                 Icon(Icons.import_export, color: Colors.white, size: 25),
                 Text(
-                  "Import from Google calendar",
+                  context.local?.import_from_google_calendar ?? "",
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.normal,

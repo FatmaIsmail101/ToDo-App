@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 
 import 'card_date_item.dart';
 
@@ -34,7 +35,8 @@ class DaysList extends StatelessWidget {
               date.day == selectedDay!.day &&
               date.month == selectedDay!.month &&
               date.year == selectedDay!.year;
-          final isWeekend = dayName == "SAT" || dayName == "SUN";
+          final isWeekend =
+              dayName == context.local?.sat || dayName == context.local?.sun;
           return GestureDetector(
             onTap: () {
               if (onDaySelected != null) {

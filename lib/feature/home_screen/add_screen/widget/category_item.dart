@@ -16,7 +16,7 @@ class CategoryItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+    final safeFont = (selectedFont.isEmpty)
         ? "Lato"
         : selectedFont;
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/calender/view_model/calender_view_model.dart';
 import 'package:up_todo_app/feature/home_screen/calender/widgets/calender_header.dart';
 import 'package:up_todo_app/feature/home_screen/calender/widgets/days_list.dart';
@@ -29,8 +30,7 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
   Widget build(BuildContext context) {
     final calender = ref.watch(calenderProvider);
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
 
     return SafeArea(
@@ -40,7 +40,7 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 24.0, right: 24, left: 24),
             child: Text(
-              "Calendar",
+              context.local?.calendar ?? "",
               style: GoogleFonts.getFont(
                 safeFont,
                 fontWeight: FontWeight.w500,

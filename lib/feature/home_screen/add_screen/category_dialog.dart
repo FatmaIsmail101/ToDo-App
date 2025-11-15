@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/category_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
@@ -23,7 +24,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
     // 🧠 هنا هنقرأ الكاتيجوريز من الـ provider
     final categories = ref.watch(categoryViewModelProvider);
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+    final safeFont = (selectedFont.isEmpty)
         ? "Lato"
         : selectedFont;
 
@@ -39,7 +40,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
           spacing: 16,
           children: [
             Text(
-              "Choose Category",
+              context.local?.choose_category ?? "",
               style: GoogleFonts.getFont(safeFont,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -107,7 +108,7 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                 ),
               ),
               child: Text(
-                "Add Category",
+                context.local?.add_category ?? "",
                 style: GoogleFonts.getFont(safeFont, color: Colors.white),
               ),
             ),

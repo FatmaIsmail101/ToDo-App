@@ -16,14 +16,13 @@ class CalenderHeader extends ConsumerWidget {
     required this.goToNext,
     required this.currentDate,
   });
+
   final DateTime currentDate;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
-        : selectedFont;
+    final safeFont = (selectedFont.isEmpty) ? "Lato" : selectedFont;
 
     final state = ref.watch(calenderProvider);
     final notifier = ref.read(calenderProvider.notifier);

@@ -14,4 +14,5 @@ class PageRouteName {
   static const String appSettings = "/appSettings";
   static const String colorScreen = "/colorScreen";
   static const String fontScreen = "/fontScreen";
+  static const String localizationScreen = "/localizationScreen";
 }

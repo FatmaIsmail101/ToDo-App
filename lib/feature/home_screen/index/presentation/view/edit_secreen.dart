@@ -4,6 +4,7 @@ import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/category_dialog.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/priority_dialog.dart';
@@ -37,9 +38,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
     final state = ref.watch(editViewModelProvider(model));
     final notifier = ref.read(editViewModelProvider(model).notifier);
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
-        : selectedFont;
+    final safeFont = (selectedFont.isEmpty) ? "Lato" : selectedFont;
 
     return Scaffold(
       backgroundColor: currentColor.colorScheme.primary,
@@ -50,7 +49,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
           children: [
             Expanded(
               child: Text(
-                "Edit Task ${model.title}",
+                "${context.local?.edit_task ?? ""} ${model.title}",
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontSize: 20,
@@ -152,7 +151,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Icon(Icons.timer_outlined, color: Colors.white),
                   SizedBox(width: 8),
                   Text(
-                    "Task Time :",
+                    context.local?.task_time ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontSize: 16,
@@ -192,7 +191,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Image.asset(Assets.tag),
                   SizedBox(width: 8),
                   Text(
-                    "Task Category :",
+                    context.local?.task_category ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontSize: 16,
@@ -248,7 +247,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Icon(Icons.flag),
                   SizedBox(width: 8),
                   Text(
-                    "Task Priority :",
+                    context.local?.task_priority ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontSize: 16,
@@ -305,7 +304,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Icon(Icons.task_rounded),
                   SizedBox(width: 8),
                   Text(
-                    "Sub-Task  :",
+                    context.local?.sub_task ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontSize: 16,
@@ -326,7 +325,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       backgroundColor: Colors.black12,
                     ),
                     child: Text(
-                      "Add Sub-Task",
+                      context.local?.add_sub_task ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.w500,
@@ -349,7 +348,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   children: [
                     Icon(Icons.delete_outline, color: Colors.red),
                     Text(
-                      "Delete Task",
+                      context.local?.delete_task ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         color: Colors.red,
@@ -373,7 +372,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   ),
                 ),
                 child: Text(
-                  "Edit Task",
+                  context.local?.edit_task ?? "",
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.w500,

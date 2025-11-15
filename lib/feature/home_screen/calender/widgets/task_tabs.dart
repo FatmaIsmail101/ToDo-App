@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 
 final selectedTabProvider = StateProvider<int>((ref) => 0);
 
@@ -27,7 +28,7 @@ class TaskTabs extends ConsumerWidget {
             child: _buildTabButton(
               context,
               ref,
-              label: "NotCompleted",
+              label: context.local?.not_completed ?? "",
               index: 0,
               isSelected: selectedTab == 0,
             ),
@@ -36,7 +37,7 @@ class TaskTabs extends ConsumerWidget {
             child: _buildTabButton(
               context,
               ref,
-              label: "Completed",
+              label: context.local?.completed ?? "",
               index: 1,
               isSelected: selectedTab == 1,
             ),

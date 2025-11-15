@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/task_provider/task_providers.dart';
@@ -69,7 +70,7 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
                 children: [
                   Icon(Icons.more_horiz, color: Colors.white),
                   Text(
-                    "Index",
+                    context.local?.index ?? "",
                     style: GoogleFonts.lato(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
@@ -88,7 +89,7 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
                         children: [
                           Image(image: AssetImage(Assets.indexPIC)),
                           Text(
-                            "What do you want to do today?",
+                            context.local?.what_do_you_want_today ?? "",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
                               fontWeight: FontWeight.w500,
@@ -97,7 +98,7 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
                             ),
                           ),
                           Text(
-                            "Tap + to add your tasks",
+                            context.local?.tap_to_add_tasks ?? "",
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
                               fontWeight: FontWeight.w500,
@@ -113,7 +114,7 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
                       child: TextField(
                         controller: _searchController,
                         decoration: InputDecoration(
-                          hintText: "Search for your task...",
+                          hintText: context.local?.search_for_task ?? "",
                           hintStyle: GoogleFonts.lato(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -141,7 +142,7 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
                     ),
               if (notCompleted.isNotEmpty) ...[
                 Text(
-                  "Not Completed",
+                  context.local?.not_completed ?? "",
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
@@ -172,7 +173,7 @@ class _IndexSecreenState extends ConsumerState<IndexScreen> {
               ],
               if (Completed.isNotEmpty) ...[
                 Text(
-                  "Completed",
+                  context.local?.completed ?? "",
 
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.w500,

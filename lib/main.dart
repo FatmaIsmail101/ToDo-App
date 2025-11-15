@@ -10,6 +10,7 @@ import 'package:up_todo_app/feature/home_screen/index/presentation/view/edit_sec
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/fonts/presentation/font_screen.dart';
+import 'package:up_todo_app/feature/home_screen/person/setteings/localization/provider/provider.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/presentation/setting.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/theme_data.dart';
 import 'package:up_todo_app/feature/intro/presentation/intro_screen.dart';
@@ -18,7 +19,9 @@ import 'package:up_todo_app/feature/intro/presentation/start_screen.dart';
 import 'core/casheing/cache_helper.dart';
 import 'core/routes/page_route_name.dart';
 import 'feature/home_screen/add_screen/add_screen.dart';
+import 'feature/home_screen/person/setteings/localization/presentation/local_screen.dart';
 import 'feature/home_screen/person/setteings/theme/presentation/color_screen.dart';
+import 'l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +38,11 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lightTheme = ref.watch(appThemeProvider);
     final darkTheme = ref.watch(appDarkThemeProvider);
-
+    final local = ref.watch(localization);
     return MaterialApp(
+      locale: Locale(local),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       themeMode: ThemeMode.dark,
       darkTheme: darkTheme,
       theme: lightTheme,
@@ -61,7 +67,8 @@ class MyApp extends ConsumerWidget {
         PageRouteName.addCategoryScreen: (context) => AddCategoryScreen(),
         PageRouteName.appSettings: (context) => SettingsScreen(),
         PageRouteName.colorScreen: (context) => ColorScreen(),
-        PageRouteName.fontScreen: (context) => FontScreen()
+        PageRouteName.fontScreen: (context) => FontScreen(),
+        PageRouteName.localizationScreen: (context) => LocalizationScreen()
 
 
       },

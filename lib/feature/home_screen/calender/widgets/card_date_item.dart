@@ -21,8 +21,7 @@ class CardDateItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
 
     return Container(

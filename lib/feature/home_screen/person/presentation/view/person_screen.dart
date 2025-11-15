@@ -5,6 +5,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/core/reusable_widgets/buttons.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
@@ -44,8 +45,7 @@ class PersonScreen extends ConsumerWidget {
         .toList();
     final logOut = ref.watch(logOutProvider);
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
 
     final imagePath = ref.watch(pickImage);
@@ -58,7 +58,7 @@ class PersonScreen extends ConsumerWidget {
         backgroundColor: currentColor.colorScheme.primary,
         centerTitle: true,
         title: Text(
-          "Profile",
+          context.local?.profile ?? "",
           style: GoogleFonts.getFont(
             safeFont,
             fontSize: 20,
@@ -110,7 +110,7 @@ class PersonScreen extends ConsumerWidget {
                 ],
               ),
               Text(
-                "Settings",
+                context.local?.settings ?? "",
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontWeight: FontWeight.normal,
@@ -127,7 +127,7 @@ class PersonScreen extends ConsumerWidget {
                   children: <Widget>[
                     Icon(Icons.settings, color: Colors.white, size: 35),
                     Text(
-                      "App Settings",
+                      context.local?.app_settings ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
@@ -145,7 +145,7 @@ class PersonScreen extends ConsumerWidget {
                 ),
               ),
               Text(
-                "Account",
+                context.local?.account ?? "",
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontWeight: FontWeight.normal,
@@ -161,7 +161,7 @@ class PersonScreen extends ConsumerWidget {
                     builder: (BuildContext dialogContext) {
                       return alertDialog(
                         context: context,
-                        text: "Change account name",
+                        text: context.local?.change_account_name ?? "",
                         controller: nameController,
                         hint: "Enter Name",
                         onTap: () async {
@@ -189,7 +189,7 @@ class PersonScreen extends ConsumerWidget {
                   children: <Widget>[
                     Icon(Icons.person, color: Colors.white, size: 35),
                     Text(
-                      "Change account name",
+                      context.local?.change_account_name ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
@@ -247,7 +247,7 @@ class PersonScreen extends ConsumerWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "Change account password",
+                        context.local?.change_account_password ?? "",
                         style: GoogleFonts.getFont(
                           safeFont,
                           fontWeight: FontWeight.normal,
@@ -274,7 +274,7 @@ class PersonScreen extends ConsumerWidget {
                   children: <Widget>[
                     Icon(Icons.image_rounded, color: Colors.white, size: 35),
                     Text(
-                      "Change account Image",
+                      context.local?.change_account_image ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
@@ -305,7 +305,7 @@ class PersonScreen extends ConsumerWidget {
                 children: <Widget>[
                   Image.asset(Assets.about, color: Colors.white),
                   Text(
-                    "About US",
+                    context.local?.about_us ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
@@ -348,7 +348,7 @@ class PersonScreen extends ConsumerWidget {
                 children: <Widget>[
                   Image.asset(Assets.like, color: Colors.white),
                   Text(
-                    "Support US",
+                    context.local?.support_us ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
@@ -385,7 +385,7 @@ class PersonScreen extends ConsumerWidget {
                     Icon(Icons.logout, color: Colors.red, size: 30),
                     // Image.asset(Assets.like,color: Colors.white,),
                     Text(
-                      "Log out",
+                      context.local?.log_out ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,

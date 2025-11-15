@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.dart';
 
 class ColorScreen extends ConsumerWidget {
@@ -20,7 +21,7 @@ class ColorScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: currentColor.colorScheme.primary,
         title: Text(
-          "Color Screen",
+          context.local?.color_screen ?? "",
           style: GoogleFonts.lato(
             fontWeight: FontWeight.normal,
             fontSize: 20,

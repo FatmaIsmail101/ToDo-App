@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/presentation/provider/timer_provider.dart';
 
 import '../../../person/setteings/fonts/provider/font_provider.dart';
@@ -23,8 +24,7 @@ class FoucsScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentColor = isDark ? darkThemePreview : themePreview;
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
 
     return SafeArea(
@@ -35,7 +35,7 @@ class FoucsScreen extends ConsumerWidget {
           child: Column(
             children: [
               Text(
-                "Focus Mode",
+                context.local?.focus_mode ?? "",
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontWeight: FontWeight.normal,
@@ -98,8 +98,8 @@ class FoucsScreen extends ConsumerWidget {
                 focusColor: Color(0xff8875FF),
                 child: Text(
                   (state == null || !state.isRunning)
-                      ? "Start Focusing"
-                      : "Stop Timer",
+                      ? context.local?.start_focusing ?? ""
+                      : context.local?.stop_timer ?? "",
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.normal,
@@ -119,7 +119,7 @@ class FoucsScreen extends ConsumerWidget {
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                     focusColor: Color(0xff8875FF),
                     child: Text(
-                      "Resume Timer",
+                      context.local?.resume_timer ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
@@ -148,7 +148,7 @@ class FoucsScreen extends ConsumerWidget {
             return AlertDialog(
               backgroundColor: const Color(0xff75caff),
               title: Text(
-                "Select Timer Duration",
+                context.local?.select_timer_duration ?? "",
                 style: GoogleFonts.lato(
                   fontWeight: FontWeight.normal,
                   fontSize: 18,
@@ -162,7 +162,7 @@ class FoucsScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Minutes",
+                        context.local?.minutes ?? "",
                         style: GoogleFonts.lato(
                           fontWeight: FontWeight.normal,
                           fontSize: 18,
@@ -195,7 +195,7 @@ class FoucsScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Seconds",
+                        context.local?.seconds ?? "",
                         style: GoogleFonts.lato(
                           fontWeight: FontWeight.normal,
                           fontSize: 18,

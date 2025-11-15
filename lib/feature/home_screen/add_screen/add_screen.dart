@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/core/reusable_widgets/custom_text_field.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/category_dialog.dart';
@@ -29,8 +30,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
   @override
   Widget build(BuildContext context) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
 
     final selectedColor = ref.watch(themeSchemeProvider);
@@ -55,7 +55,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
             spacing: 24,
             children: [
               Text(
-                "Add Task",
+                context.local?.add_task ?? "",
                 style: GoogleFonts.getFont(
                   safeFont,
                   color: Colors.white,
@@ -66,14 +66,14 @@ class _AddScreenState extends ConsumerState<AddScreen> {
               //title
               CustomTextField(
                 onChange: notifier.updateTitle,
-                hint: "Title",
+                hint: context.local?.title ?? "",
                 textController: titleController,
               ),
               //Description
               CustomTextField(
                 textController: descriptionController,
                 onChange: notifier.updateDescription,
-                hint: "Description",
+                hint: context.local?.description ?? "",
               ),
               Row(
                 children: [
@@ -130,7 +130,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                           .saveTask();
                       if (task != null) {
                         NotificationBar.showNotification(
-                          message: "Task Added Successfully",
+                          message: context.local?.task_added_successfully ?? "",
                           type: ContentType.success,
                           context: context,
                           icon: Icons.check,
@@ -138,7 +138,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
                         Navigator.pop(context);
                       } else {
                         NotificationBar.showNotification(
-                          message: "Fill All fields",
+                          message: context.local?.fill_all_fields ?? "",
                           type: ContentType.failure,
                           context: context,
                           icon: Icons.error,

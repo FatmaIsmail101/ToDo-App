@@ -2,6 +2,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/priorty_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
@@ -21,7 +22,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
   @override
   Widget build(BuildContext context) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
+    final safeFont = (selectedFont.isEmpty)
         ? "Lato"
         : selectedFont;
 
@@ -38,7 +39,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
           spacing: 16,
           children: [
             Text(
-              "Task Priority",
+              context.local?.task_priority ?? "",
               style: GoogleFonts.getFont(safeFont,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -73,7 +74,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
                   child: TextButton(
                     onPressed: () {
                       NotificationBar.showNotification(
-                          message: "Please Select Priorty",
+                          message: context.local?.please_select_priority ?? "",
                           type: ContentType.failure
                           ,
                           context: context,
@@ -83,7 +84,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
                       backgroundColor: Colors.transparent,
                     ),
                     child: Text(
-                      "Cancel",
+                      context.local?.cancel ?? "",
                       style: GoogleFonts.getFont(safeFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
@@ -106,7 +107,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
                         )
                     ),
                     child: Text(
-                      "Save",
+                      context.local?.save ?? "",
                       style: GoogleFonts.getFont(safeFont,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,

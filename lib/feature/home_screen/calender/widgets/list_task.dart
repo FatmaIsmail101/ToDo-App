@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/calender/widgets/task_tabs.dart';
 
 import '../../../../core/routes/page_route_name.dart';
@@ -14,8 +15,7 @@ class ListTask extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
 
     final taskState = ref.watch(taskViewModelProvider);
@@ -30,7 +30,7 @@ class ListTask extends ConsumerWidget {
     if (filteredTasks.isEmpty) {
       return Center(
         child: Text(
-          "No tasks available",
+          context.local?.no_tasks_available ?? "",
           style: GoogleFonts.getFont(
             safeFont,
             fontSize: 16,

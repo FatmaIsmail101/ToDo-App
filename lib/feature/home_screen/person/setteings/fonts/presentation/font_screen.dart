@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/fonts/provider/font_provider.dart';
 
 import '../../theme/provider.dart';
@@ -12,8 +13,7 @@ class FontScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty || selectedFont == null)
-        ? "Lato"
+    final safeFont = (selectedFont.isEmpty) ? "Lato"
         : selectedFont;
     final notifer = ref.read(fontProvider.notifier);
     final fontList = [
@@ -40,7 +40,7 @@ class FontScreen extends ConsumerWidget {
         backgroundColor: currentColor.colorScheme.primary,
         centerTitle: true,
         title: Text(
-          "Fonts",
+          context.local?.fonts ?? "",
           style: GoogleFonts.getFont(
             safeFont,
             fontSize: 22,
