@@ -18,37 +18,37 @@ class IntroScreen extends StatefulWidget {
 class _IntroScreenState extends State<IntroScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     CacheHelper.setBool("Intro", true);
   }
 
-  List<IntroModel> intos = [
+  static final List<IntroModel> intos = [
     IntroModel(
       imagePath: Assets.intro1,
       title: "Manage your tasks",
-      description:
-          "You can easily manage all of your daily tasks in DoMe for free",
+      description: "You can easily manage all of your daily tasks in DoMe for free",
     ),
     IntroModel(
       imagePath: Assets.intro2,
       title: "Create daily routine",
-      description:
-          "In Uptodo  you can create your personalized routine to stay productive",
+      description: "In Uptodo you can create your personalized routine to stay productive",
     ),
     IntroModel(
       imagePath: Assets.intro3,
       title: "Organize your tasks",
-      description:
-          "You can organize your daily tasks by adding your tasks into separate categories",
+      description: "You can organize your daily tasks by adding your tasks into separate categories",
     ),
   ];
 
   final PageController _controller = PageController();
+  final pageNotifier = ValueNotifier<int>(0);
 
-  bool get endPage => currentPage == intos.length - 1;
-
-  int currentPage = 0;
+  @override
+  void dispose() {
+    _controller.dispose();
+    pageNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,69 +75,87 @@ class _IntroScreenState extends State<IntroScreen> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: PageView(
+              child: PageView.builder(
                 controller: _controller,
+                itemCount: intos.length,
                 onPageChanged: (index) {
-                  //todo:
-                  setState(() {
-                    currentPage = index;
-                  });
+                  pageNotifier.value = index;
+                  print('Page changed to: $index'); // ✅ للتأكد
                 },
-                children: intos
-                    .map(
-                      (model) => InteoWidget(
-                        model: model,
-                        currentIndex: currentPage,
-                        totalPage: intos.length,
-                      ),
-                    )
-                    .toList(),
+                itemBuilder: (context, index) {
+                  return InteoWidget(
+                    model: intos[index],
+                    currentIndex: index,
+                    totalPage: intos.length,
+
+                  );
+                },
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    if ((_controller.page ?? 0) > 0) {
-                      _controller.previousPage(
-                        duration: Duration(milliseconds: 700),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                    int nextPage = ((_controller.page ?? 0).toInt() + 1);
-                  },
-                  child: Text(
-                    "Back",
-                    style: GoogleFonts.lato(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                      color: Color(0x24FFFFFF),
+
+
+            // ✅ الأزرار
+            ValueListenableBuilder<int>(
+              valueListenable: pageNotifier,
+              builder: (context, currentPage,
+                  _) { // ✅ استخدمي currentPage من هنا!
+                bool isLastPage = currentPage == intos.length - 1;
+
+                print(
+                    "currentPage: $currentPage, isLastPage: $isLastPage"); // ✅ للتأكد
+
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: currentPage > 0
+                          ? () {
+                        print("Back Button pressed");
+                        _controller.previousPage(
+                          duration: Duration(milliseconds: 700),
+                          curve: Curves.easeInOut,
+                        );
+                      }
+                          : null,
+                      child: Text(currentPage == 0 ? "" :
+                      "Back",
+                        style: GoogleFonts.lato(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: currentPage > 0
+                              ? Color(0xFFFFFFFF)
+                              : Color(0x24FFFFFF),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Button(
-                  onPressed: () {
-                    int nextPage = (_controller.page!.toInt() + 1);
-                    if (nextPage < 3) {
-                      _controller.animateToPage(
-                        nextPage,
-                        duration: Duration(milliseconds: 500),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                    if (nextPage == 3) {
-                      Navigator.pushNamed(context, PageRouteName.startScreen);
-                    }
-                  },
-                  text: endPage ? "GET STARED" : "NEXT",
-                  style: GoogleFonts.lato(
-                    color: Color(0xFFFFFFFF),
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
+                    Button(
+                      onPressed: () {
+                        print("Button pressed, isLastPage: $isLastPage");
+
+                        if (isLastPage) {
+                          print("Navigating to start screen");
+                          Navigator.pushNamed(
+                            context,
+                            PageRouteName.startScreen,
+                          );
+                        } else {
+                          print("Going to next page");
+                          _controller.nextPage(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                        }
+                      },
+                      text: isLastPage ? "GET STARTED" : "NEXT",
+                      style: GoogleFonts.lato(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ],
         ),

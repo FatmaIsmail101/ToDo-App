@@ -14,19 +14,26 @@ class InteoWidget extends StatelessWidget {
   final IntroModel model;
   final int currentIndex;
   final int totalPage;
-
   @override
   Widget build(BuildContext context) {
     return  Column(
-        spacing: 50,
-        mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 32,
+      mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 260,height: 260,
-              child: Image.asset(model.imagePath)),
-          DotsIndicator(totalDot: totalPage, currentIndex: currentIndex),
-          Text(
-            model.title,
+        Flexible(
+          flex: 3,
+          child: RepaintBoundary(
+            child: Image.asset(
+              model.imagePath,
+              cacheHeight: 800,
+              cacheWidth: 800,
+            ),
+          ),
+        ),
+        //ValueListenableBuilder(valueListenable: p, builder: builder)
+        DotsIndicator(totalDot: totalPage, currentIndex: currentIndex),
+        Text(
+          model.title,
             style: GoogleFonts.lato(
               fontWeight: FontWeight.bold,
               fontSize: 28,

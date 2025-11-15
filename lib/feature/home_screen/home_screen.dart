@@ -2,12 +2,13 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:up_todo_app/feature/home_screen/add_screen/add_screen.dart';
-import 'package:up_todo_app/feature/home_screen/calender/calender_screen.dart';
-import 'package:up_todo_app/feature/home_screen/foucs/presentation/view/foucs_screen.dart';
-import 'package:up_todo_app/feature/home_screen/index/presentation/view/index_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.dart';
+
+import 'add_screen/add_screen.dart';
+import 'calender/calender_screen.dart';
+import 'foucs/presentation/view/foucs_screen.dart';
+import 'index/presentation/view/index_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +18,21 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  int currentIndex = 0;
+  final ValueNotifier<int> currentIndexNotifier = ValueNotifier<int>(0);
+
+  final List<Widget> screens = [
+    const RepaintBoundary(child: IndexScreen()),
+    const RepaintBoundary(child: CalenderScreen()),
+    const SizedBox.shrink(), // AddScreen handled separately
+    const RepaintBoundary(child: FoucsScreen()),
+    RepaintBoundary(child: PersonScreen()),
+  ];
+
+  @override
+  void dispose() {
+    currentIndexNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +45,54 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final currentColor = isDark ? darkThemePreview : themePreview;
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      backgroundColor: currentColor.colorScheme.primary,
+      body: ValueListenableBuilder<int>(
+        valueListenable: currentIndexNotifier,
+        builder: (context, currentIndex, _) {
+          return IndexedStack(
+            index: currentIndex,
+            children: screens,
+          );
+        },
+      ),
+      bottomNavigationBar: ValueListenableBuilder<int>(
+        valueListenable: currentIndexNotifier,
+        builder: (context, currentIndex, _) {
+          return ConvexAppBar(
+            elevation: 4,
+            activeColor: Colors.blue,
+            items: const [
+              TabItem(icon: Icons.home_filled),
+              TabItem(icon: Icons.calendar_month),
+              TabItem(icon: Icons.add),
+              TabItem(icon: Icons.access_time),
+              TabItem(icon: Icons.person),
+            ],
+            backgroundColor: currentColor.colorScheme.primary,
+            color: Colors.white,
+            height: 60,
+            initialActiveIndex: currentIndex,
+            onTap: (index) {
+              if (index == 2) {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (_) => AddScreen(),
+                );
+              } else {
+                currentIndexNotifier.value = index;
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+/*
+Scaffold(
+     // resizeToAvoidBottomInset: false,
       backgroundColor: currentColor.colorScheme.primary,
       bottomNavigationBar: ConvexAppBar(
         elevation: 20,
@@ -81,13 +143,4 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         children: screens,
       ),
     );
-  }
-
-  List<Widget> screens = [
-    IndexScreen(),
-    CalenderScreen(),
-    Container(), // مكان add فاضي
-    FoucsScreen(),
-    PersonScreen(),
-  ];
-}
+ */

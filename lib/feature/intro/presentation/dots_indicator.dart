@@ -19,7 +19,7 @@ class DotsIndicator extends StatelessWidget {
         bool isActive = index == currentIndex;
         return AnimatedContainer(
           duration: Duration(seconds: 1),
-          width: 27,
+          width: isActive ? 27 : 8,
           height: 4,
           decoration: BoxDecoration(
             color: isActive ? Color(0xdeffffff) : Colors.grey,

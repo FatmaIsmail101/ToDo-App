@@ -40,6 +40,7 @@ class MyApp extends ConsumerWidget {
     final darkTheme = ref.watch(appDarkThemeProvider);
     final local = ref.watch(localization);
     return MaterialApp(
+      showPerformanceOverlay: true,
       locale: Locale(local),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
