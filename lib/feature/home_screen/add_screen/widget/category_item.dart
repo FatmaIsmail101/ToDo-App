@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
+import '../../../../core/size_config/size_config.dart';
 import '../../person/setteings/fonts/provider/font_provider.dart';
 
 class CategoryItem extends ConsumerWidget {
@@ -22,16 +23,16 @@ class CategoryItem extends ConsumerWidget {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
-      spacing: 6,
+      spacing: SizeConfig.heightRatio(6),
       children: [
         InkWell(
           onTap: selected,
           child: Container(
             alignment: Alignment.center,
-            width: 64,
-            height: 64,
+            width: SizeConfig.widthRatio(64),
+            height: SizeConfig.heightRatio(64),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
               color: model.color,
                 border: Border.all(
                     color: isSelected ? Colors.white : Colors.transparent)
@@ -43,7 +44,7 @@ class CategoryItem extends ConsumerWidget {
           model.name,
           style: GoogleFonts.getFont(safeFont,
             fontWeight: FontWeight.w500,
-            fontSize: 14,
+            fontSize: SizeConfig.widthRatio(14),
             color: Colors.white,
           ),
         ),

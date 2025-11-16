@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/foucs/presentation/provider/timer_provider.dart';
 
+import '../../../../../core/size_config/size_config.dart';
 import '../../../person/setteings/fonts/provider/font_provider.dart';
 import '../../../person/setteings/theme/provider.dart';
 
@@ -31,7 +32,7 @@ class FoucsScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: currentColor.colorScheme.primary,
         body: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
           child: Column(
             children: [
               Text(
@@ -39,7 +40,7 @@ class FoucsScreen extends ConsumerWidget {
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontWeight: FontWeight.normal,
-                  fontSize: 20,
+                  fontSize: SizeConfig.widthRatio(20),
                   color: Color(0xe0ffffff),
                 ),
               ),
@@ -65,7 +66,8 @@ class FoucsScreen extends ConsumerWidget {
                         return Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: color, width: 10),
+                            border: Border.all(
+                                color: color, width: SizeConfig.widthRatio(10)),
                           ),
                         );
                       },
@@ -75,7 +77,7 @@ class FoucsScreen extends ConsumerWidget {
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
-                        fontSize: 30,
+                        fontSize: SizeConfig.widthRatio(30),
                         color: Color(0xe0ffffff),
                       ),
                     ),
@@ -94,7 +96,9 @@ class FoucsScreen extends ConsumerWidget {
                   }
                 },
                 color: Color(0xff8875FF),
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                padding: EdgeInsets.symmetric(
+                    vertical: SizeConfig.heightRatio(12),
+                    horizontal: SizeConfig.widthRatio(40)),
                 focusColor: Color(0xff8875FF),
                 child: Text(
                   (state == null || !state.isRunning)
@@ -103,27 +107,29 @@ class FoucsScreen extends ConsumerWidget {
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.normal,
-                    fontSize: 20,
+                    fontSize: SizeConfig.widthRatio(20),
                     color: Color(0xe0ffffff),
                   ),
                 ),
               ),
               if (state != null && !state.isRunning && state.remainingTime > 0)
                 Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
+                  padding: EdgeInsets.only(top: SizeConfig.heightRatio(16)),
                   child: MaterialButton(
                     onPressed: () async {
                       notifier.resumeTimer(state.remainingTime);
                     },
                     color: Color(0xff8875FF),
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                    padding: EdgeInsets.symmetric(
+                        vertical: SizeConfig.heightRatio(12)
+                        , horizontal: SizeConfig.widthRatio(40)),
                     focusColor: Color(0xff8875FF),
                     child: Text(
                       context.local?.resume_timer ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
-                        fontSize: 20,
+                        fontSize: SizeConfig.widthRatio(20),
                         color: Color(0xe0ffffff),
                       ),
                     ),
@@ -151,7 +157,7 @@ class FoucsScreen extends ConsumerWidget {
                 context.local?.select_timer_duration ?? "",
                 style: GoogleFonts.lato(
                   fontWeight: FontWeight.normal,
-                  fontSize: 18,
+                  fontSize: SizeConfig.widthRatio(18),
                   color: Color(0xf5202020),
                 ),
               ),
@@ -165,7 +171,7 @@ class FoucsScreen extends ConsumerWidget {
                         context.local?.minutes ?? "",
                         style: GoogleFonts.lato(
                           fontWeight: FontWeight.normal,
-                          fontSize: 18,
+                          fontSize: SizeConfig.widthRatio(18),
                           color: Color(0xf5202020),
                         ),
                       ),
@@ -181,7 +187,7 @@ class FoucsScreen extends ConsumerWidget {
                                   "$index",
                                   style: GoogleFonts.lato(
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 18,
+                                    fontSize: SizeConfig.widthRatio(18),
                                     color: Color(0xf5202020),
                                   ),
                                 ),
@@ -198,7 +204,7 @@ class FoucsScreen extends ConsumerWidget {
                         context.local?.seconds ?? "",
                         style: GoogleFonts.lato(
                           fontWeight: FontWeight.normal,
-                          fontSize: 18,
+                          fontSize: SizeConfig.widthRatio(18),
                           color: Color(0xf5202020),
                         ),
                       ),
@@ -214,7 +220,7 @@ class FoucsScreen extends ConsumerWidget {
                                   "$index",
                                   style: GoogleFonts.lato(
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 18,
+                                    fontSize: SizeConfig.widthRatio(18),
                                     color: Color(0xf5202020),
                                   ),
                                 ),

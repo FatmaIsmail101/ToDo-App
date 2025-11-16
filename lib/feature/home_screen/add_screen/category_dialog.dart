@@ -5,6 +5,7 @@ import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/category_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
+import '../../../core/size_config/size_config.dart';
 import '../index/presentation/task_provider/task_providers.dart';
 import '../person/setteings/fonts/provider/font_provider.dart';
 import 'categories/add_category.dart';
@@ -30,19 +31,19 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
         color: Colors.black,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(6.0),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(6)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 16,
+          spacing: SizeConfig.heightRatio(16),
           children: [
             Text(
               context.local?.choose_category ?? "",
               style: GoogleFonts.getFont(safeFont,
-                fontSize: 16,
+                fontSize: SizeConfig.widthRatio(16),
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -102,14 +103,19 @@ class _CategoryDialogState extends ConsumerState<CategoryDialog> {
                 }
               },
               style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(SizeConfig.widthRatio(4)),
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
                 ),
               ),
               child: Text(
                 context.local?.add_category ?? "",
-                style: GoogleFonts.getFont(safeFont, color: Colors.white),
+                style: GoogleFonts.getFont(safeFont,
+                  fontSize: SizeConfig.widthRatio(16),
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
             ),
           ],

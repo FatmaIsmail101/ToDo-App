@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.dart';
 
+import '../../../../../../core/size_config/size_config.dart';
+
 class ColorScreen extends ConsumerWidget {
   const ColorScreen({super.key});
 
@@ -24,17 +26,18 @@ class ColorScreen extends ConsumerWidget {
           context.local?.color_screen ?? "",
           style: GoogleFonts.lato(
             fontWeight: FontWeight.normal,
-            fontSize: 20,
+            fontSize: SizeConfig.widthRatio(20),
             color: Colors.white,
           ),
         ),
         centerTitle: true,
+        toolbarHeight: SizeConfig.heightRatio(60),
         iconTheme: IconThemeData(color: Colors.white),
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back_ios),
+          child: Icon(Icons.arrow_back_ios, size: SizeConfig.widthRatio(18),),
         ),
       ),
       body: ListView.builder(
@@ -51,17 +54,17 @@ class ColorScreen extends ConsumerWidget {
               notifier.setTheme(scheme);
             },
             child: Container(
-              width: 20,
-              height: 40,
-              margin: EdgeInsets.all(8),
+              width: SizeConfig.widthRatio(20),
+              height: SizeConfig.heightRatio(40),
+              margin: EdgeInsets.all(SizeConfig.widthRatio(8)),
               decoration: BoxDecoration(
                 color: colors.colorScheme.primary,
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(SizeConfig.widthRatio(6)),
                 border: Border.all(
                   color: scheme == selectedColor
                       ? Colors.black
                       : Colors.transparent,
-                  width: 3,
+                  width: SizeConfig.widthRatio(3),
                 ),
               ),
             ),

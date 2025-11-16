@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/fonts/provider/font_provider.dart';
 
+import '../../../../../../core/size_config/size_config.dart';
 import '../../theme/provider.dart';
 
 class FontScreen extends ConsumerWidget {
@@ -43,7 +44,7 @@ class FontScreen extends ConsumerWidget {
           context.local?.fonts ?? "",
           style: GoogleFonts.getFont(
             safeFont,
-            fontSize: 22,
+            fontSize: SizeConfig.widthRatio(22),
             color: Colors.white,
           ),
         ),
@@ -56,7 +57,7 @@ class FontScreen extends ConsumerWidget {
               fontName,
               style: GoogleFonts.getFont(
                 fontName,
-                fontSize: 22,
+                fontSize: SizeConfig.widthRatio(22),
                 color: Colors.white,
               ),
             ),

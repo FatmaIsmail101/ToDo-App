@@ -13,6 +13,7 @@ import 'package:up_todo_app/feature/home_screen/add_screen/view_model/add_task_v
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
 import '../../../core/assets/assets.dart';
+import '../../../core/size_config/size_config.dart';
 import '../person/setteings/fonts/provider/font_provider.dart';
 import '../person/setteings/theme/provider.dart';
 
@@ -30,8 +31,7 @@ class _AddScreenState extends ConsumerState<AddScreen> {
   @override
   Widget build(BuildContext context) {
     final selectedFont = ref.watch(fontProvider);
-    final safeFont = (selectedFont.isEmpty) ? "Lato"
-        : selectedFont;
+    final safeFont = (selectedFont.isEmpty) ? "Lato" : selectedFont;
 
     final selectedColor = ref.watch(themeSchemeProvider);
     final themePreview = FlexThemeData.light(scheme: selectedColor);
@@ -41,25 +41,26 @@ class _AddScreenState extends ConsumerState<AddScreen> {
     final state = ref.watch(addTaskProvider);
     final notifier = ref.read(addTaskProvider.notifier);
     return Material(
+      borderRadius: BorderRadius.circular(SizeConfig.widthRatio(8)),
       color: currentColor.colorScheme.primary,
       child: Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
-          left: 16,
-          right: 16,
-          top: 24,
+          left: SizeConfig.widthRatio(16),
+          right: SizeConfig.widthRatio(16),
+          top: SizeConfig.heightRatio(24),
         ),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 24,
+            spacing: SizeConfig.heightRatio(24),
             children: [
               Text(
                 context.local?.add_task ?? "",
                 style: GoogleFonts.getFont(
                   safeFont,
                   color: Colors.white,
-                  fontSize: 22,
+                  fontSize: SizeConfig.widthRatio(22),
                   fontWeight: FontWeight.w600,
                 ),
               ),

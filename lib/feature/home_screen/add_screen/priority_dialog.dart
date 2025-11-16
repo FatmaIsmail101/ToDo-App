@@ -7,6 +7,7 @@ import 'package:up_todo_app/core/notification/notification_bar.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/widget/priorty_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
+import '../../../core/size_config/size_config.dart';
 import '../person/setteings/fonts/provider/font_provider.dart';
 
 class PriorityDialog extends ConsumerStatefulWidget {
@@ -27,21 +28,21 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
         : selectedFont;
 
     return Container(
-      height: 360,
+      height: SizeConfig.heightRatio(360),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
         color: Color(0xff363636),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(6.0),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(6)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          spacing: 16,
+          spacing: SizeConfig.heightRatio(16),
           children: [
             Text(
               context.local?.task_priority ?? "",
               style: GoogleFonts.getFont(safeFont,
-                fontSize: 16,
+                fontSize: SizeConfig.widthRatio(16),
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -87,7 +88,7 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
                       context.local?.cancel ?? "",
                       style: GoogleFonts.getFont(safeFont,
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                       ),
                     ),
                   ),
@@ -103,14 +104,15 @@ class _PriorityDialogState extends ConsumerState<PriorityDialog> {
                       backgroundColor: Colors.blue,
 
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4)
+                            borderRadius: BorderRadius.circular(
+                                SizeConfig.widthRatio(4))
                         )
                     ),
                     child: Text(
                       context.local?.save ?? "",
                       style: GoogleFonts.getFont(safeFont,
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                       ),
                     ),
                   ),

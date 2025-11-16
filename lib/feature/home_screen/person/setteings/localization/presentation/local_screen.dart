@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/localization/provider/provider.dart';
 
+import '../../../../../../core/size_config/size_config.dart';
 import '../../fonts/provider/font_provider.dart';
 import '../../theme/provider.dart';
 
@@ -30,7 +31,7 @@ class LocalizationScreen extends ConsumerWidget {
           style: GoogleFonts.getFont(
             safeFont,
             fontWeight: FontWeight.normal,
-            fontSize: 20,
+            fontSize: SizeConfig.widthRatio(20),
             color: Colors.white,
           ),
         ),
@@ -44,9 +45,9 @@ class LocalizationScreen extends ConsumerWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(24),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         child: Column(
-          spacing: 20,
+          spacing: SizeConfig.heightRatio(20),
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -60,13 +61,14 @@ class LocalizationScreen extends ConsumerWidget {
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 20,
+                      fontSize: SizeConfig.widthRatio(20),
                       color: Colors.white,
                     ),
                   ),
                 ),
                 local == "ar"
-                    ? Icon(Icons.check, color: Colors.green, size: 30)
+                    ? Icon(Icons.check, color: Colors.green,
+                    size: SizeConfig.widthRatio(30))
                     : SizedBox(),
               ],
             ),
@@ -82,13 +84,14 @@ class LocalizationScreen extends ConsumerWidget {
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 20,
+                      fontSize: SizeConfig.widthRatio(20),
                       color: Colors.white,
                     ),
                   ),
                 ),
                 local == "en"
-                    ? Icon(Icons.check, color: Colors.green, size: 30)
+                    ? Icon(Icons.check, color: Colors.green,
+                    size: SizeConfig.widthRatio(30))
                     : SizedBox(),
               ],
             ),

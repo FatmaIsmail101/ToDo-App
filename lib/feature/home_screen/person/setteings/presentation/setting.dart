@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
 
+import '../../../../../core/size_config/size_config.dart';
 import '../fonts/provider/font_provider.dart';
 import '../theme/provider.dart';
 
@@ -98,7 +99,7 @@ class SettingsScreen extends ConsumerWidget {
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       color: Colors.white,
                     ),
                   ),
@@ -106,7 +107,7 @@ class SettingsScreen extends ConsumerWidget {
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Colors.white,
-                    size: 35,
+                    size: SizeConfig.widthRatio(15),
                   ),
                 ],
               ),
@@ -116,15 +117,16 @@ class SettingsScreen extends ConsumerWidget {
                 Navigator.pushNamed(context, PageRouteName.localizationScreen);
               },
               child: Row(
-                spacing: 10,
+                spacing: SizeConfig.widthRatio(10),
                 children: <Widget>[
-                  Icon(Icons.language, color: Colors.white, size: 35),
+                  Icon(Icons.language, color: Colors.white,
+                      size: SizeConfig.widthRatio(15)),
                   Text(
                     context.local?.change_app_language ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       color: Colors.white,
                     ),
                   ),
@@ -132,7 +134,7 @@ class SettingsScreen extends ConsumerWidget {
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Colors.white,
-                    size: 35,
+                    size: SizeConfig.widthRatio(15),
                   ),
                 ],
               ),
@@ -142,20 +144,21 @@ class SettingsScreen extends ConsumerWidget {
               style: GoogleFonts.getFont(
                 safeFont,
                 fontWeight: FontWeight.normal,
-                fontSize: 14,
+                fontSize: SizeConfig.widthRatio(14),
                 color: Colors.grey,
               ),
             ),
             Row(
-              spacing: 4,
+              spacing: SizeConfig.widthRatio(4),
               children: <Widget>[
-                Icon(Icons.import_export, color: Colors.white, size: 25),
+                Icon(Icons.import_export, color: Colors.white,
+                    size: SizeConfig.widthRatio(15)),
                 Text(
                   context.local?.import_from_google_calendar ?? "",
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.normal,
-                    fontSize: 16,
+                    fontSize: SizeConfig.widthRatio(16),
                     color: Colors.white,
                   ),
                 ),
@@ -163,7 +166,7 @@ class SettingsScreen extends ConsumerWidget {
                 Icon(
                   Icons.arrow_forward_ios_rounded,
                   color: Colors.white,
-                  size: 25,
+                  size: SizeConfig.widthRatio(15),
                 ),
               ],
             ),

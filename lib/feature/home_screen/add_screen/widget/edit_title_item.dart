@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/size_config/size_config.dart';
 import '../../person/setteings/fonts/provider/font_provider.dart';
 
 class EditTitleItem extends ConsumerWidget {
@@ -23,23 +24,23 @@ class EditTitleItem extends ConsumerWidget {
         : selectedFont;
 
     return Container(
-      height: 300,
-      width: 327,
+      height: SizeConfig.heightRatio(300),
+      width: SizeConfig.widthRatio(328),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
         color: Color(0xff363636),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(10)),
         child: Column(
-          spacing: 16,
+          spacing: SizeConfig.heightRatio(16),
           children: [
             Text(
               "Edit Task Title",
               style: GoogleFonts.getFont(
                 safeFont,
                 color: Colors.white,
-                fontSize: 22,
+                fontSize: SizeConfig.widthRatio(22),
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -52,16 +53,18 @@ class EditTitleItem extends ConsumerWidget {
                 labelStyle: GoogleFonts.getFont(
                   safeFont,
                   color: Colors.white,
-                  fontSize: 22,
+                  fontSize: SizeConfig.widthRatio(22),
                   fontWeight: FontWeight.w600,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.white24),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.widthRatio(12)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.white54),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.widthRatio(12)),
                 ),
               ),
             ),
@@ -73,16 +76,18 @@ class EditTitleItem extends ConsumerWidget {
                 labelStyle: GoogleFonts.getFont(
                   safeFont,
                   color: Colors.white,
-                  fontSize: 22,
+                  fontSize: SizeConfig.widthRatio(22),
                   fontWeight: FontWeight.w600,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.white24),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.widthRatio(12)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: const BorderSide(color: Colors.white54),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(
+                      SizeConfig.widthRatio(12)),
                 ),
               ),
             ),
@@ -99,7 +104,7 @@ class EditTitleItem extends ConsumerWidget {
                       "Cancel",
                       style: GoogleFonts.getFont(
                         safeFont,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         fontWeight: FontWeight.w500,
                         color: Color(0xff8875FF),
                       ),
@@ -113,7 +118,8 @@ class EditTitleItem extends ConsumerWidget {
                       backgroundColor: Color(0xff8875FF),
                       foregroundColor: Color(0xff8875FF),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
+                        borderRadius: BorderRadius.circular(
+                            SizeConfig.widthRatio(4)),
                       ),
                     ),
                     child: Text(
@@ -121,7 +127,7 @@ class EditTitleItem extends ConsumerWidget {
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: Colors.white,
                       ),
                     ),

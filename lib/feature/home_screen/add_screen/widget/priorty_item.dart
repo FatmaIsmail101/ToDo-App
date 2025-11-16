@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bounceable/flutter_bounceable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
 import '../../person/setteings/fonts/provider/font_provider.dart';
@@ -26,14 +27,14 @@ class PriortyItem extends ConsumerWidget {
         alignment: Alignment.center,
 
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
             color: Color(0xff272727),
             border: Border.all(
                 color: isSelected ? Colors.greenAccent : Colors.transparent
             )
         ),
         child: Column(
-          spacing: 10,
+          spacing: SizeConfig.heightRatio(10),
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -41,7 +42,7 @@ class PriortyItem extends ConsumerWidget {
             Text(
               "${model.level}",
               style: GoogleFonts.getFont(safeFont,
-                fontSize: 12,
+                fontSize: SizeConfig.widthRatio(12),
                 fontWeight: FontWeight.w500,
                 color: Colors.white,
               ),
