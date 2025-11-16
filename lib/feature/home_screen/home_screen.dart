@@ -2,6 +2,7 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/person_screen.dart';
 import 'package:up_todo_app/feature/home_screen/person/setteings/theme/provider.dart';
 
@@ -59,6 +60,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         valueListenable: currentIndexNotifier,
         builder: (context, currentIndex, _) {
           return ConvexAppBar(
+            style: TabStyle.custom,
+
             elevation: 4,
             activeColor: Colors.blue,
             items: const [
@@ -66,16 +69,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               TabItem(icon: Icons.calendar_month),
               TabItem(icon: Icons.add),
               TabItem(icon: Icons.access_time),
-              TabItem(icon: Icons.person),
+              TabItem(icon: Icons.person,),
             ],
             backgroundColor: currentColor.colorScheme.primary,
             color: Colors.white,
-            height: 60,
+            height: SizeConfig.heightRatio(60),
             initialActiveIndex: currentIndex,
             onTap: (index) {
               if (index == 2) {
                 showModalBottomSheet(
                   context: context,
+
                   isScrollControlled: true,
                   builder: (_) => AddScreen(),
                 );

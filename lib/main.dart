@@ -1,5 +1,7 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 import 'package:up_todo_app/feature/authenticaton/login/presentation/view/login_screen.dart';
 import 'package:up_todo_app/feature/authenticaton/register/presentation/view/register_screen.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/categories/add_category.dart';
@@ -26,7 +28,14 @@ import 'l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  runApp(ProviderScope(child: MyApp()));
+  // await SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,DeviceOrientation.portraitDown
+  // ]);
+  runApp(DevicePreview(
+      enabled: true,
+      builder: (context) {
+        return ProviderScope(child: Builder(builder: (context) => MyApp()));
+      }));
 }
 
 class MyApp extends ConsumerWidget {
@@ -36,11 +45,14 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    SizeConfig.init(context);
     final lightTheme = ref.watch(appThemeProvider);
     final darkTheme = ref.watch(appDarkThemeProvider);
     final local = ref.watch(localization);
     return MaterialApp(
-      showPerformanceOverlay: true,
+      useInheritedMediaQuery: true,
+      builder: DevicePreview.appBuilder,
+      //showPerformanceOverlay: true,
       locale: Locale(local),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

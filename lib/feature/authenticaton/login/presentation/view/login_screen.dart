@@ -9,18 +9,31 @@ import 'package:up_todo_app/feature/authenticaton/login/presentation/view_model/
 import '../../../../../core/notification/notification_bar.dart';
 import '../../../../../core/reusable_widgets/buttons.dart';
 import '../../../../../core/reusable_widgets/text_form_field.dart';
+import '../../../../../core/size_config/size_config.dart';
 import '../providers/auth_providers.dart';
 import '../view_model/login_state.dart';
 
-class LoginScreen extends ConsumerWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   LoginScreen({super.key});
 
+
+  @override
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+    passwordController.dispose();
+  }
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final loginState = ref.watch(loginViewModelProvider);
 
     // 🎯 نسمع للتغييرات في الـ state
@@ -45,14 +58,15 @@ class LoginScreen extends ConsumerWidget {
       }
       // ✅ Success / needLocalAuth
       if (next.state == LoginStatus.needLocalAuth && next.model != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
         showModalBottomSheet(
           context: context,
           builder: (_) => Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.fingerprint),
-                title: Text(
+                leading: const Icon(Icons.fingerprint),
+                title: const Text(
                   'Please hold your finger at the fingerprint scanner to verify your identity',
                 ),
                 onTap: () async {
@@ -81,8 +95,8 @@ class LoginScreen extends ConsumerWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.pin),
-                title: Text('Login with PIN'),
+                leading: const Icon(Icons.pin),
+                title: const Text('Login with PIN'),
                 onTap: () {
                   // هنا تحطي كود الـ PIN Auth
                   Navigator.pop(context);
@@ -90,7 +104,7 @@ class LoginScreen extends ConsumerWidget {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text("Enter PIN"),
+                      title: const Text("Enter PIN"),
                       content: TextField(
                         controller: pinController,
                         keyboardType: TextInputType.number,
@@ -123,7 +137,7 @@ class LoginScreen extends ConsumerWidget {
                               );
                             }
                           },
-                          child: Text("Submit"),
+                          child: const Text("Submit"),
                         ),
                       ],
                     ),
@@ -137,8 +151,8 @@ class LoginScreen extends ConsumerWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.cancel),
-                title: Text('Cancel'),
+                leading: const Icon(Icons.cancel),
+                title: const Text('Cancel'),
                 onTap: () => Navigator.pushReplacementNamed(
                   context,
                   PageRouteName.homeScreen,
@@ -147,6 +161,7 @@ class LoginScreen extends ConsumerWidget {
             ],
           ),
         );
+        },);
       }
     });
 
@@ -157,20 +172,20 @@ class LoginScreen extends ConsumerWidget {
         leading: const Icon(Icons.arrow_back_ios, color: Colors.white),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         child: Stack(
           children: [
             SingleChildScrollView(
               child: Form(
                 key: formKey,
                 child: Column(
-                  spacing: 32,
+                  spacing: SizeConfig.heightRatio(32),
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       "Login",
                       style: GoogleFonts.lato(
-                        fontSize: 32,
+                        fontSize: SizeConfig.widthRatio(32),
                         fontWeight: FontWeight.bold,
                         color: Colors.white.withOpacity(0.88),
                       ),
@@ -202,15 +217,15 @@ class LoginScreen extends ConsumerWidget {
                           ref
                               .read(loginViewModelProvider.notifier)
                               .login(
-                                nameController.text,
-                                passwordController.text,
-                              );
+                            nameController.text,
+                            passwordController.text,
+                          );
                         }
                       },
                       text: "Login",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: Colors.white.withOpacity(0.88),
                       ),
                     ),
@@ -221,12 +236,14 @@ class LoginScreen extends ConsumerWidget {
                           child: Divider(color: Color(0xff979797)),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.widthRatio(10),
+                          ),
                           child: Text(
                             "Or",
                             style: GoogleFonts.lato(
                               fontWeight: FontWeight.w500,
-                              fontSize: 16,
+                              fontSize: SizeConfig.widthRatio(16),
                               color: Color(0xff979797),
                             ),
                           ),
@@ -244,7 +261,7 @@ class LoginScreen extends ConsumerWidget {
                       text: "Login With Google",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: const Color(0xe0ffffff),
                       ),
                     ),
@@ -252,7 +269,7 @@ class LoginScreen extends ConsumerWidget {
                       isColor: false,
                       onPressed: () async {
                         final userDate =
-                            await FacebookLoginService.signInWithFacebook();
+                        await FacebookLoginService.signInWithFacebook();
                         if (userDate != null) {
                           print("User Info :$userDate");
                         } else {
@@ -262,7 +279,7 @@ class LoginScreen extends ConsumerWidget {
                       text: "Login With Facebook",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: const Color(0xe0ffffff),
                       ),
                     ),
@@ -281,4 +298,5 @@ class LoginScreen extends ConsumerWidget {
       ),
     );
   }
+
 }

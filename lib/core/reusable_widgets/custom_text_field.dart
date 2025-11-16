@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../feature/home_screen/person/setteings/fonts/provider/font_provider.dart';
+import '../size_config/size_config.dart';
 
 class CustomTextField extends ConsumerWidget {
   final Function(String) onChange;
@@ -28,16 +29,16 @@ class CustomTextField extends ConsumerWidget {
         hintStyle: GoogleFonts.getFont(
           selectedFont,
           color: Colors.white,
-          fontSize: 22,
+          fontSize: SizeConfig.widthRatio(22),
           fontWeight: FontWeight.w600,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.white24),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(12)),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.white54),
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(12)),
         ),
       ),
       onChanged: onChange,

@@ -11,6 +11,7 @@ import 'package:up_todo_app/feature/home_screen/index/presentation/task_provider
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/widget/task_item.dart';
 import 'package:up_todo_app/feature/home_screen/index/presentation/view_model/search_provider/search_provider.dart';
 
+import '../../../../../core/size_config/size_config.dart';
 import '../../../person/image/provider.dart';
 import '../../../person/setteings/fonts/provider/font_provider.dart';
 
@@ -28,13 +29,13 @@ class IndexScreen extends ConsumerWidget {
 
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min, // ✅ مهم
             children: [
               _buildHeader(context, imagePath ?? "", ref),
-              const SizedBox(height: 20),
+              SizedBox(height: SizeConfig.heightRatio(20)),
 
               taskState.isEmpty
                   ? Column(
@@ -42,30 +43,30 @@ class IndexScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Image(image: AssetImage(Assets.indexPIC)),
-                        const SizedBox(height: 16),
+                        SizedBox(height: SizeConfig.heightRatio(16)),
                         Text(
                           context.local?.what_do_you_want_today ?? "",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.lato(
                             fontWeight: FontWeight.w500,
-                            fontSize: 20,
+                            fontSize: SizeConfig.widthRatio(20),
                             color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: SizeConfig.heightRatio(8)),
                         Text(
                           context.local?.tap_to_add_tasks ?? "",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.lato(
                             fontWeight: FontWeight.w500,
-                            fontSize: 16,
+                            fontSize: SizeConfig.widthRatio(16),
                             color: Colors.white,
                           ),
                         ),
                       ],
                     )
                   : Padding(
-                      padding: const EdgeInsets.only(top: 12.0),
+                padding: EdgeInsets.only(top: SizeConfig.heightRatio(12)),
                       child: TextField(
                         onChanged: (value) {
                           ref.read(searchProvider.notifier).state = value;
@@ -73,7 +74,7 @@ class IndexScreen extends ConsumerWidget {
                         decoration: InputDecoration(
                           hintText: context.local?.search_for_task ?? "",
                           hintStyle: GoogleFonts.lato(
-                            fontSize: 16,
+                            fontSize: SizeConfig.widthRatio(16),
                             fontWeight: FontWeight.w500,
                             color: Colors.grey,
                           ),
@@ -82,11 +83,13 @@ class IndexScreen extends ConsumerWidget {
                             color: Colors.white,
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(
+                                SizeConfig.widthRatio(4)),
                             borderSide: const BorderSide(color: Colors.white),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(
+                                SizeConfig.widthRatio(4)),
                             borderSide: const BorderSide(color: Colors.white),
                           ),
                           filled: true,
@@ -94,14 +97,14 @@ class IndexScreen extends ConsumerWidget {
                         ),
                         style: GoogleFonts.getFont(
                           safeFont,
-                          fontSize: 16,
+                          fontSize: SizeConfig.widthRatio(16),
                           fontWeight: FontWeight.w500,
                           color: Colors.grey,
                         ),
                       ),
                     ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: SizeConfig.heightRatio(20)),
 
               // محتوى المهام
               SizedBox(
@@ -134,18 +137,19 @@ class IndexScreen extends ConsumerWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Icon(Icons.more_horiz, color: Colors.white),
+        Icon(Icons.more_horiz, color: Colors.white,
+          size: SizeConfig.widthRatio(16),),
         Text(
           context.local?.index ?? "",
           style: GoogleFonts.getFont(
             safeFont,
-            fontSize: 20,
+            fontSize: SizeConfig.widthRatio(20),
             fontWeight: FontWeight.w500,
             color: Colors.white,
           ),
         ),
         CircleAvatar(
-          backgroundImage: (image.isNotEmpty) ? FileImage(File(image)) : null,
+          backgroundImage: (image.isNotEmpty) ? FileImage(File(image,)) : null,
         ),
       ],
     );
@@ -155,12 +159,12 @@ class IndexScreen extends ConsumerWidget {
     final selectedFont = ref.watch(fontProvider);
     final safeFont = (selectedFont.isEmpty) ? "Lato" : selectedFont;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: EdgeInsets.symmetric(vertical: SizeConfig.heightRatio(12)),
       child: Text(
         title,
         style: GoogleFonts.getFont(
           safeFont,
-          fontSize: 20,
+          fontSize: SizeConfig.widthRatio(20),
           fontWeight: FontWeight.w500,
           color: Colors.white,
         ),
@@ -172,7 +176,7 @@ class IndexScreen extends ConsumerWidget {
     return tasks
         .map(
           (task) => Padding(
-            padding: const EdgeInsets.only(bottom: 12),
+            padding: EdgeInsets.only(bottom: SizeConfig.heightRatio(12)),
             child: InkWell(
               onTap: () => Navigator.pushNamed(
                 context,

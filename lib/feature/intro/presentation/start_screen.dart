@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/reusable_widgets/buttons.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
 
+import '../../../core/size_config/size_config.dart';
+
 class StartScreen extends StatelessWidget {
   const StartScreen({super.key});
 
@@ -22,7 +24,7 @@ class StartScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(24),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           spacing: 26,
@@ -34,7 +36,7 @@ class StartScreen extends StatelessWidget {
               style: GoogleFonts.lato(
                 color: Color(0xDEFFFFFF),
                 fontWeight: FontWeight.bold,
-                fontSize: 32,
+                fontSize: SizeConfig.widthRatio(32),
               ),
             ),
             Text(
@@ -43,7 +45,7 @@ class StartScreen extends StatelessWidget {
               style: GoogleFonts.lato(
                 color: Color(0xABFFFFFF),
                 fontWeight: FontWeight.w500,
-                fontSize: 16,
+                fontSize: SizeConfig.widthRatio(16),
               ),
               overflow: TextOverflow.visible,
               maxLines: 2,
@@ -57,7 +59,7 @@ class StartScreen extends StatelessWidget {
               text: "LOGIN",
               style: GoogleFonts.lato(
                 color: Color(0xFFFFFFFF),
-                fontSize: 16,
+                fontSize: SizeConfig.widthRatio(16),
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -68,7 +70,7 @@ class StartScreen extends StatelessWidget {
               text: "CREATE ACCOUNT",
               style: GoogleFonts.lato(
                 color: Color(0xFFFFFFFF),
-                fontSize: 16,
+                fontSize: SizeConfig.widthRatio(16),
                 fontWeight: FontWeight.w500,
               ),
             ),

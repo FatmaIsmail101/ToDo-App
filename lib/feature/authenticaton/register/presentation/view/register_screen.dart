@@ -10,6 +10,7 @@ import 'package:up_todo_app/feature/authenticaton/register/presentation/provider
 
 import '../../../../../core/reusable_widgets/buttons.dart';
 import '../../../../../core/reusable_widgets/text_form_field.dart';
+import '../../../../../core/size_config/size_config.dart';
 import '../../../local_auth/local_auth.dart';
 
 class RegisterScreen extends ConsumerWidget {
@@ -60,7 +61,7 @@ class RegisterScreen extends ConsumerWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         //todo
         child: Stack(
           children: [
@@ -69,25 +70,25 @@ class RegisterScreen extends ConsumerWidget {
               child: Form(
                 key: formKey,
                 child: Column(
-                  spacing: 32,
+                  spacing: SizeConfig.heightRatio(32),
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       "Register",
                       style: GoogleFonts.lato(
-                        fontSize: 32,
+                        fontSize: SizeConfig.widthRatio(32),
                         fontWeight: FontWeight.bold,
                         color: const Color(0xe0ffffff),
                       ),
                     ),
                     Column(
-                      spacing: 8,
+                      spacing: SizeConfig.heightRatio(8),
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Username",
                           style: GoogleFonts.lato(
-                            fontSize: 16,
+                            fontSize: SizeConfig.widthRatio(16),
                             fontWeight: FontWeight.w500,
                             color: const Color(0xe0ffffff),
                           ),
@@ -106,13 +107,13 @@ class RegisterScreen extends ConsumerWidget {
                       ],
                     ),
                     Column(
-                      spacing: 8,
+                      spacing: SizeConfig.heightRatio(8),
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "Password",
                           style: GoogleFonts.lato(
-                            fontSize: 16,
+                            fontSize: SizeConfig.widthRatio(16),
                             fontWeight: FontWeight.w500,
                             color: const Color(0xe0ffffff),
                           ),
@@ -128,10 +129,16 @@ class RegisterScreen extends ConsumerWidget {
                             return null;
                           },
                         ),
+                      ],
+                    ),
+                    Column(
+                      spacing: SizeConfig.heightRatio(8),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
                         Text(
                           "Confirm Password",
                           style: GoogleFonts.lato(
-                            fontSize: 16,
+                            fontSize: SizeConfig.widthRatio(16),
                             fontWeight: FontWeight.w500,
                             color: const Color(0xe0ffffff),
                           ),
@@ -156,7 +163,7 @@ class RegisterScreen extends ConsumerWidget {
                     Button(
                       text: "Register",
                       style: GoogleFonts.lato(
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
                       ),
@@ -308,19 +315,21 @@ class RegisterScreen extends ConsumerWidget {
                           child: Divider(color: Color(0xff979797)),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SizeConfig.widthRatio(10),
+                          ),
                           child: Text(
                             "Or",
                             style: GoogleFonts.lato(
                               fontWeight: FontWeight.w500,
-                              fontSize: 16,
+                              fontSize: SizeConfig.widthRatio(16),
                               color: Color(0xff979797),
                             ),
                           ),
                         ),
                         Expanded(
                           flex: 3,
-                          child: Divider(color: Color(0xff979797)),
+                          child: Divider(color: const Color(0xff979797)),
                         ),
                       ],
                     ),
@@ -331,7 +340,7 @@ class RegisterScreen extends ConsumerWidget {
                       text: "Login With Google",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: const Color(0xe0ffffff),
                       ),
                     ),
@@ -341,7 +350,7 @@ class RegisterScreen extends ConsumerWidget {
                       text: "Login With Apple",
                       style: GoogleFonts.lato(
                         fontWeight: FontWeight.w500,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: const Color(0xe0ffffff),
                       ),
                     ),

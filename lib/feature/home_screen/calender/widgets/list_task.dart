@@ -5,6 +5,7 @@ import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/feature/home_screen/calender/widgets/task_tabs.dart';
 
 import '../../../../core/routes/page_route_name.dart';
+import '../../../../core/size_config/size_config.dart';
 import '../../index/presentation/task_provider/task_providers.dart';
 import '../../index/presentation/view/widget/task_item.dart';
 import '../../person/setteings/fonts/provider/font_provider.dart';
@@ -33,7 +34,7 @@ class ListTask extends ConsumerWidget {
           context.local?.no_tasks_available ?? "",
           style: GoogleFonts.getFont(
             safeFont,
-            fontSize: 16,
+            fontSize: SizeConfig.widthRatio(16),
             color: Colors.white,
             fontWeight: FontWeight.normal,
           ),
@@ -42,7 +43,8 @@ class ListTask extends ConsumerWidget {
     }
     return Expanded(
       child: ListView.separated(
-        padding: EdgeInsets.only(right: 24, left: 24),
+        padding: EdgeInsets.only(right: SizeConfig.widthRatio(24),
+            left: SizeConfig.widthRatio(24)),
         itemBuilder: (context, index) {
           final task = filteredTasks[index];
           return InkWell(
@@ -57,7 +59,7 @@ class ListTask extends ConsumerWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return SizedBox(height: 16);
+          return SizedBox(height: SizeConfig.heightRatio(16));
         },
         itemCount: filteredTasks.length,
       ),

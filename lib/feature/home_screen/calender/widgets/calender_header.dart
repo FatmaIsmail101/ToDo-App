@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:up_todo_app/feature/home_screen/calender/view_model/calender_view_model.dart';
 
+import '../../../../core/size_config/size_config.dart';
 import '../../person/setteings/fonts/provider/font_provider.dart';
 
 class CalenderHeader extends ConsumerWidget {
@@ -31,48 +32,51 @@ class CalenderHeader extends ConsumerWidget {
     ).format(state.currentDate).toUpperCase();
     final year = DateFormat("yyyy").format(state.currentDate);
 
-    return Expanded(
-      child: Container(
-        width: double.infinity,
-        color: Color(0xff202020),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: goToPrev,
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+    return Container(
+      width: double.infinity,
+      color: Color(0xff202020),
+      padding: EdgeInsets.symmetric(horizontal: SizeConfig.widthRatio(16),
+          vertical: SizeConfig.heightRatio(12)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: goToPrev,
+            icon: Icon(Icons.arrow_back_ios, color: Colors.white,
             ),
-            Column(
-              children: [
-                Text(
-                  nameMonth.toUpperCase(),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                nameMonth.toUpperCase(),
+                style: GoogleFonts.getFont(
+                  safeFont,
+                  fontWeight: FontWeight.w500,
+                  fontSize: SizeConfig.widthRatio(14),
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.heightRatio(20),
+                child: Text(
+                  year,
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    color: Colors.white,
+                    fontSize: SizeConfig.widthRatio(10),
+                    color: Colors.grey,
                   ),
                 ),
-                Expanded(
-                  child: Text(
-                    year,
-                    style: GoogleFonts.getFont(
-                      safeFont,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 10,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              ],
+              ),
+            ],
+          ),
+          IconButton(
+            onPressed: goToNext,
+            icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white,
             ),
-            IconButton(
-              onPressed: goToNext,
-              icon: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

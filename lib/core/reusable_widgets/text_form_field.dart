@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 
 class TextFormFieldWidget extends StatefulWidget {
   const TextFormFieldWidget({
@@ -22,6 +23,7 @@ class TextFormFieldWidget extends StatefulWidget {
 final String? Function (String?)?validator;
 final TextInputType? keyboardType;
 final TextEditingController ?controller;
+
   @override
   State<TextFormFieldWidget> createState() => _TextFormFieldWidgetState();
 }
@@ -36,14 +38,20 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    widget.controller?.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: true,
       keyboardType:widget.keyboardType ,
       controller:widget.controller ,
       validator:widget.validator ,
       style: GoogleFonts.lato(
         color: Colors.white,
-        fontSize: 18,
+        fontSize: SizeConfig.widthRatio(18),
         fontWeight: FontWeight.w500,
       ),
       cursorColor: Colors.white,
@@ -64,27 +72,27 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
         hintText: widget.text,
         hintStyle: GoogleFonts.lato(
           color: Colors.white,
-          fontSize: 16,
+          fontSize: SizeConfig.widthRatio(16),
           fontWeight: FontWeight.w500,
         ),
         filled: true,
         fillColor: Color(0xff1D1D1D),
         enabledBorder: widget.isEnabled
             ? OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
                 borderSide: BorderSide(color: Color(0xff979797)),
               )
             : null,
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
           borderSide: BorderSide(color: Color(0xff979797)),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
           borderSide: BorderSide(color: Colors.red),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
           borderSide: BorderSide(color: Colors.red),
         ),
       ),

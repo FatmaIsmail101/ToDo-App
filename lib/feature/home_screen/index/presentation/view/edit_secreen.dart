@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/category_dialog.dart';
 import 'package:up_todo_app/feature/home_screen/add_screen/priority_dialog.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
@@ -52,7 +53,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                 "${context.local?.edit_task ?? ""} ${model.title}",
                 style: GoogleFonts.getFont(
                   safeFont,
-                  fontSize: 20,
+                  fontSize: SizeConfig.widthRatio(20),
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
@@ -65,17 +66,21 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.close, color: Colors.white),
+          child: Icon(
+            Icons.close,
+            color: Colors.white,
+            size: SizeConfig.widthRatio(16),
+          ),
         ),
         actions: [
           ImageIcon(AssetImage(Assets.leadingIcon), color: Colors.white),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         child: SingleChildScrollView(
           child: Column(
-            spacing: 40,
+            spacing: SizeConfig.heightRatio(40),
             children: [
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,13 +88,14 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Bounceable(
                     onTap: () => notifier.toggleComplete(),
                     child: Icon(
+                      size: SizeConfig.widthRatio(16),
                       state.isComplete ? Icons.circle : Icons.circle_outlined,
                       color: state.isComplete
                           ? Color(0xff8875FF)
                           : Colors.white,
                     ),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: SizeConfig.widthRatio(20)),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -99,7 +105,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                           safeFont,
                           color: Color(0xe0ffffff),
                           fontWeight: FontWeight.w500,
-                          fontSize: 20,
+                          fontSize: SizeConfig.widthRatio(20),
                         ),
                       ),
                       Text(
@@ -108,7 +114,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                           safeFont,
                           color: Colors.grey,
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontSize: SizeConfig.widthRatio(16),
                         ),
                       ),
                     ],
@@ -142,19 +148,27 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                         },
                       );
                     },
-                    child: Icon(Icons.edit_note_sharp, color: Colors.white),
+                    child: Icon(
+                      Icons.edit_note_sharp,
+                      color: Colors.white,
+                      size: SizeConfig.widthRatio(16),
+                    ),
                   ),
                 ],
               ),
               Row(
                 children: [
-                  Icon(Icons.timer_outlined, color: Colors.white),
-                  SizedBox(width: 8),
+                  Icon(
+                    Icons.timer_outlined,
+                    color: Colors.white,
+                    size: SizeConfig.widthRatio(16),
+                  ),
+                  SizedBox(width: SizeConfig.widthRatio(8)),
                   Text(
                     context.local?.task_time ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
@@ -168,9 +182,13 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.widthRatio(6),
+                      ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(
+                          SizeConfig.widthRatio(6),
+                        ),
                       ),
                       backgroundColor: Colors.black12,
                     ),
@@ -179,7 +197,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.w500,
-                        fontSize: 12,
+                        fontSize: SizeConfig.widthRatio(12),
                         color: Colors.white,
                       ),
                     ),
@@ -189,12 +207,12 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
               Row(
                 children: [
                   Image.asset(Assets.tag),
-                  SizedBox(width: 8),
+                  SizedBox(width: SizeConfig.widthRatio(8)),
                   Text(
                     context.local?.task_category ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
@@ -218,22 +236,30 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.widthRatio(6),
+                      ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(
+                          SizeConfig.widthRatio(6),
+                        ),
                       ),
                       backgroundColor: state.category.color,
                     ),
                     child: Row(
                       children: [
-                        Icon(state.category.icon, color: Colors.white),
-                        SizedBox(width: 6),
+                        Icon(
+                          state.category.icon,
+                          color: Colors.white,
+                          size: SizeConfig.widthRatio(16),
+                        ),
+                        SizedBox(width: SizeConfig.widthRatio(6)),
                         Text(
                           state.category.name,
                           style: GoogleFonts.getFont(
                             safeFont,
                             fontWeight: FontWeight.w500,
-                            fontSize: 12,
+                            fontSize: SizeConfig.widthRatio(12),
                             color: Colors.white,
                           ),
                         ),
@@ -244,13 +270,13 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
               ),
               Row(
                 children: [
-                  Icon(Icons.flag),
-                  SizedBox(width: 8),
+                  Icon(Icons.flag, size: SizeConfig.widthRatio(16)),
+                  SizedBox(width: SizeConfig.widthRatio(8)),
                   Text(
                     context.local?.task_priority ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
@@ -275,22 +301,30 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.widthRatio(6),
+                      ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(
+                          SizeConfig.widthRatio(6),
+                        ),
                       ),
                       backgroundColor: Colors.black12,
                     ),
                     child: Row(
                       children: [
-                        Icon(state.priority.label, color: Colors.white),
-                        SizedBox(width: 6),
+                        Icon(
+                          state.priority.label,
+                          color: Colors.white,
+                          size: SizeConfig.widthRatio(16),
+                        ),
+                        SizedBox(width: SizeConfig.widthRatio(6)),
                         Text(
                           "${state.priority.level}",
                           style: GoogleFonts.getFont(
                             safeFont,
                             fontWeight: FontWeight.w500,
-                            fontSize: 12,
+                            fontSize: SizeConfig.widthRatio(12),
                             color: Colors.white,
                           ),
                         ),
@@ -301,13 +335,13 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
               ),
               Row(
                 children: [
-                  Icon(Icons.task_rounded),
-                  SizedBox(width: 8),
+                  Icon(Icons.task_rounded, size: SizeConfig.widthRatio(16)),
+                  SizedBox(width: SizeConfig.widthRatio(8)),
                   Text(
                     context.local?.sub_task ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
                     ),
@@ -318,9 +352,13 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       Navigator.pushNamed(context, PageRouteName.addScreen);
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 6),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.widthRatio(6),
+                      ),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6),
+                        borderRadius: BorderRadius.circular(
+                          SizeConfig.widthRatio(6),
+                        ),
                       ),
                       backgroundColor: Colors.black12,
                     ),
@@ -329,7 +367,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.w500,
-                        fontSize: 12,
+                        fontSize: SizeConfig.widthRatio(12),
                         color: Colors.white,
                       ),
                     ),
@@ -352,7 +390,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                       style: GoogleFonts.getFont(
                         safeFont,
                         color: Colors.red,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -365,10 +403,15 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 100, vertical: 12),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.widthRatio(100),
+                    vertical: SizeConfig.heightRatio(12),
+                  ),
                   backgroundColor: Color(0xff8875FF),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
+                    borderRadius: BorderRadius.circular(
+                      SizeConfig.widthRatio(4),
+                    ),
                   ),
                 ),
                 child: Text(
@@ -376,7 +419,7 @@ class _EditSecreenState extends ConsumerState<EditSecreen> {
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                    fontSize: SizeConfig.widthRatio(16),
                     color: Colors.white,
                   ),
                 ),

@@ -4,6 +4,7 @@ import 'package:up_todo_app/feature/home_screen/index/presentation/task_provider
 import 'package:up_todo_app/feature/home_screen/index/presentation/view/widget/task_item.dart';
 
 import '../../../../core/routes/page_route_name.dart';
+import '../../../../core/size_config/size_config.dart';
 
 class AllTasks extends ConsumerWidget {
   const AllTasks({super.key});
@@ -13,7 +14,7 @@ class AllTasks extends ConsumerWidget {
     final taskState = ref.watch(taskViewModelProvider);
     return Expanded(
       child: ListView.separated(
-        padding: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.only(top: SizeConfig.heightRatio(20)),
         itemBuilder: (context, index) => InkWell(
           onTap: () {
             Navigator.pushNamed(

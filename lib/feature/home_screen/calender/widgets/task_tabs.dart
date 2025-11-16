@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
 
+import '../../../../core/size_config/size_config.dart';
+
 final selectedTabProvider = StateProvider<int>((ref) => 0);
 
 class TaskTabs extends ConsumerWidget {
@@ -13,16 +15,16 @@ class TaskTabs extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedTab = ref.watch(selectedTabProvider);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24),
-      padding: EdgeInsets.all(6),
+      margin: EdgeInsets.symmetric(horizontal: SizeConfig.widthRatio(24)),
+      padding: EdgeInsets.all(SizeConfig.widthRatio(6)),
       width: double.infinity,
-      height: 80,
+      height: SizeConfig.heightRatio(80),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
         color: Color(0xff4C4C4C),
       ),
       child: Row(
-        spacing: 32,
+        spacing: SizeConfig.widthRatio(32),
         children: [
           Expanded(
             child: _buildTabButton(
@@ -60,9 +62,10 @@ class TaskTabs extends ConsumerWidget {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: isSelected ? Color(0xff8685E7) : Colors.grey[800],
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: SizeConfig.widthRatio(15),
+            vertical: SizeConfig.heightRatio(20)),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
           side: BorderSide(
             color: isSelected ? Colors.transparent : Colors.white,
           ),
@@ -71,7 +74,7 @@ class TaskTabs extends ConsumerWidget {
       child: Text(
         label,
         style: GoogleFonts.lato(
-          fontSize: 16,
+          fontSize: SizeConfig.widthRatio(16),
           color: Colors.white,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),

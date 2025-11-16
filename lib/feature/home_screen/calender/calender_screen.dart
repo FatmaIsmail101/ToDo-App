@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 import 'package:up_todo_app/feature/home_screen/calender/view_model/calender_view_model.dart';
 import 'package:up_todo_app/feature/home_screen/calender/widgets/calender_header.dart';
 import 'package:up_todo_app/feature/home_screen/calender/widgets/days_list.dart';
@@ -35,16 +36,18 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
 
     return SafeArea(
       child: Column(
-        spacing: 20,
+        spacing: SizeConfig.heightRatio(20),
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 24.0, right: 24, left: 24),
+            padding: EdgeInsets.only(top: SizeConfig.heightRatio(24),
+                right: SizeConfig.widthRatio(24),
+                left: SizeConfig.widthRatio(24)),
             child: Text(
               context.local?.calendar ?? "",
               style: GoogleFonts.getFont(
                 safeFont,
                 fontWeight: FontWeight.w500,
-                fontSize: 20,
+                fontSize: SizeConfig.widthRatio(20),
                 color: Colors.white,
               ),
             ),
@@ -53,7 +56,7 @@ class _CalenderScreenState extends ConsumerState<CalenderScreen> {
             children: [
               Container(
                 width: double.infinity,
-                height: 120,
+                height: SizeConfig.heightRatio(152),
                 color: Color(0xf2202020),
                 child: Column(
                   children: <Widget>[

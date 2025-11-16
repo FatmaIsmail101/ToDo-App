@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:up_todo_app/core/extenssion/extenssion.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 
 import 'card_date_item.dart';
 
@@ -19,7 +20,7 @@ class DaysList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 58,
+      height: SizeConfig.heightRatio(64),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
@@ -52,7 +53,7 @@ class DaysList extends StatelessWidget {
           );
         },
         separatorBuilder: (context, index) {
-          return SizedBox(width: 14);
+          return SizedBox(width: SizeConfig.widthRatio(14));
         },
         itemCount: days.length,
       ),

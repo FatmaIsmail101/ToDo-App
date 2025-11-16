@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:up_todo_app/feature/home_screen/index/data/model/task_model.dart';
 
+import '../../../../../../core/size_config/size_config.dart';
 import '../../../../person/setteings/fonts/provider/font_provider.dart';
 
 class TaskItem extends ConsumerWidget {
@@ -17,38 +18,41 @@ class TaskItem extends ConsumerWidget {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(10),
-      height: 130,
+      padding: EdgeInsets.all(SizeConfig.widthRatio(10)),
+      height: SizeConfig.heightRatio(130),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
         color: Color(0xff363636),
       ),
       child: Row(
-        spacing: 12,
+        spacing: SizeConfig.widthRatio(12),
         children: [
           Icon(
+            size: SizeConfig.widthRatio(20),
             model.isComplete ? Icons.circle_rounded : Icons.circle_outlined,
             color: model.isComplete ? Color(0xff8875FF) : Colors.white,
           ),
           Expanded(
-            child: Column(
-              spacing: 6,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.start,
+
+              spacing: SizeConfig.heightRatio(6),
+              // mainAxisAlignment: MainAxisAlignment.start,
+              // crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   model.title,
                   style: GoogleFonts.getFont(selectedFont,
-                    fontSize: 16,
+                    fontSize: SizeConfig.widthRatio(16),
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),
                 ),
-                Spacer(),
+                // Spacer(),
                 Text(
                   DateFormat('hh:mm a, dd/MM/yyyy').format(model.dateTime),
                   style: GoogleFonts.getFont(selectedFont,
-                    fontSize: 14,
+                    fontSize: SizeConfig.widthRatio(14),
                     fontWeight: FontWeight.w500,
                     color: Colors.grey,
                   ),
@@ -57,21 +61,21 @@ class TaskItem extends ConsumerWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 7),
+            padding: EdgeInsets.symmetric(horizontal: SizeConfig.widthRatio(7)),
             // width: 88,
             // height: 30,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
               color: model.category.color,
             ),
             child: Row(
               children: [
-                Icon(model.category.icon),
+                Icon(model.category.icon, size: SizeConfig.widthRatio(18)),
                 Text(
                   model.category.name,
                   style: GoogleFonts.getFont(selectedFont,
                     fontWeight: FontWeight.w500,
-                    fontSize: 12,
+                    fontSize: SizeConfig.widthRatio(12),
                     color: Colors.white,
                   ),
                 ),
@@ -79,22 +83,23 @@ class TaskItem extends ConsumerWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 7),
+            padding: EdgeInsets.symmetric(horizontal: SizeConfig.widthRatio(7)),
 
             // width: 88,
             // height: 30,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
+                borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
                 color: Colors.transparent,
                 border: Border.all(color: Colors.lightBlue)),
             child: Row(
               children: [
-                Icon(model.priority.label, color: Colors.white),
+                Icon(model.priority.label, color: Colors.white,
+                  size: SizeConfig.widthRatio(18),),
                 Text(
                   "${model.priority.level}",
                   style: GoogleFonts.getFont(selectedFont,
                     fontWeight: FontWeight.w500,
-                    fontSize: 12,
+                    fontSize: SizeConfig.widthRatio(12),
                     color: Colors.white,
                   ),
                 ),

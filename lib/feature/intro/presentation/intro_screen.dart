@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/casheing/cache_helper.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
+import 'package:up_todo_app/core/size_config/size_config.dart';
 import 'package:up_todo_app/feature/intro/data/model/intero_model.dart';
 
 import '../../../core/assets/assets.dart';
@@ -26,17 +27,20 @@ class _IntroScreenState extends State<IntroScreen> {
     IntroModel(
       imagePath: Assets.intro1,
       title: "Manage your tasks",
-      description: "You can easily manage all of your daily tasks in DoMe for free",
+      description:
+          "You can easily manage all of your daily tasks in DoMe for free",
     ),
     IntroModel(
       imagePath: Assets.intro2,
       title: "Create daily routine",
-      description: "In Uptodo you can create your personalized routine to stay productive",
+      description:
+          "In Uptodo you can create your personalized routine to stay productive",
     ),
     IntroModel(
       imagePath: Assets.intro3,
       title: "Organize your tasks",
-      description: "You can organize your daily tasks by adding your tasks into separate categories",
+      description:
+          "You can organize your daily tasks by adding your tasks into separate categories",
     ),
   ];
 
@@ -63,7 +67,7 @@ class _IntroScreenState extends State<IntroScreen> {
           child: Text(
             "Skip",
             style: GoogleFonts.lato(
-              fontSize: 16,
+              fontSize: SizeConfig.widthRatio(16),
               fontWeight: FontWeight.w500,
               color: Color(0xFFFFFFFF),
             ),
@@ -87,22 +91,21 @@ class _IntroScreenState extends State<IntroScreen> {
                     model: intos[index],
                     currentIndex: index,
                     totalPage: intos.length,
-
                   );
                 },
               ),
             ),
 
-
             // ✅ الأزرار
             ValueListenableBuilder<int>(
               valueListenable: pageNotifier,
-              builder: (context, currentPage,
-                  _) { // ✅ استخدمي currentPage من هنا!
+              builder: (context, currentPage, _) {
+                // ✅ استخدمي currentPage من هنا!
                 bool isLastPage = currentPage == intos.length - 1;
 
                 print(
-                    "currentPage: $currentPage, isLastPage: $isLastPage"); // ✅ للتأكد
+                  "currentPage: $currentPage, isLastPage: $isLastPage",
+                ); // ✅ للتأكد
 
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,18 +113,18 @@ class _IntroScreenState extends State<IntroScreen> {
                     TextButton(
                       onPressed: currentPage > 0
                           ? () {
-                        print("Back Button pressed");
-                        _controller.previousPage(
-                          duration: Duration(milliseconds: 700),
-                          curve: Curves.easeInOut,
-                        );
-                      }
+                              print("Back Button pressed");
+                              _controller.previousPage(
+                                duration: Duration(milliseconds: 700),
+                                curve: Curves.easeInOut,
+                              );
+                            }
                           : null,
-                      child: Text(currentPage == 0 ? "" :
-                      "Back",
+                      child: Text(
+                        currentPage == 0 ? "" : "Back",
                         style: GoogleFonts.lato(
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontSize: SizeConfig.widthRatio(16),
                           color: currentPage > 0
                               ? Color(0xFFFFFFFF)
                               : Color(0x24FFFFFF),
@@ -149,7 +152,7 @@ class _IntroScreenState extends State<IntroScreen> {
                       text: isLastPage ? "GET STARTED" : "NEXT",
                       style: GoogleFonts.lato(
                         color: Color(0xFFFFFFFF),
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
