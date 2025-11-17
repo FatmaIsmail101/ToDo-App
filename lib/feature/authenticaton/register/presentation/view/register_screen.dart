@@ -13,16 +13,28 @@ import '../../../../../core/reusable_widgets/text_form_field.dart';
 import '../../../../../core/size_config/size_config.dart';
 import '../../../local_auth/local_auth.dart';
 
-class RegisterScreen extends ConsumerWidget {
+class RegisterScreen extends ConsumerStatefulWidget {
   RegisterScreen({super.key});
 
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  void dispose() {
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final registerState = ref.watch(registerViewModelProvider);
 
     // 🎯 نسمع للتغييرات في الـ state
@@ -57,7 +69,11 @@ class RegisterScreen extends ConsumerWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+            size: SizeConfig.widthRatio(15),
+          ),
         ),
       ),
       body: Padding(

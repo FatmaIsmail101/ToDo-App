@@ -149,6 +149,7 @@ class IndexScreen extends ConsumerWidget {
           ),
         ),
         CircleAvatar(
+          radius: SizeConfig.widthRatio(20),
           backgroundImage: (image.isNotEmpty) ? FileImage(File(image,)) : null,
         ),
       ],

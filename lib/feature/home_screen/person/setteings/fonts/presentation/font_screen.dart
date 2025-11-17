@@ -48,6 +48,12 @@ class FontScreen extends ConsumerWidget {
             color: Colors.white,
           ),
         ),
+        leading: InkWell(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(Icons.arrow_back_ios, size: SizeConfig.widthRatio(15),),
+        ),
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {

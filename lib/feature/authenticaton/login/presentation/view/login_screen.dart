@@ -14,7 +14,7 @@ import '../providers/auth_providers.dart';
 import '../view_model/login_state.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
 
   @override
@@ -27,6 +27,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  @override
   void dispose() {
     super.dispose();
     nameController.dispose();

@@ -43,7 +43,7 @@ class CustomBottomSheet {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: SizeConfig.heightRatio(16).toInt()),
+              SizedBox(height: SizeConfig.heightRatio(16)),
               ...items.map(
                 (item) => ListTile(
                   leading: Icon(item.icon, color: Colors.white),

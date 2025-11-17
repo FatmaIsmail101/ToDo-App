@@ -32,7 +32,7 @@ class SettingsScreen extends ConsumerWidget {
           style: GoogleFonts.getFont(
             safeFont,
             fontWeight: FontWeight.normal,
-            fontSize: 20,
+            fontSize: SizeConfig.widthRatio(20),
             color: Colors.white,
           ),
         ),
@@ -42,21 +42,21 @@ class SettingsScreen extends ConsumerWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back_ios),
+          child: Icon(Icons.arrow_back_ios, size: SizeConfig.widthRatio(15),),
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 16,
+          spacing: SizeConfig.heightRatio(16),
           children: [
             Text(
               context.local?.settings ?? "",
               style: GoogleFonts.getFont(
                 safeFont,
                 fontWeight: FontWeight.normal,
-                fontSize: 14,
+                fontSize: SizeConfig.widthRatio(14),
                 color: Colors.grey,
               ),
             ),
@@ -65,15 +65,16 @@ class SettingsScreen extends ConsumerWidget {
                 Navigator.pushNamed(context, PageRouteName.colorScreen);
               },
               child: Row(
-                spacing: 10,
+                spacing: SizeConfig.widthRatio(10),
                 children: <Widget>[
-                  Icon(Icons.format_paint_sharp, color: Colors.white, size: 35),
+                  Icon(Icons.format_paint_sharp, color: Colors.white,
+                      size: SizeConfig.widthRatio(15)),
                   Text(
                     context.local?.change_app_color ?? "",
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       color: Colors.white,
                     ),
                   ),
@@ -81,7 +82,7 @@ class SettingsScreen extends ConsumerWidget {
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Colors.white,
-                    size: 35,
+                    size: SizeConfig.widthRatio(15),
                   ),
                 ],
               ),
@@ -91,9 +92,10 @@ class SettingsScreen extends ConsumerWidget {
                 Navigator.pushNamed(context, PageRouteName.fontScreen);
               },
               child: Row(
-                spacing: 10,
+                spacing: SizeConfig.widthRatio(10),
                 children: <Widget>[
-                  Icon(Icons.text_fields, color: Colors.white, size: 35),
+                  Icon(Icons.text_fields, color: Colors.white,
+                      size: SizeConfig.widthRatio(15)),
                   Text(
                     context.local?.change_app_typography ?? "",
                     style: GoogleFonts.getFont(

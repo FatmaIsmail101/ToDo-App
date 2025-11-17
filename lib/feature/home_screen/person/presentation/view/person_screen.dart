@@ -14,6 +14,7 @@ import 'package:up_todo_app/feature/home_screen/person/log_out/provider/provider
 import 'package:up_todo_app/feature/home_screen/person/presentation/view/widget/card_number_of_tasks.dart';
 
 import '../../../../../core/assets/assets.dart';
+import '../../../../../core/size_config/size_config.dart';
 import '../../../../authenticaton/login/presentation/providers/auth_providers.dart';
 import '../../../index/presentation/task_provider/task_providers.dart';
 import '../../setteings/fonts/provider/font_provider.dart';
@@ -61,7 +62,7 @@ class PersonScreen extends ConsumerWidget {
           context.local?.profile ?? "",
           style: GoogleFonts.getFont(
             safeFont,
-            fontSize: 20,
+            fontSize: SizeConfig.widthRatio(20),
             fontWeight: FontWeight.normal,
             color: Color(0xe0ffffff),
           ),
@@ -70,23 +71,25 @@ class PersonScreen extends ConsumerWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 20,
+            spacing: SizeConfig.heightRatio(20),
             children: [
               //Image
               Center(
                 child: CircleAvatar(
                   backgroundImage: imagePath != null && imagePath.isNotEmpty
-                      ? FileImage(File(imagePath))
+                      ? FileImage(
+                      File(imagePath,), scale: SizeConfig.widthRatio(25))
                       : null,
                   foregroundImage: imagePath != null && imagePath.isNotEmpty
                       ? FileImage(File(imagePath))
                       : null,
-                  radius: 86,
+                  radius: SizeConfig.widthRatio(86),
                   child: imagePath == null || imagePath.isEmpty
-                      ? Icon(Icons.person, size: 70, color: Colors.white)
+                      ? Icon(Icons.person, size: SizeConfig.widthRatio(70),
+                      color: Colors.white)
                       : null,
                 ),
               ),
@@ -96,14 +99,14 @@ class PersonScreen extends ConsumerWidget {
                   style: GoogleFonts.getFont(
                     safeFont,
                     fontWeight: FontWeight.normal,
-                    fontSize: 16,
+                    fontSize: SizeConfig.widthRatio(16),
                     color: Colors.white,
                   ),
                 ),
               ),
               //Number of Tasks
               Row(
-                spacing: 20,
+                spacing: SizeConfig.widthRatio(20),
                 children: <Widget>[
                   CardNumberOfTasks(number: notComplete.length, word: "left"),
                   CardNumberOfTasks(number: complete.length, word: "done"),
@@ -114,7 +117,7 @@ class PersonScreen extends ConsumerWidget {
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontWeight: FontWeight.normal,
-                  fontSize: 14,
+                  fontSize: SizeConfig.widthRatio(14),
                   color: Colors.grey,
                 ),
               ),
@@ -123,15 +126,16 @@ class PersonScreen extends ConsumerWidget {
                   Navigator.pushNamed(context, PageRouteName.appSettings);
                 },
                 child: Row(
-                  spacing: 10,
+                  spacing: SizeConfig.widthRatio(10),
                   children: <Widget>[
-                    Icon(Icons.settings, color: Colors.white, size: 35),
+                    Icon(Icons.settings, color: Colors.white,
+                        size: SizeConfig.widthRatio(15)),
                     Text(
                       context.local?.app_settings ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: Colors.white,
                       ),
                     ),
@@ -139,7 +143,7 @@ class PersonScreen extends ConsumerWidget {
                     Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.white,
-                      size: 35,
+                      size: SizeConfig.widthRatio(15),
                     ),
                   ],
                 ),
@@ -149,7 +153,7 @@ class PersonScreen extends ConsumerWidget {
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontWeight: FontWeight.normal,
-                  fontSize: 14,
+                  fontSize: SizeConfig.widthRatio(14),
                   color: Colors.grey,
                 ),
               ),
@@ -185,15 +189,16 @@ class PersonScreen extends ConsumerWidget {
                   );
                 },
                 child: Row(
-                  spacing: 10,
+                  spacing: SizeConfig.widthRatio(10),
                   children: <Widget>[
-                    Icon(Icons.person, color: Colors.white, size: 35),
+                    Icon(Icons.person, color: Colors.white,
+                        size: SizeConfig.widthRatio(15)),
                     Text(
                       context.local?.change_account_name ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: Colors.white,
                       ),
                     ),
@@ -201,7 +206,7 @@ class PersonScreen extends ConsumerWidget {
                     Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.white,
-                      size: 35,
+                      size: SizeConfig.widthRatio(15),
                     ),
                   ],
                 ),
@@ -238,12 +243,12 @@ class PersonScreen extends ConsumerWidget {
                   );
                 },
                 child: Row(
-                  spacing: 10,
+                  spacing: SizeConfig.widthRatio(10),
                   children: <Widget>[
                     Icon(
                       Icons.lock_outline_sharp,
                       color: Colors.white,
-                      size: 35,
+                      size: SizeConfig.widthRatio(15),
                     ),
                     Expanded(
                       child: Text(
@@ -251,7 +256,7 @@ class PersonScreen extends ConsumerWidget {
                         style: GoogleFonts.getFont(
                           safeFont,
                           fontWeight: FontWeight.normal,
-                          fontSize: 16,
+                          fontSize: SizeConfig.widthRatio(16),
                           color: Colors.white,
                         ),
                       ),
@@ -260,7 +265,7 @@ class PersonScreen extends ConsumerWidget {
                     Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.white,
-                      size: 35,
+                      size: SizeConfig.widthRatio(15),
                     ),
                   ],
                 ),
@@ -270,15 +275,16 @@ class PersonScreen extends ConsumerWidget {
                   await showBottomSheet(context, ref);
                 },
                 child: Row(
-                  spacing: 10,
+                  spacing: SizeConfig.widthRatio(10),
                   children: <Widget>[
-                    Icon(Icons.image_rounded, color: Colors.white, size: 35),
+                    Icon(Icons.image_rounded, color: Colors.white,
+                        size: SizeConfig.widthRatio(15)),
                     Text(
                       context.local?.change_account_image ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: Colors.white,
                       ),
                     ),
@@ -286,7 +292,7 @@ class PersonScreen extends ConsumerWidget {
                     Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.white,
-                      size: 35,
+                      size: SizeConfig.widthRatio(15),
                     ),
                   ],
                 ),
@@ -296,12 +302,12 @@ class PersonScreen extends ConsumerWidget {
                 style: GoogleFonts.getFont(
                   safeFont,
                   fontWeight: FontWeight.normal,
-                  fontSize: 14,
+                  fontSize: SizeConfig.widthRatio(14),
                   color: Colors.grey,
                 ),
               ),
               Row(
-                spacing: 10,
+                spacing: SizeConfig.widthRatio(10),
                 children: <Widget>[
                   Image.asset(Assets.about, color: Colors.white),
                   Text(
@@ -309,7 +315,7 @@ class PersonScreen extends ConsumerWidget {
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       color: Colors.white,
                     ),
                   ),
@@ -317,12 +323,12 @@ class PersonScreen extends ConsumerWidget {
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Colors.white,
-                    size: 35,
+                    size: SizeConfig.widthRatio(15),
                   ),
                 ],
               ),
               Row(
-                spacing: 10,
+                spacing: SizeConfig.widthRatio(10),
                 children: <Widget>[
                   // Icon(Icons.info_outline,color: Colors.white,size: 30,)
                   Image.asset(Assets.help, color: Colors.white),
@@ -331,7 +337,7 @@ class PersonScreen extends ConsumerWidget {
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       color: Colors.white,
                     ),
                   ),
@@ -339,12 +345,12 @@ class PersonScreen extends ConsumerWidget {
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Colors.white,
-                    size: 35,
+                    size: SizeConfig.widthRatio(15),
                   ),
                 ],
               ),
               Row(
-                spacing: 10,
+                spacing: SizeConfig.widthRatio(10),
                 children: <Widget>[
                   Image.asset(Assets.like, color: Colors.white),
                   Text(
@@ -352,7 +358,7 @@ class PersonScreen extends ConsumerWidget {
                     style: GoogleFonts.getFont(
                       safeFont,
                       fontWeight: FontWeight.normal,
-                      fontSize: 16,
+                      fontSize: SizeConfig.widthRatio(16),
                       color: Colors.white,
                     ),
                   ),
@@ -360,7 +366,7 @@ class PersonScreen extends ConsumerWidget {
                   Icon(
                     Icons.arrow_forward_ios_rounded,
                     color: Colors.white,
-                    size: 35,
+                    size: SizeConfig.widthRatio(15),
                   ),
                 ],
               ),
@@ -380,16 +386,17 @@ class PersonScreen extends ConsumerWidget {
                   );
                 },
                 child: Row(
-                  spacing: 10,
+                  spacing: SizeConfig.widthRatio(10),
                   children: <Widget>[
-                    Icon(Icons.logout, color: Colors.red, size: 30),
+                    Icon(Icons.logout, color: Colors.red,
+                        size: SizeConfig.widthRatio(15)),
                     // Image.asset(Assets.like,color: Colors.white,),
                     Text(
                       context.local?.log_out ?? "",
                       style: GoogleFonts.getFont(
                         safeFont,
                         fontWeight: FontWeight.normal,
-                        fontSize: 16,
+                        fontSize: SizeConfig.widthRatio(16),
                         color: Colors.red,
                       ),
                     ),
@@ -423,7 +430,7 @@ class PersonScreen extends ConsumerWidget {
           text: 'Edit',
           style: GoogleFonts.lato(
             fontWeight: FontWeight.normal,
-            fontSize: 16,
+            fontSize: SizeConfig.widthRatio(16),
             color: Colors.white,
           ),
         ),
@@ -434,7 +441,7 @@ class PersonScreen extends ConsumerWidget {
         text,
         style: GoogleFonts.lato(
           fontWeight: FontWeight.normal,
-          fontSize: 16,
+          fontSize: SizeConfig.widthRatio(16),
           color: Colors.white,
         ),
       ),
@@ -443,17 +450,18 @@ class PersonScreen extends ConsumerWidget {
         decoration: InputDecoration(
           hintText: hint,
           hintStyle: GoogleFonts.lato(
-            fontSize: 16,
+            fontSize: SizeConfig.widthRatio(16),
             fontWeight: FontWeight.w500,
             color: Colors.grey,
           ),
-          prefixIcon: Icon(Icons.search, color: Colors.white),
+          prefixIcon: Icon(Icons.search, color: Colors.white,
+            size: SizeConfig.widthRatio(16),),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
             borderSide: BorderSide(color: Colors.white),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
             borderSide: BorderSide(color: Colors.white),
           ),
           filled: true,
@@ -461,7 +469,7 @@ class PersonScreen extends ConsumerWidget {
           focusColor: Colors.white,
         ),
         style: GoogleFonts.lato(
-          fontSize: 16,
+          fontSize: SizeConfig.widthRatio(16),
           fontWeight: FontWeight.w500,
           color: Colors.grey,
         ),
@@ -477,15 +485,16 @@ class PersonScreen extends ConsumerWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final currentColor = isDark ? darkThemePreview : themePreview;
     return await showModalBottomSheet(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(SizeConfig.widthRatio(12))),
       sheetAnimationStyle: AnimationStyle(curve: Curves.easeInOut),
       backgroundColor: currentColor.colorScheme.primary,
       context: context,
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
           child: Column(
-            spacing: 12,
+            spacing: SizeConfig.heightRatio(12),
             children: [
               Align(
                 alignment: AlignmentGeometry.center,
@@ -493,16 +502,16 @@ class PersonScreen extends ConsumerWidget {
                   "Change account Image",
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.normal,
-                    fontSize: 16,
+                    fontSize: SizeConfig.widthRatio(16),
                     color: Colors.red,
                   ),
                 ),
               ),
               Divider(
                 color: Colors.white,
-                height: 20,
-                indent: 32,
-                endIndent: 32,
+                height: SizeConfig.heightRatio(20),
+                indent: SizeConfig.widthRatio(32),
+                endIndent: SizeConfig.widthRatio(32),
               ),
               GestureDetector(
                 onTap: () {
@@ -512,7 +521,7 @@ class PersonScreen extends ConsumerWidget {
                   "Take picture",
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.normal,
-                    fontSize: 16,
+                    fontSize: SizeConfig.widthRatio(16),
                     color: Colors.red,
                   ),
                 ),
@@ -525,7 +534,7 @@ class PersonScreen extends ConsumerWidget {
                   "Import from gallery",
                   style: GoogleFonts.lato(
                     fontWeight: FontWeight.normal,
-                    fontSize: 16,
+                    fontSize: SizeConfig.widthRatio(16),
                     color: Colors.red,
                   ),
                 ),

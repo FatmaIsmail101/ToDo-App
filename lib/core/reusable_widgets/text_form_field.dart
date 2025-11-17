@@ -58,7 +58,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
       decoration: InputDecoration(
         suffixIcon: widget.isObsecure
             ? IconButton(
-                icon: Icon(
+          icon: Icon(size: SizeConfig.widthRatio(15),
                   _obsecure ? Icons.visibility_off : Icons.visibility,
                   color: Colors.white70,
                 ),

@@ -41,7 +41,7 @@ class LocalizationScreen extends ConsumerWidget {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.arrow_back_ios),
+          child: Icon(Icons.arrow_back_ios, size: SizeConfig.widthRatio(15),),
         ),
       ),
       body: Padding(
