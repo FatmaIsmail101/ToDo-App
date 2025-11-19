@@ -24,7 +24,7 @@ class EditTitleItem extends ConsumerWidget {
         : selectedFont;
 
     return Container(
-      height: SizeConfig.heightRatio(300),
+      height: SizeConfig.heightRatio(328),
       width: SizeConfig.widthRatio(328),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
