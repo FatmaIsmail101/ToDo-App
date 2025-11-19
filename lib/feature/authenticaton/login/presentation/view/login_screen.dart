@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:up_todo_app/core/routes/page_route_name.dart';
-import 'package:up_todo_app/feature/authenticaton/local_auth/local_auth.dart';
 import 'package:up_todo_app/feature/authenticaton/login/presentation/view_model/login_with_facebook_provider.dart';
 
 import '../../../../../core/notification/notification_bar.dart';
@@ -16,8 +15,6 @@ import '../view_model/login_state.dart';
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
-
-  @override
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
 }
@@ -27,18 +24,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final nameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  // void dispose() {
+  //   nameController.dispose();
+  //   passwordController.dispose();
+  //   super.dispose();
+  // }
   @override
-  void dispose() {
-    super.dispose();
-    nameController.dispose();
-    passwordController.dispose();
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
     final loginState = ref.watch(loginViewModelProvider);
 
     // 🎯 نسمع للتغييرات في الـ state
-    ref.listen<LoginState>(loginViewModelProvider, (prev, next) {
+    ref.listen<LoginState>(loginViewModelProvider, (prev, next) async {
+      if (!mounted) return;
+      if (prev?.state == next.state) return;
       // ⚠ Error
       if (next.state == LoginStatus.error) {
         NotificationBar.showNotification(
@@ -55,115 +58,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           context: context,
           icon: Icons.check,
         );
-        Navigator.pushReplacementNamed(context, PageRouteName.homeScreen);
+        await Navigator.pushReplacementNamed(context, PageRouteName.homeScreen);
       }
       // ✅ Success / needLocalAuth
-      if (next.state == LoginStatus.needLocalAuth && next.model != null) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.fingerprint),
-                title: const Text(
-                  'Please hold your finger at the fingerprint scanner to verify your identity',
-                ),
-                onTap: () async {
-                  bool success = await LocalAuthHelper.authenticate();
-                  if (success) {
-                    NotificationBar.showNotification(
-                      message: "Authenticated with Fingerprint",
-                      type: ContentType.success,
-                      context: context,
-                      icon: Icons.check,
-                    );
-                    //todo
-                    Navigator.pushReplacementNamed(
-                      context,
-                      PageRouteName.homeScreen,
-                    );
-                  } else {
-                    NotificationBar.showNotification(
-                      message: "Fingerprint authentication failed",
-                      type: ContentType.failure,
-                      context: context,
-                      icon: Icons.error,
-                    );
-                  }
-                  // هنا تحطي كود الـ Local Auth
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.pin),
-                title: const Text('Login with PIN'),
-                onTap: () {
-                  // هنا تحطي كود الـ PIN Auth
-                  Navigator.pop(context);
-                  final pinController = TextEditingController();
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text("Enter PIN"),
-                      content: TextField(
-                        controller: pinController,
-                        keyboardType: TextInputType.number,
-                        obscureText: true,
-                        decoration: InputDecoration(hintText: "PIN"),
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            if (pinController.text ==
-                                LocalAuthHelper.getPin()) {
-                              Navigator.pushReplacementNamed(
-                                context,
-                                PageRouteName.homeScreen,
-                              );
-                              NotificationBar.showNotification(
-                                message: "Authenticated with PIN",
-                                type: ContentType.success,
-                                context: context,
-                                icon: Icons.check,
-                              );
-                              Navigator.pop(context);
-                            } else {
-                              Navigator.pop(context);
-                              NotificationBar.showNotification(
-                                message: "Incorrect PIN",
-                                type: ContentType.failure,
-                                context: context,
-                                icon: Icons.error,
-                              );
-                            }
-                          },
-                          child: const Text("Submit"),
-                        ),
-                      ],
-                    ),
-                  );
-                  NotificationBar.showNotification(
-                    message: "Authenticated with PIN",
-                    type: ContentType.success,
-                    context: context,
-                    icon: Icons.check,
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.cancel),
-                title: const Text('Cancel'),
-                onTap: () => Navigator.pushReplacementNamed(
-                  context,
-                  PageRouteName.homeScreen,
-                ),
-              ),
-            ],
-          ),
-        );
-        },);
-      }
     });
 
     return Scaffold(
@@ -301,3 +198,113 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
 }
+
+/*
+      if (next.state == LoginStatus.needLocalAuth && next.model != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+        showModalBottomSheet(
+          context: context,
+          builder: (_) => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.fingerprint),
+                title: const Text(
+                  'Please hold your finger at the fingerprint scanner to verify your identity',
+                ),
+                onTap: () async {
+                  bool success = await LocalAuthHelper.authenticate();
+                  if (success) {
+                    NotificationBar.showNotification(
+                      message: "Authenticated with Fingerprint",
+                      type: ContentType.success,
+                      context: context,
+                      icon: Icons.check,
+                    );
+                    //todo
+                    Navigator.pushReplacementNamed(
+                      context,
+                      PageRouteName.homeScreen,
+                    );
+                  } else {
+                    NotificationBar.showNotification(
+                      message: "Fingerprint authentication failed",
+                      type: ContentType.failure,
+                      context: context,
+                      icon: Icons.error,
+                    );
+                  }
+                  // هنا تحطي كود الـ Local Auth
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.pin),
+                title: const Text('Login with PIN'),
+                onTap: () {
+                  // هنا تحطي كود الـ PIN Auth
+                  Navigator.pop(context);
+                  final pinController = TextEditingController();
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text("Enter PIN"),
+                      content: TextField(
+                        controller: pinController,
+                        keyboardType: TextInputType.number,
+                        obscureText: true,
+                        decoration: InputDecoration(hintText: "PIN"),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            if (pinController.text ==
+                                LocalAuthHelper.getPin()) {
+                              Navigator.pushReplacementNamed(
+                                context,
+                                PageRouteName.homeScreen,
+                              );
+                              NotificationBar.showNotification(
+                                message: "Authenticated with PIN",
+                                type: ContentType.success,
+                                context: context,
+                                icon: Icons.check,
+                              );
+                              Navigator.pop(context);
+                            } else {
+                              Navigator.pop(context);
+                              NotificationBar.showNotification(
+                                message: "Incorrect PIN",
+                                type: ContentType.failure,
+                                context: context,
+                                icon: Icons.error,
+                              );
+                            }
+                          },
+                          child: const Text("Submit"),
+                        ),
+                      ],
+                    ),
+                  );
+                  NotificationBar.showNotification(
+                    message: "Authenticated with PIN",
+                    type: ContentType.success,
+                    context: context,
+                    icon: Icons.check,
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.cancel),
+                title: const Text('Cancel'),
+                onTap: () => Navigator.pushReplacementNamed(
+                  context,
+                  PageRouteName.homeScreen,
+                ),
+              ),
+            ],
+          ),
+        );
+        },);
+      }
+
+ */

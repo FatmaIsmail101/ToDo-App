@@ -75,7 +75,7 @@ class _IntroScreenState extends State<IntroScreen> {
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(24),
+        padding: EdgeInsets.all(SizeConfig.widthRatio(24)),
         child: Column(
           children: <Widget>[
             Expanded(

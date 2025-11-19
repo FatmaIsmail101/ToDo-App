@@ -14,7 +14,7 @@ import '../../../../../core/size_config/size_config.dart';
 import '../../../local_auth/local_auth.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _RegisterScreenState();
@@ -26,19 +26,19 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  void dispose() {
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    nameController.dispose();
-    super.dispose();
-  }
+  // void dispose() {
+  //   passwordController.dispose();
+  //   confirmPasswordController.dispose();
+  //   nameController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final registerState = ref.watch(registerViewModelProvider);
 
     // 🎯 نسمع للتغييرات في الـ state
-    ref.listen<AsyncValue<void>>(registerViewModelProvider, (prev, next) {
+    ref.listen<AsyncValue<void>>(registerViewModelProvider, (prev, next) async {
       next.whenOrNull(
         error: (error, stackTrace) {
           return NotificationBar.showNotification(
@@ -242,13 +242,17 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                     context: context,
                                     builder: (_) => AlertDialog(
                                       title: const Text("Set PIN"),
-                                      content: TextField(
-                                        controller: pinController,
-                                        keyboardType: TextInputType.number,
-                                        obscureText: true,
-                                        decoration: const InputDecoration(
-                                          hintText:
-                                              "Enter your PIN (e.g. 1234)",
+                                      content: SizedBox(
+                                        width: SizeConfig.widthRatio(80),
+                                        height: SizeConfig.heightRatio(20),
+                                        child: TextField(
+                                          controller: pinController,
+                                          keyboardType: TextInputType.number,
+                                          obscureText: true,
+                                          decoration: const InputDecoration(
+                                            hintText:
+                                                "Enter your PIN (e.g. 1234)",
+                                          ),
                                         ),
                                       ),
                                       actions: [

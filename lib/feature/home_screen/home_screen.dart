@@ -60,8 +60,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         valueListenable: currentIndexNotifier,
         builder: (context, currentIndex, _) {
           return ConvexAppBar(
-            style: TabStyle.custom,
-
+            style: TabStyle.fixedCircle,
+            // cornerRadius: 50,
             elevation: 4,
             activeColor: Colors.blue,
             items: const [

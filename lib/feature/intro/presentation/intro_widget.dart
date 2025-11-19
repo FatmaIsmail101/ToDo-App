@@ -27,6 +27,9 @@ class InteoWidget extends StatelessWidget {
           flex: 3,
           child: RepaintBoundary(
             child: Image.asset(
+              height: SizeConfig.heightRatio(800),
+              width: SizeConfig.widthRatio(800),
+              fit: BoxFit.cover,
               model.imagePath,
               cacheWidth: SizeConfig.widthRatio(800).toInt(),
               cacheHeight: SizeConfig.heightRatio(800).toInt(),

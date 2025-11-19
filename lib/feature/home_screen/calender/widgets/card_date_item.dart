@@ -27,7 +27,7 @@ class CardDateItem extends ConsumerWidget {
     return Container(
       padding: EdgeInsets.all(SizeConfig.widthRatio(4)),
       width: SizeConfig.widthRatio(44),
-      height: SizeConfig.heightRatio(44),
+      height: SizeConfig.heightRatio(48),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SizeConfig.widthRatio(4)),
         color: isSelected ? Color(0xff8685E7) : Color(0x0fffffff),

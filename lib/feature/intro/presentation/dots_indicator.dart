@@ -15,7 +15,7 @@ class DotsIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 9,
+      spacing: SizeConfig.widthRatio(8),
       children: List.generate(totalDot, (index) {
         bool isActive = index == currentIndex;
         return AnimatedContainer(
@@ -23,7 +23,7 @@ class DotsIndicator extends StatelessWidget {
           width: isActive
               ? SizeConfig.widthRatio(28)
               : SizeConfig.widthRatio(8),
-          height: 4,
+          height: SizeConfig.heightRatio(4),
           decoration: BoxDecoration(
             color: isActive ? Color(0xdeffffff) : Colors.grey,
           ),
